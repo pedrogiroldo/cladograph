@@ -7,6 +7,7 @@ from ete3 import Tree
 
 t = Tree("minha_arvore.nw")
 
+
 def exibir_arvore():
     t.show()
 
