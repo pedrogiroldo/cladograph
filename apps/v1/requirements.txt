@@ -1,1 +1,7 @@
 ete3
+six
+numpy
+matplotlib
+tk
+PyQt5
+Pillow
