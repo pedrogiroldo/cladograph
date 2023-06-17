@@ -1,7 +1,7 @@
 import tkinter as tk
 from ete3 import Tree
 
-def criar_arvore():
+def criar_arvore_Newick():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
     
@@ -41,6 +41,9 @@ def salvar_arvore():
     except Exception as e:
         status_label.config(text=f"Erro: {str(e)}")
 
+def criar_arvore_alternativa():
+    print("teste")
+
 # Cria a janela principal
 root = tk.Tk()
 root.title("Visualizador de Árvore")
@@ -53,7 +56,7 @@ entrada_text = tk.Text(root, height=5)
 entrada_text.pack()
 
 # Cria os botões
-btn_criar = tk.Button(root, text="Criar Árvore", command=criar_arvore)
+btn_criar = tk.Button(root, text="Criar Árvore", command=criar_arvore_Newick)
 btn_salvar = tk.Button(root, text="Salvar Árvore", command=salvar_arvore)
 
 btn_criar.pack()
