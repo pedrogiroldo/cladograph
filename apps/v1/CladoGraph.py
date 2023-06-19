@@ -10,6 +10,8 @@ def criar_arvore_Newick():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
 
+    tipoNewick = int(box_Newick.get())
+    
     # Verifique se a entrada está vazia
     if not entrada:
         status_label.config(text="Erro: insira uma árvore válida")
@@ -17,7 +19,7 @@ def criar_arvore_Newick():
 
     try:
         # Crie a árvore a partir da entrada do usuário
-        t = Tree(entrada)
+        t = Tree(entrada, format=tipoNewick)
 
         # Exiba a árvore
         t.show()
@@ -30,6 +32,7 @@ def criar_arvore_Newick():
 def salvar_arvore():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
+    tipoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
     if not entrada:
@@ -38,7 +41,7 @@ def salvar_arvore():
 
     try:
         # Crie a árvore a partir da entrada do usuário
-        t = Tree(entrada)
+        t = Tree(entrada, format=tipoNewick)
 
         # Solicitar ao usuário o local para salvar o arquivo
         filename = filedialog.asksaveasfilename(
@@ -122,7 +125,10 @@ status_label.grid(row=6, column=0, padx=5, pady=5)
 
 # Deixa um pouco responsivo:)
 root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.rowconfigure(1, weight=1)
+
+
 
 
 root.mainloop()
