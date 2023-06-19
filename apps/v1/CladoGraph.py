@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 from ete3 import Tree
 
 novo_input_values = []
@@ -39,10 +40,18 @@ def salvar_arvore():
         # Crie a árvore a partir da entrada do usuário
         t = Tree(entrada)
 
-        # Salve o cladograma em um arquivo
-        t.render("cladograma.png", w=4000, units="px")
+        # Solicitar ao usuário o local para salvar o arquivo
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".png",
+            filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")]
+        )
 
-        status_label.config(text="Árvore salva com sucesso!")
+        if filename:
+            # Salvar o cladograma no local escolhido pelo usuário
+            t.render(filename, w=4000, units="px")
+            status_label.config(text="Árvore salva com sucesso!")
+        else:
+            status_label.config(text="Erro: nenhum local selecionado")
     except Exception as e:
         status_label.config(text=f"Erro: {str(e)}")
 
