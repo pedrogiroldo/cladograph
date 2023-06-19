@@ -1,9 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from ete3 import Tree
+from ete3 import Tree, TreeStyle
 
 novo_input_values = []
+
+leaf_name = False
+circular = False
+if circular == True:
+    mode = 'c'
+mode = 'r'
+
+ts = TreeStyle()
+ts.show_leaf_name = leaf_name
+ts.show_branch_length = True
+ts.show_branch_support = True
+ts.mode = mode
 
 
 def criar_arvore_Newick():
@@ -22,7 +34,8 @@ def criar_arvore_Newick():
         t = Tree(entrada, format=tipoNewick)
 
         # Exiba a árvore
-        t.show()
+        t.show(tree_style=ts)
+        
 
         status_label.config(text="")
     except Exception as e:
@@ -51,7 +64,7 @@ def salvar_arvore():
 
         if filename:
             # Salvar o cladograma no local escolhido pelo usuário
-            t.render(filename, w=4000, units="px")
+            t.render(filename, w=4000, units="px", tree_style=ts)
             status_label.config(text="Árvore salva com sucesso!")
         else:
             status_label.config(text="Erro: nenhum local selecionado")
@@ -61,7 +74,7 @@ def salvar_arvore():
 
 def criar_arvore_alternativa():
     global novo_input_values
-    popup = tk.Tk()
+    popup = tk.Toplevel(root)
     popup.title("Conversor Newick")
 
     def criar_label():
@@ -90,6 +103,21 @@ def criar_arvore_alternativa():
         print(valor)
 
 
+def abrir_janela_estilos():
+    estilos_popup = tk.Toplevel(root)
+    btn_leaf_name = ttk.Checkbutton(estilos_popup, variable=leaf_name, text="Leaf name")
+    btn_leaf_name.grid(row=0, column=0, padx=5, pady=5)
+    btn_circular = ttk.Checkbutton(estilos_popup, variable=circular)
+    btn_circular.grid(row=1, column=0, padx=5, pady=5)
+
+
+
+'''
+==================
+Criação da janela
+==================
+'''
+
 # Cria a janela principal
 root = tk.Tk()
 root.title("Visualizador de Árvore")
@@ -99,7 +127,7 @@ entrada_label = tk.Label(root, text="Insira a árvore no formato Newick:")
 entrada_label.grid(row=0, column=0, padx=5, pady=5)
 
 entrada_text = tk.Text(root, height=5)
-entrada_text.grid(row=1, column=0, padx=5, pady=5)
+entrada_text.grid(row=1, rowspan=6, column=0, padx=5, pady=5)
 
 # Cria o seletor de versão do newick
 box_Newick = ttk.Combobox(
@@ -119,11 +147,14 @@ btn_converter = tk.Button(
 )
 btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
+btn_estilos = tk.Button(root, text="Configurar estilos", command=abrir_janela_estilos)
+btn_estilos.grid(row=6, column=1, padx=5, pady=5)
+
 # Cria a etiqueta de status
 status_label = tk.Label(root, text="")
-status_label.grid(row=6, column=0, padx=5, pady=5)
+status_label.grid(row=7, column=0, padx=5, pady=5)
 
-# Deixa um pouco responsivo:)
+# Deixa um pouco responsivo :)
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
