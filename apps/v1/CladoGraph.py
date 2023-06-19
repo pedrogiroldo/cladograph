@@ -1,8 +1,8 @@
 import tkinter as tk
+from tkinter import ttk
 from ete3 import Tree
 
 novo_input_values = []
-
 
 
 def criar_arvore_Newick():
@@ -51,6 +51,7 @@ def criar_arvore_alternativa():
     global novo_input_values
     popup = tk.Tk()
     popup.title("Conversor Newick")
+
     def criar_label():
         global novo_input_values
         nova_label = tk.Label(popup, text="Novo animal")
@@ -64,13 +65,12 @@ def criar_arvore_alternativa():
         novo_input_values.append(valor)
         popup.destroy()
 
-    botao_confirmar = tk.Button(popup, text="Confirmar", command=obter_valor)
-    botao_confirmar.pack()
-
-
     criar_label()
     botao = tk.Button(popup, text="Criar Label", command=criar_label)
     botao.pack()
+    botao_confirmar = tk.Button(popup, text="Confirmar", command=obter_valor)
+    botao_confirmar.pack()
+
     popup.mainloop()
 
     # Use os valores digitados pelos usuários (novo_input_values) como desejar
@@ -84,24 +84,36 @@ root.title("Visualizador de Árvore")
 
 # Cria o campo de entrada de texto
 entrada_label = tk.Label(root, text="Insira a árvore no formato Newick:")
-entrada_label.pack()
+entrada_label.grid(row=0, column=0, padx=5, pady=5)
 
 entrada_text = tk.Text(root, height=5)
-entrada_text.pack()
+entrada_text.grid(row=1, column=0, padx=5, pady=5)
+
+# Cria o seletor de versão do newick
+box_Newick = ttk.Combobox(
+    root, width=5, state="readonly", values=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+)
+box_Newick.grid(row=1, column=1, padx=5, pady=5)
 
 # Cria os botões
 btn_criar = tk.Button(root, text="Criar Árvore", command=criar_arvore_Newick)
+btn_criar.grid(row=2, column=1, padx=5, pady=5)
+
 btn_salvar = tk.Button(root, text="Salvar Árvore", command=salvar_arvore)
+btn_salvar.grid(row=3, column=1, padx=5, pady=5)
+
 btn_converter = tk.Button(
     root, text="Converter para Newick", command=criar_arvore_alternativa
 )
-
-btn_criar.pack()
-btn_salvar.pack()
-btn_converter.pack()
+btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
 # Cria a etiqueta de status
 status_label = tk.Label(root, text="")
-status_label.pack()
+status_label.grid(row=6, column=0, padx=5, pady=5)
+
+# Deixa um pouco responsivo:)
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
 
 root.mainloop()
