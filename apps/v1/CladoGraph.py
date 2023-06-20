@@ -8,15 +8,17 @@ novo_input_values = []
 # inicializa a janela principal
 root = tk.Tk()
 
-'''
+"""
 =========================
 Funções janela de estilos
 =========================
-'''
-leaf_name_var = tk.BooleanVar()
+"""
+leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 
 ts = TreeStyle()
+
+
 def atualizar_checkbox():
     ts.show_leaf_name = leaf_name_var.get()
     ts.show_branch_length = True
@@ -26,17 +28,34 @@ def atualizar_checkbox():
 
 def abrir_janela_estilos():
     estilos_popup = tk.Toplevel(root)
-    btn_leaf_name = ttk.Checkbutton(estilos_popup, variable=leaf_name_var, text="Leaf name", command=atualizar_checkbox)
+    btn_leaf_name = ttk.Checkbutton(
+        estilos_popup,
+        variable=leaf_name_var,
+        text="Leaf name",
+        command=atualizar_checkbox,
+    )
     btn_leaf_name.grid(row=0, column=0, padx=5, pady=5)
-    btn_circular = ttk.Checkbutton(estilos_popup, variable=circular_var, text="Circular", command=atualizar_checkbox)
+    btn_circular = ttk.Checkbutton(
+        estilos_popup,
+        variable=circular_var,
+        text="Circular",
+        command=atualizar_checkbox,
+    )
     btn_circular.grid(row=1, column=0, padx=5, pady=5)
+
+
+"""
+==================================================
+Executa as funções principais (donwload e mostrar)
+==================================================
+"""
 
 
 def criar_arvore_Newick():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
 
-    tipoNewick = int(box_Newick.get())
+    formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
     if not entrada:
@@ -45,7 +64,7 @@ def criar_arvore_Newick():
 
     try:
         # Crie a árvore a partir da entrada do usuário
-        t = Tree(entrada, format=tipoNewick)
+        t = Tree(entrada, format=formatoNewick)
 
         # Exiba a árvore
         t.show(tree_style=ts)
@@ -58,7 +77,7 @@ def criar_arvore_Newick():
 def salvar_arvore():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
-    tipoNewick = int(box_Newick.get())
+    formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
     if not entrada:
@@ -67,7 +86,7 @@ def salvar_arvore():
 
     try:
         # Crie a árvore a partir da entrada do usuário
-        t = Tree(entrada, format=tipoNewick)
+        t = Tree(entrada, format=formatoNewick)
 
         # Solicitar ao usuário o local para salvar o arquivo
         filename = filedialog.asksaveasfilename(
