@@ -5,17 +5,31 @@ from ete3 import Tree, TreeStyle
 
 novo_input_values = []
 
-leaf_name = False
-circular = False
-if circular == True:
-    mode = 'c'
-mode = 'r'
+# inicializa a janela principal
+root = tk.Tk()
+
+'''
+=========================
+Funções janela de estilos
+=========================
+'''
+leaf_name_var = tk.BooleanVar()
+circular_var = tk.BooleanVar()
 
 ts = TreeStyle()
-ts.show_leaf_name = leaf_name
-ts.show_branch_length = True
-ts.show_branch_support = True
-ts.mode = mode
+def atualizar_checkbox():
+    ts.show_leaf_name = leaf_name_var.get()
+    ts.show_branch_length = True
+    ts.show_branch_support = True
+    ts.mode = "c" if circular_var.get() else "r"
+
+
+def abrir_janela_estilos():
+    estilos_popup = tk.Toplevel(root)
+    btn_leaf_name = ttk.Checkbutton(estilos_popup, variable=leaf_name_var, text="Leaf name", command=atualizar_checkbox)
+    btn_leaf_name.grid(row=0, column=0, padx=5, pady=5)
+    btn_circular = ttk.Checkbutton(estilos_popup, variable=circular_var, text="Circular", command=atualizar_checkbox)
+    btn_circular.grid(row=1, column=0, padx=5, pady=5)
 
 
 def criar_arvore_Newick():
@@ -23,7 +37,7 @@ def criar_arvore_Newick():
     entrada = entrada_text.get("1.0", tk.END).strip()
 
     tipoNewick = int(box_Newick.get())
-    
+
     # Verifique se a entrada está vazia
     if not entrada:
         status_label.config(text="Erro: insira uma árvore válida")
@@ -35,7 +49,6 @@ def criar_arvore_Newick():
 
         # Exiba a árvore
         t.show(tree_style=ts)
-        
 
         status_label.config(text="")
     except Exception as e:
@@ -59,7 +72,7 @@ def salvar_arvore():
         # Solicitar ao usuário o local para salvar o arquivo
         filename = filedialog.asksaveasfilename(
             defaultextension=".png",
-            filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")]
+            filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")],
         )
 
         if filename:
@@ -103,23 +116,13 @@ def criar_arvore_alternativa():
         print(valor)
 
 
-def abrir_janela_estilos():
-    estilos_popup = tk.Toplevel(root)
-    btn_leaf_name = ttk.Checkbutton(estilos_popup, variable=leaf_name, text="Leaf name")
-    btn_leaf_name.grid(row=0, column=0, padx=5, pady=5)
-    btn_circular = ttk.Checkbutton(estilos_popup, variable=circular)
-    btn_circular.grid(row=1, column=0, padx=5, pady=5)
-
-
-
-'''
+"""
 ==================
 Criação da janela
 ==================
-'''
+"""
 
 # Cria a janela principal
-root = tk.Tk()
 root.title("Visualizador de Árvore")
 
 # Cria o campo de entrada de texto
@@ -158,8 +161,6 @@ status_label.grid(row=7, column=0, padx=5, pady=5)
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
-
-
 
 
 root.mainloop()
