@@ -117,7 +117,6 @@ def criar_arvore_alternativa():
             nome = nome_text.get("1.0", "end-1c")
             caracteristicas = caracteristicas_text.get("1.0", "end-1c").split(',')
             ancestral = {"Nome": f"{nome}"}
-            ancestral["AAAA"] = False
             for caracteristica in caracteristicas:
                 ancestral[f"{caracteristica}"] = True
             janela_ancestral.destroy()
