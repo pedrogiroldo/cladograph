@@ -15,6 +15,7 @@ Funções janela de estilos
 """
 leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
+semi_circular_var = tk.BooleanVar()
 
 
 ts = TreeStyle()
@@ -24,13 +25,36 @@ ts = TreeStyle()
 ns = NodeStyle()
 ns["hz_line_width"] = 1
 ns["vt_line_width"] = 1
+
+
 def atualizar_checkbox():
     ts.show_leaf_name = leaf_name_var.get()
-    ts.mode = "c" if circular_var.get() else "r"
+    # ts.mode = "c" if circular_var.get() else "r"
+    if semi_circular_var.get():
+        ts.mode = "c"
+        ts.rotation = 90  # Rotação de 90 graus
+        ts.arc_start = -180  # Início do arco em -180 graus
+        ts.arc_span = 180  # Ângulo de 180 graus
+    elif circular_var.get():
+        ts.mode = "c"
+        ts.rotation = 0
+        ts.arc_start = 0
+        ts.arc_span = 360  # Ângulo completo de 360 graus
+    else:
+        ts.mode = "r"
+        ts.rotation = 0
+        ts.arc_start = 0
+        ts.arc_span = 0
+
 
 
 def abrir_janela_estilos():
+    def fechar_janela():
+        atualizar_checkbox()
+        estilos_popup.destroy()
+
     estilos_popup = tk.Toplevel(root)
+
     btn_leaf_name = ttk.Checkbutton(
         estilos_popup,
         variable=leaf_name_var,
@@ -44,8 +68,14 @@ def abrir_janela_estilos():
         text="Circular",
     )
     btn_circular.grid(row=2, column=0, padx=0, pady=10, sticky="w")
-    btn_salvar = tk.Button(estilos_popup, text="Salvar", command=atualizar_checkbox)
-    btn_salvar.grid(row=3, column=0, padx=0, pady=5)
+
+    btn_semi_circular = ttk.Checkbutton(
+        estilos_popup, variable=semi_circular_var, text="Semi Circular"
+    )
+    btn_semi_circular.grid(row=3, column=0, padx=0, pady=10, sticky="w")
+
+    btn_salvar = tk.Button(estilos_popup, text="Salvar", command=fechar_janela)
+    btn_salvar.grid(row=100, column=0, padx=0, pady=5)
 
 
 """
