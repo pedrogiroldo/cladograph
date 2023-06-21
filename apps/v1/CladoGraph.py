@@ -105,34 +105,42 @@ def salvar_arvore():
 
 
 def criar_arvore_alternativa():
-    global novo_input_values
-    popup = tk.Toplevel(root)
-    popup.title("Conversor Newick")
+    janela_comparador = tk.Toplevel(root)
 
-    def criar_label():
-        global novo_input_values
-        nova_label = tk.Label(popup, text="Novo animal")
-        nova_label.pack()
-        novo_input = tk.Text(popup, height=1)
-        novo_input.pack()
+    ancestral = {}
+    descendentes = {}
 
-    def obter_valor():
-        global novo_input_values
-        valor = novo_input.get("1.0", tk.END).strip()
-        novo_input_values.append(valor)
-        popup.destroy()
+    # ancestral[nome] = {caracteristica: True for caracteristica in caracteristicas}
 
-    criar_label()
-    botao = tk.Button(popup, text="Criar Label", command=criar_label)
-    botao.pack()
-    botao_confirmar = tk.Button(popup, text="Confirmar", command=obter_valor)
-    botao_confirmar.pack()
+    def criar_ancestral():
+        def salvar_ancestral():
+            nome = nome_text.get("1.0", "end-1c")
+            caracteristicas = caracteristicas_text.get("1.0", "end-1c").split(',')
+            ancestral = {"Nome": f"{nome}"}
+            ancestral["AAAA"] = False
+            for caracteristica in caracteristicas:
+                ancestral[f"{caracteristica}"] = True
+            janela_ancestral.destroy()
 
-    popup.mainloop()
+        janela_ancestral = tk.Toplevel(janela_comparador)
 
-    # Use os valores digitados pelos usuários (novo_input_values) como desejar
-    for valor in novo_input_values:
-        print(valor)
+        nome_label = ttk.Label(janela_ancestral, text="Nome:")
+        nome_label.grid(row=0, column=0, padx=5, pady=5)
+
+        nome_text = tk.Text(janela_ancestral, height=1)
+        nome_text.grid(row=1, column=0, padx=5, pady=5)
+
+        caracteristicas_label = ttk.Label(janela_ancestral, text="Características separadas por vírgula:")
+        caracteristicas_label.grid(row=2, column=0, padx=5, pady=5)
+
+        caracteristicas_text = tk.Text(janela_ancestral)
+        caracteristicas_text.grid(row=3, rowspan=2, column=0, padx=5, pady=5)
+
+        btn_ok = ttk.Button(janela_ancestral, text="Ok", command=salvar_ancestral)
+        btn_ok.grid(row=9, column=0, padx=10, pady=10)
+
+    btn_criar_ancestral = ttk.Button(janela_comparador, text="Criar ancestral", command=criar_ancestral)
+    btn_criar_ancestral.pack()
 
 
 """
