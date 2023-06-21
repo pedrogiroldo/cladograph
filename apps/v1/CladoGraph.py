@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from ete3 import Tree, TreeStyle
+from ete3 import Tree, TreeStyle, NodeStyle
 
 novo_input_values = []
 
@@ -16,13 +16,16 @@ Funções janela de estilos
 leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 
+
 ts = TreeStyle()
+# Configurações de estilo padrões
 
 
+ns = NodeStyle()
+ns["hz_line_width"] = 1
+ns["vt_line_width"] = 1
 def atualizar_checkbox():
     ts.show_leaf_name = leaf_name_var.get()
-    ts.show_branch_length = True
-    ts.show_branch_support = True
     ts.mode = "c" if circular_var.get() else "r"
 
 
@@ -32,16 +35,17 @@ def abrir_janela_estilos():
         estilos_popup,
         variable=leaf_name_var,
         text="Leaf name",
-        command=atualizar_checkbox,
     )
-    btn_leaf_name.grid(row=0, column=0, padx=5, pady=5)
+    btn_leaf_name.grid(row=0, column=0, padx=0, pady=10, sticky="w")
+
     btn_circular = ttk.Checkbutton(
         estilos_popup,
         variable=circular_var,
         text="Circular",
-        command=atualizar_checkbox,
     )
-    btn_circular.grid(row=1, column=0, padx=5, pady=5)
+    btn_circular.grid(row=2, column=0, padx=0, pady=10, sticky="w")
+    btn_salvar = tk.Button(estilos_popup, text="Salvar", command=atualizar_checkbox)
+    btn_salvar.grid(row=3, column=0, padx=0, pady=5)
 
 
 """
@@ -66,6 +70,9 @@ def criar_arvore_Newick():
         # Crie a árvore a partir da entrada do usuário
         t = Tree(entrada, format=formatoNewick)
 
+        for node in t.traverse():
+            node.set_style(ns)
+
         # Exiba a árvore
         t.show(tree_style=ts)
 
@@ -87,6 +94,9 @@ def salvar_arvore():
     try:
         # Crie a árvore a partir da entrada do usuário
         t = Tree(entrada, format=formatoNewick)
+
+        for node in t.traverse():
+            node.set_style(ns)
 
         # Solicitar ao usuário o local para salvar o arquivo
         filename = filedialog.asksaveasfilename(
@@ -115,7 +125,7 @@ def criar_arvore_alternativa():
     def criar_ancestral():
         def salvar_ancestral():
             nome = nome_text.get("1.0", "end-1c")
-            caracteristicas = caracteristicas_text.get("1.0", "end-1c").split(',')
+            caracteristicas = caracteristicas_text.get("1.0", "end-1c").split(",")
             ancestral = {"Nome": f"{nome}"}
             for caracteristica in caracteristicas:
                 ancestral[f"{caracteristica}"] = True
@@ -129,7 +139,9 @@ def criar_arvore_alternativa():
         nome_text = tk.Text(janela_ancestral, height=1)
         nome_text.grid(row=1, column=0, padx=5, pady=5)
 
-        caracteristicas_label = ttk.Label(janela_ancestral, text="Características separadas por vírgula:")
+        caracteristicas_label = ttk.Label(
+            janela_ancestral, text="Características separadas por vírgula:"
+        )
         caracteristicas_label.grid(row=2, column=0, padx=5, pady=5)
 
         caracteristicas_text = tk.Text(janela_ancestral)
@@ -138,7 +150,9 @@ def criar_arvore_alternativa():
         btn_ok = ttk.Button(janela_ancestral, text="Ok", command=salvar_ancestral)
         btn_ok.grid(row=9, column=0, padx=10, pady=10)
 
-    btn_criar_ancestral = ttk.Button(janela_comparador, text="Criar ancestral", command=criar_ancestral)
+    btn_criar_ancestral = ttk.Button(
+        janela_comparador, text="Criar ancestral", command=criar_ancestral
+    )
     btn_criar_ancestral.pack()
 
 
