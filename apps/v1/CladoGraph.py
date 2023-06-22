@@ -1,9 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
+from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
 
-novo_input_values = []
 
 # inicializa a janela principal
 root = tk.Tk()
@@ -20,7 +18,6 @@ semi_circular_var = tk.BooleanVar()
 
 ts = TreeStyle()
 # Configurações de estilo padrões
-
 
 ns = NodeStyle()
 ns["hz_line_width"] = 1
@@ -54,6 +51,7 @@ def abrir_janela_estilos():
         estilos_popup.destroy()
 
     estilos_popup = tk.Toplevel(root)
+    estilos_popup.geometry("150x200")
 
     btn_leaf_name = ttk.Checkbutton(
         estilos_popup,
@@ -209,14 +207,14 @@ box_Newick = ttk.Combobox(
 box_Newick.grid(row=1, column=1, padx=5, pady=5)
 
 # Cria os botões
-btn_criar = tk.Button(root, text="Criar Árvore", command=criar_arvore_Newick)
+btn_criar = tk.Button(root, text="Vizualizar Árvore", command=criar_arvore_Newick)
 btn_criar.grid(row=2, column=1, padx=5, pady=5)
 
-btn_salvar = tk.Button(root, text="Salvar Árvore", command=salvar_arvore)
+btn_salvar = tk.Button(root, text="Baixar Árvore", command=salvar_arvore)
 btn_salvar.grid(row=3, column=1, padx=5, pady=5)
 
 btn_converter = tk.Button(
-    root, text="Converter para Newick", command=criar_arvore_alternativa
+    root, text="Comparador de caract.", command=criar_arvore_alternativa
 )
 btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
