@@ -29,14 +29,13 @@ def atualizar_checkbox():
     # ts.mode = "c" if circular_var.get() else "r"
     if semi_circular_var.get():
         ts.mode = "c"
-        ts.rotation = 90  # Rotação de 90 graus
-        ts.arc_start = -180  # Início do arco em -180 graus
-        ts.arc_span = 180  # Ângulo de 180 graus
+        ts.arc_start = -180 
+        ts.arc_span = 180
     elif circular_var.get():
         ts.mode = "c"
         ts.rotation = 0
         ts.arc_start = 0
-        ts.arc_span = 360  # Ângulo completo de 360 graus
+        ts.arc_span = 360
     else:
         ts.mode = "r"
         ts.rotation = 0
