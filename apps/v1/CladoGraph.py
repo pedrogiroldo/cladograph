@@ -48,31 +48,32 @@ def atualizar_checkbox():
 def abrir_janela_estilos():
     def fechar_janela():
         atualizar_checkbox()
-        estilos_popup.destroy()
+        popup_estilos.destroy()
 
-    estilos_popup = tk.Toplevel(root)
-    estilos_popup.geometry("150x200")
+    popup_estilos = tk.Toplevel(root)
+    popup_estilos.title("Configrações de estilo")
+    popup_estilos.geometry("150x200")
 
     btn_leaf_name = ttk.Checkbutton(
-        estilos_popup,
+        popup_estilos,
         variable=leaf_name_var,
         text="Leaf name",
     )
     btn_leaf_name.grid(row=0, column=0, padx=0, pady=10, sticky="w")
 
     btn_circular = ttk.Checkbutton(
-        estilos_popup,
+        popup_estilos,
         variable=circular_var,
         text="Circular",
     )
     btn_circular.grid(row=2, column=0, padx=0, pady=10, sticky="w")
 
     btn_semi_circular = ttk.Checkbutton(
-        estilos_popup, variable=semi_circular_var, text="Semi Circular"
+        popup_estilos, variable=semi_circular_var, text="Semi Circular"
     )
     btn_semi_circular.grid(row=3, column=0, padx=0, pady=10, sticky="w")
 
-    btn_salvar = tk.Button(estilos_popup, text="Salvar", command=fechar_janela)
+    btn_salvar = tk.Button(popup_estilos, text="Salvar", command=fechar_janela)
     btn_salvar.grid(row=100, column=0, padx=0, pady=5)
 
 
