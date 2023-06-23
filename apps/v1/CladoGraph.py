@@ -29,7 +29,7 @@ def atualizar_checkbox():
     # ts.mode = "c" if circular_var.get() else "r"
     if semi_circular_var.get():
         ts.mode = "c"
-        ts.arc_start = -180 
+        ts.arc_start = -180
         ts.arc_span = 180
     elif circular_var.get():
         ts.mode = "c"
@@ -41,7 +41,6 @@ def atualizar_checkbox():
         ts.rotation = 0
         ts.arc_start = 0
         ts.arc_span = 0
-
 
 
 def abrir_janela_estilos():
@@ -147,36 +146,61 @@ def criar_arvore_alternativa():
 
     ancestral = {}
     descendentes = {}
+    dados_comparativos = []
 
     # ancestral[nome] = {caracteristica: True for caracteristica in caracteristicas}
 
-    def criar_ancestral():
-        def salvar_ancestral():
-            nome = nome_text.get("1.0", "end-1c")
-            caracteristicas = caracteristicas_text.get("1.0", "end-1c").split(",")
-            ancestral = {"Nome": f"{nome}"}
-            for caracteristica in caracteristicas:
-                ancestral[f"{caracteristica}"] = True
-            janela_ancestral.destroy()
+    def criar_dados():
 
+        def salvar_dados_comparativos():
+            global dados_comparativos
+            dados_comparativos = input_dados.get("1.0", tk.END).replace("\n", '').split(",")
+
+        janela_dados_comparativos = tk.Toplevel()
+
+        label_criar_dados = ttk.Label(
+            janela_dados_comparativos, text="Insira as características"
+        )
+        label_criar_dados.grid(row=0, column=0, padx=5, pady=5)
+
+        input_dados = tk.Text(janela_dados_comparativos, height=5)
+        input_dados.grid(row=1, column=0, padx=5, pady=5)
+
+        label_instrucao_dados = ttk.Label(
+            janela_dados_comparativos,
+            text='As características têm que estar separadas por vírgulas sem espaços. Ex.: "carac1,carac2,carac3"',
+        )
+        label_instrucao_dados.grid(row=2, column=0, padx=10, pady=10)
+
+        btn_salvar_dados_comparativos = ttk.Button(janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos)
+        btn_salvar_dados_comparativos.grid(row=3, column=0, padx=5, pady=5)
+
+    def criar_ancestral():
         janela_ancestral = tk.Toplevel(janela_comparador)
 
+        global dados_comparativos
+
+
         nome_label = ttk.Label(janela_ancestral, text="Nome:")
-        nome_label.grid(row=0, column=0, padx=5, pady=5)
+        nome_label.pack()
 
         nome_text = tk.Text(janela_ancestral, height=1)
-        nome_text.grid(row=1, column=0, padx=5, pady=5)
+        nome_text.pack()
 
-        caracteristicas_label = ttk.Label(
-            janela_ancestral, text="Características separadas por vírgula:"
-        )
-        caracteristicas_label.grid(row=2, column=0, padx=5, pady=5)
+        dados_comparativos_nome_var = {}
 
-        caracteristicas_text = tk.Text(janela_ancestral)
-        caracteristicas_text.grid(row=3, rowspan=2, column=0, padx=5, pady=5)
+        for dado in dados_comparativos:
+            dados_comparativos_nome_var[dado] = tk.BooleanVar(value=False)
 
-        btn_ok = ttk.Button(janela_ancestral, text="Ok", command=salvar_ancestral)
-        btn_ok.grid(row=9, column=0, padx=10, pady=10)
+        for dado in dados_comparativos:
+            checkbutton = ttk.Checkbutton(janela_ancestral, text=dado, variable=dados_comparativos_nome_var[dado])
+            checkbutton.pack()
+
+
+    btn_criar_dados = ttk.Button(
+        janela_comparador, text="Adicionar dados", command=criar_dados
+    )
+    btn_criar_dados.pack()
 
     btn_criar_ancestral = ttk.Button(
         janela_comparador, text="Criar ancestral", command=criar_ancestral
