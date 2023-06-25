@@ -2,6 +2,16 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 # inicializa a janela principal
 root = tk.Tk()
@@ -214,8 +224,10 @@ Criação da janela
 ==================
 """
 
-# Cria a janela principal
 root.title("Visualizador de Árvore")
+icon_path = resource_path('icon.ico')
+root.iconbitmap(icon_path)
+
 
 # Cria o campo de entrada de texto
 entrada_label = tk.Label(root, text="Insira a árvore no formato Newick:")
