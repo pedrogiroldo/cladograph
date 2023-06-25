@@ -1,0 +1,17 @@
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+função que retorna o caminho que vamos usar no pyinstaller para que ele crie o arquivo do ícone ao usar o método --onefile.
+
+
+icon_path = resource_path('icon.ico')
+root.iconbitmap(icon_path)
+
+é assim que o ícone tkinter será criar_dados

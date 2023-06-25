@@ -2,15 +2,15 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
 
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
+# def resource_path(relative_path):
+#     """ Get absolute path to resource, works for dev and for PyInstaller """
+#     try:
+#         # PyInstaller creates a temp folder and stores path in _MEIPASS
+#         base_path = sys._MEIPASS
+#     except Exception:
+#         base_path = os.path.abspath(".")
 
-    return os.path.join(base_path, relative_path)
+#     return os.path.join(base_path, relative_path)
 
 
 # inicializa a janela principal
@@ -60,28 +60,31 @@ def abrir_janela_estilos():
 
     popup_estilos = tk.Toplevel(root)
     popup_estilos.title("Configrações de estilo")
-    popup_estilos.geometry("150x200")
+    # popup_estilos.geometry("250x250")
+
+    popup_estilos_frame = ttk.Frame(popup_estilos, width=500, height=500)
+    popup_estilos_frame.pack()
 
     btn_leaf_name = ttk.Checkbutton(
-        popup_estilos,
+        popup_estilos_frame,
         variable=leaf_name_var,
         text="Leaf name",
     )
     btn_leaf_name.grid(row=0, column=0, padx=0, pady=10, sticky="w")
 
     btn_circular = ttk.Checkbutton(
-        popup_estilos,
+        popup_estilos_frame,
         variable=circular_var,
         text="Circular",
     )
     btn_circular.grid(row=2, column=0, padx=0, pady=10, sticky="w")
 
     btn_semi_circular = ttk.Checkbutton(
-        popup_estilos, variable=semi_circular_var, text="Semi Circular"
+        popup_estilos_frame, variable=semi_circular_var, text="Semi Circular"
     )
     btn_semi_circular.grid(row=3, column=0, padx=0, pady=10, sticky="w")
 
-    btn_salvar = tk.Button(popup_estilos, text="Salvar", command=fechar_janela)
+    btn_salvar = tk.Button(popup_estilos_frame, text="Salvar", command=fechar_janela)
     btn_salvar.grid(row=100, column=0, padx=0, pady=5)
 
 
@@ -161,12 +164,14 @@ def criar_arvore_alternativa():
     # ancestral[nome] = {caracteristica: True for caracteristica in caracteristicas}
 
     def criar_dados():
-
         def salvar_dados_comparativos():
             global dados_comparativos
-            dados_comparativos = input_dados.get("1.0", tk.END).replace("\n", '').split(",")
+            dados_comparativos = (
+                input_dados.get("1.0", tk.END).replace("\n", "").split(",")
+            )
+            janela_dados_comparativos.destroy()
 
-        janela_dados_comparativos = tk.Toplevel()
+        janela_dados_comparativos = tk.Toplevel(janela_comparador)
 
         label_criar_dados = ttk.Label(
             janela_dados_comparativos, text="Insira as características"
@@ -182,14 +187,15 @@ def criar_arvore_alternativa():
         )
         label_instrucao_dados.grid(row=2, column=0, padx=10, pady=10)
 
-        btn_salvar_dados_comparativos = ttk.Button(janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos)
+        btn_salvar_dados_comparativos = ttk.Button(
+            janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos
+        )
         btn_salvar_dados_comparativos.grid(row=3, column=0, padx=5, pady=5)
 
     def criar_ancestral():
         janela_ancestral = tk.Toplevel(janela_comparador)
 
         global dados_comparativos
-
 
         nome_label = ttk.Label(janela_ancestral, text="Nome:")
         nome_label.pack()
@@ -203,9 +209,10 @@ def criar_arvore_alternativa():
             dados_comparativos_nome_var[dado] = tk.BooleanVar(value=False)
 
         for dado in dados_comparativos:
-            checkbutton = ttk.Checkbutton(janela_ancestral, text=dado, variable=dados_comparativos_nome_var[dado])
+            checkbutton = ttk.Checkbutton(
+                janela_ancestral, text=dado, variable=dados_comparativos_nome_var[dado]
+            )
             checkbutton.pack()
-
 
     btn_criar_dados = ttk.Button(
         janela_comparador, text="Adicionar dados", command=criar_dados
@@ -225,8 +232,8 @@ Criação da janela
 """
 
 root.title("Visualizador de Árvore")
-icon_path = resource_path('icon.ico')
-root.iconbitmap(icon_path)
+# icon_path = resource_path('icon.ico')
+# root.iconbitmap(icon_path)
 
 
 # Cria o campo de entrada de texto
