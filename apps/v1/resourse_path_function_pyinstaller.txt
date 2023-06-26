@@ -15,3 +15,5 @@ icon_path = resource_path('icon.ico')
 root.iconbitmap(icon_path)
 
 é assim que o ícone tkinter será criar_dados
+
+pyinstaller --onefile --noconsole --clean --icon='icon.ico' --add-data 'icon.ico;.' CladoGraph.py
