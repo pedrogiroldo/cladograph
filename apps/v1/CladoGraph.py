@@ -158,7 +158,7 @@ def criar_arvore_alternativa():
     janela_comparador = tk.Toplevel(root)
 
     ancestral = {}
-    descendentes = {}
+    descendentes = []
     dados_comparativos = []
 
     # ancestral[nome] = {caracteristica: True for caracteristica in caracteristicas}
