@@ -34,7 +34,7 @@ ns["hz_line_width"] = 1
 ns["vt_line_width"] = 1
 
 
-def atualizar_checkbox():
+def atualizar_estilos():
     ts.show_leaf_name = leaf_name_var.get()
     # ts.mode = "c" if circular_var.get() else "r"
     if semi_circular_var.get():
@@ -55,8 +55,8 @@ def atualizar_checkbox():
 
 def abrir_janela_estilos():
     def fechar_janela():
-        atualizar_checkbox()
-        popup_estilos.destroy()
+     atualizar_estilos()
+    popup_estilos.destroy()
 
     popup_estilos = tk.Toplevel(root)
     popup_estilos.title("Configrações de estilo")
