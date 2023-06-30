@@ -242,8 +242,6 @@ def criar_arvore_alternativa():
             for dado, var in dados_comparativos_nome_var.items():
                 valor = var.get()
                 descendentes[nome_descendente][dado] = valor
-            else:
-                print(descendentes[nome_descendente])
 
             janela_descendente.destroy()
 
