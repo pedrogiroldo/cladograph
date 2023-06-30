@@ -6,15 +6,15 @@ from ete3 import Tree, TreeStyle, NodeStyle
 if getattr(sys, 'frozen', False):
     import pyi_splash
 
-# def resource_path(relative_path):
-#     """ Get absolute path to resource, works for dev and for PyInstaller """
-#     try:
-#         # PyInstaller creates a temp folder and stores path in _MEIPASS
-#         base_path = sys._MEIPASS
-#     except Exception:
-#         base_path = os.path.abspath(".")
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
 
-#     return os.path.join(base_path, relative_path)
+        return os.path.join(base_path, relative_path)
 
 
 # inicializa a janela principal
@@ -309,8 +309,7 @@ Criação da janela
 """
 
 root.title("Visualizador de Árvore")
-# icon_path = resource_path('icon.ico')
-# root.iconbitmap(icon_path)
+
 
 
 # Cria o campo de entrada de texto
@@ -352,5 +351,7 @@ root.rowconfigure(1, weight=1)
 
 if getattr(sys, 'frozen', False):
     pyi_splash.close()
+    icon_path = resource_path('icon.ico')
+    root.iconbitmap(icon_path)
 
 root.mainloop()
