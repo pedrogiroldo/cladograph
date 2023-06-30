@@ -1,6 +1,10 @@
 import tkinter as tk
+import sys
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
+
+if getattr(sys, 'frozen', False):
+    import pyi_splash
 
 # def resource_path(relative_path):
 #     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -346,5 +350,7 @@ root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
 
+if getattr(sys, 'frozen', False):
+    pyi_splash.close()
 
 root.mainloop()
