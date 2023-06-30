@@ -55,7 +55,8 @@ def atualizar_estilos():
 
 def abrir_janela_estilos():
     def fechar_janela():
-     atualizar_estilos()
+        atualizar_estilos()
+
     popup_estilos.destroy()
 
     popup_estilos = tk.Toplevel(root)
@@ -154,14 +155,13 @@ def salvar_arvore():
         status_label.config(text=f"Erro: {str(e)}")
 
 
+ancestral = {}
+descendentes = {}
+dados_comparativos = []
 def criar_arvore_alternativa():
     janela_comparador = tk.Toplevel(root)
 
-    ancestral = {}
-    descendentes = []
-    dados_comparativos = []
 
-    # ancestral[nome] = {caracteristica: True for caracteristica in caracteristicas}
 
     def criar_dados():
         def salvar_dados_comparativos():
@@ -193,6 +193,15 @@ def criar_arvore_alternativa():
         btn_salvar_dados_comparativos.grid(row=3, column=0, padx=5, pady=5)
 
     def criar_ancestral():
+        def salvar_ancestral():
+            ancestral["nome"] = nome_text.get("1.0", tk.END).replace("\n", "")
+
+            for dado, var in dados_comparativos_nome_var.items():
+                valor = var.get()
+                ancestral[dado] = valor
+
+            janela_ancestral.destroy()
+
         janela_ancestral = tk.Toplevel(janela_comparador)
 
         global dados_comparativos
@@ -209,10 +218,56 @@ def criar_arvore_alternativa():
             dados_comparativos_nome_var[dado] = tk.BooleanVar(value=False)
 
         for dado in dados_comparativos:
-            checkbutton = ttk.Checkbutton(
+            Checkbutton = ttk.Checkbutton(
                 janela_ancestral, text=dado, variable=dados_comparativos_nome_var[dado]
             )
-            checkbutton.pack()
+            Checkbutton.pack()
+
+        btn_salvar_ancestral = ttk.Button(
+            janela_ancestral, text="Salvar", command=salvar_ancestral
+        )
+        btn_salvar_ancestral.pack()
+
+
+    def adicionar_descendente():
+        def salvar_descendente():
+            nome_descendente = nome_text.get("1.0", tk.END).replace("\n", "")
+
+            descendentes[nome_descendente] = {"nome": nome_descendente}
+
+            for dado, var in dados_comparativos_nome_var.items():
+                valor = var.get()
+                descendentes[nome_descendente][dado] = valor
+            else:
+                print(descendentes[nome_descendente])
+
+            janela_descendente.destroy()
+
+        janela_descendente = tk.Toplevel(janela_comparador)
+
+        global dados_comparativos
+
+        nome_label = ttk.Label(janela_descendente, text="Nome:")
+        nome_label.pack()
+
+        nome_text = tk.Text(janela_descendente, height=1)
+        nome_text.pack()
+
+        dados_comparativos_nome_var = {}
+
+        for dado in dados_comparativos:
+            dados_comparativos_nome_var[dado] = tk.BooleanVar(value=False)
+
+        for dado in dados_comparativos:
+            Checkbutton = ttk.Checkbutton(
+                janela_descendente, text=dado, variable=dados_comparativos_nome_var[dado]
+            )
+            Checkbutton.pack()
+
+        btn_salvar_descendente = ttk.Button(
+            janela_descendente, text="Salvar", command=salvar_descendente
+        )
+        btn_salvar_descendente.pack()
 
     btn_criar_dados = ttk.Button(
         janela_comparador, text="Adicionar dados", command=criar_dados
@@ -223,6 +278,24 @@ def criar_arvore_alternativa():
         janela_comparador, text="Criar ancestral", command=criar_ancestral
     )
     btn_criar_ancestral.pack()
+
+    btn_adicionar_descendente = ttk.Button(
+        janela_comparador, text="Adicionar descendente", command=adicionar_descendente
+    )
+    btn_adicionar_descendente.pack()
+
+
+    # recursos dev
+
+    def testar():
+        global ancestral
+        global descendentes
+        global dados_comparativos
+        print(ancestral)
+        print(descendentes)
+        print(dados_comparativos)
+    btn_dev = ttk.Button(janela_comparador, text='dev', command=testar)
+    btn_dev.pack()
 
 
 """
