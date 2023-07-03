@@ -98,17 +98,29 @@ Executa as funções principais (donwload e mostrar)
 ==================================================
 """
 
-
+    
 def criar_arvore_Newick():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
+    
+    formatoNewick = None
 
-    formatoNewick = int(box_Newick.get())
+    if box_Newick.get():
+      formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
     if not entrada:
         status_label.config(text="Erro: insira uma árvore válida")
         return
+    
+    '''
+    Para mostrar o erro caso não tenha nenhum newick no input, porem se o valor for 0, ele retorna falso e o erro aparece, por isso antes temos q verificar antes se é 0
+    '''
+    
+    if formatoNewick != 0:
+        if not formatoNewick:
+            status_label.config(text="Erro: insira um tipo de Newick")
+            return
 
     try:
         # Crie a árvore a partir da entrada do usuário
