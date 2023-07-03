@@ -60,8 +60,7 @@ def atualizar_estilos():
 def abrir_janela_estilos():
     def fechar_janela():
         atualizar_estilos()
-
-    popup_estilos.destroy()
+        popup_estilos.destroy()
 
     popup_estilos = tk.Toplevel(root)
     popup_estilos.title("Configrações de estilo")
@@ -319,23 +318,23 @@ entrada_text.grid(row=1, rowspan=6, column=0, padx=5, pady=5)
 
 # Cria o seletor de versão do newick
 box_Newick = ttk.Combobox(
-    root, width=5, state="readonly", values=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+    root, width=10, state="readonly", values=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 100)
 )
 box_Newick.grid(row=1, column=1, padx=5, pady=5)
 
 # Cria os botões
-btn_criar = tk.Button(root, text="Vizualizar Árvore", command=criar_arvore_Newick)
+btn_criar = tk.Button(root, text="Vizualizar Árvore", command=criar_arvore_Newick, width=20)
 btn_criar.grid(row=2, column=1, padx=5, pady=5)
 
-btn_salvar = tk.Button(root, text="Baixar Árvore", command=salvar_arvore)
+btn_salvar = tk.Button(root, text="Baixar Árvore", command=salvar_arvore, width=20)
 btn_salvar.grid(row=3, column=1, padx=5, pady=5)
 
 btn_converter = tk.Button(
-    root, text="Comparador de caract.", command=criar_arvore_alternativa
+    root, text="Comparador de caract.", command=criar_arvore_alternativa, width=20
 )
 btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
-btn_estilos = tk.Button(root, text="Configurar estilos", command=abrir_janela_estilos)
+btn_estilos = tk.Button(root, text="Configurar estilos", command=abrir_janela_estilos, width=20)
 btn_estilos.grid(row=6, column=1, padx=5, pady=5)
 
 # Cria a etiqueta de status
