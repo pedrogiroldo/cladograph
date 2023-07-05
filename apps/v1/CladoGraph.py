@@ -28,6 +28,9 @@ Funções janela de estilos
 leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 semi_circular_var = tk.BooleanVar()
+forcar_topologia_var = tk.BooleanVar()
+mostrar_escala_var =tk.BooleanVar(value=True)
+mostrar_comprimento_ramos_var = tk.BooleanVar()
 
 
 ts = TreeStyle()
@@ -40,7 +43,9 @@ ns["vt_line_width"] = 1
 
 def atualizar_estilos():
     ts.show_leaf_name = leaf_name_var.get()
-    # ts.mode = "c" if circular_var.get() else "r"
+    ts.force_topology = forcar_topologia_var.get()
+    ts.show_scale = mostrar_escala_var.get()
+    ts.show_branch_length = mostrar_comprimento_ramos_var.get()
     if semi_circular_var.get():
         ts.mode = "c"
         ts.arc_start = -180
@@ -59,38 +64,57 @@ def atualizar_estilos():
 
 def abrir_janela_estilos():
     def fechar_janela():
-        atualizar_estilos()
-        popup_estilos.destroy()
+        if semi_circular_var.get() != circular_var.get() or semi_circular_var.get() == False and circular_var.get() == False:
+            atualizar_estilos()
+            popup_estilos.destroy()
+        elif semi_circular_var.get() == circular_var.get():
+            label_erro.config(text="Escolha entre circular e semi circular")
+            label_erro.grid(row=200, column=0)
+
 
     popup_estilos = tk.Toplevel(root)
     popup_estilos.title("Configrações de estilo")
-    # popup_estilos.geometry("250x250")
 
-    popup_estilos_frame = ttk.Frame(popup_estilos, width=500, height=500)
-    popup_estilos_frame.pack()
+    popup_estilos_frame = ttk.Frame(popup_estilos, padding=20)
+    popup_estilos_frame.grid(row=0, column=0)
+
+    style = ttk.Style()
+    style.configure("TCheckbutton", font=("Arial", 13))
+
+    grid_style = {'padx':10, 'pady':7, 'stick':"w"}
 
     btn_leaf_name = ttk.Checkbutton(
         popup_estilos_frame,
         variable=leaf_name_var,
-        text="Leaf name",
+        text="Mostrar nome da folha",
     )
-    btn_leaf_name.grid(row=0, column=0, padx=0, pady=10, sticky="w")
+    btn_leaf_name.grid(row=0, column=0, **grid_style)
 
     btn_circular = ttk.Checkbutton(
         popup_estilos_frame,
         variable=circular_var,
-        text="Circular",
+        text="Circular", style='TCheckbutton'
     )
-    btn_circular.grid(row=2, column=0, padx=0, pady=10, sticky="w")
+    btn_circular.grid(row=2, column=0, **grid_style)
 
     btn_semi_circular = ttk.Checkbutton(
-        popup_estilos_frame, variable=semi_circular_var, text="Semi Circular"
+        popup_estilos_frame, variable=semi_circular_var, text="Semi Circular", style='TCheckbutton'
     )
-    btn_semi_circular.grid(row=3, column=0, padx=0, pady=10, sticky="w")
+    btn_semi_circular.grid(row=3, column=0, **grid_style)
+
+    btn_forcar_topologia = ttk.Checkbutton(popup_estilos_frame, variable=forcar_topologia_var, text="Forçar topologia", style='TCheckbutton')
+    btn_forcar_topologia.grid(row=4, column=0, **grid_style)
+
+    btn_mostrar_escala = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_escala_var, text='Mostrar escala')
+    btn_mostrar_escala.grid(row=5, column=0, **grid_style)
+
+    btn_mostrar_comprimento_ramos = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_comprimento_ramos_var,text='Mostrar o comprimento dos ramos', style='TCheckbutton')
+    btn_mostrar_comprimento_ramos.grid(row=5, column=0, **grid_style)
 
     btn_salvar = tk.Button(popup_estilos_frame, text="Salvar", command=fechar_janela)
-    btn_salvar.grid(row=100, column=0, padx=0, pady=5)
+    btn_salvar.grid(row=100, column=0, padx=15, pady=5)
 
+    label_erro = ttk.Label(popup_estilos_frame, text='', foreground='red')
 
 """
 ==================================================
@@ -173,7 +197,7 @@ def salvar_arvore():
 ancestral = {}
 descendentes = {}
 dados_comparativos = []
-def criar_arvore_alternativa():
+def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
 
 
@@ -342,7 +366,7 @@ btn_salvar = tk.Button(root, text="Baixar Árvore", command=salvar_arvore, width
 btn_salvar.grid(row=3, column=1, padx=5, pady=5)
 
 btn_converter = tk.Button(
-    root, text="Comparador de caract.", command=criar_arvore_alternativa, width=20
+    root, text="Comparador de caract.", command=criar_arvore_a_partir_da_comparacao, width=20
 )
 btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
