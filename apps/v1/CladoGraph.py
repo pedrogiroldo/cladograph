@@ -81,35 +81,35 @@ def abrir_janela_estilos():
     style = ttk.Style()
     style.configure("TCheckbutton", font=("Arial", 13))
 
-    grid_style = {'padx':10, 'pady':7, 'stick':"w"}
+    grid_style_estilos = {'padx':10, 'pady':7, 'stick':"w"}
 
     btn_leaf_name = ttk.Checkbutton(
         popup_estilos_frame,
         variable=leaf_name_var,
         text="Mostrar nome da folha",
     )
-    btn_leaf_name.grid(row=0, column=0, **grid_style)
+    btn_leaf_name.grid(row=0, column=0, **grid_style_estilos)
 
     btn_circular = ttk.Checkbutton(
         popup_estilos_frame,
         variable=circular_var,
         text="Circular", style='TCheckbutton'
     )
-    btn_circular.grid(row=2, column=0, **grid_style)
+    btn_circular.grid(row=2, column=0, **grid_style_estilos)
 
     btn_semi_circular = ttk.Checkbutton(
         popup_estilos_frame, variable=semi_circular_var, text="Semi Circular", style='TCheckbutton'
     )
-    btn_semi_circular.grid(row=3, column=0, **grid_style)
+    btn_semi_circular.grid(row=3, column=0, **grid_style_estilos)
 
     btn_forcar_topologia = ttk.Checkbutton(popup_estilos_frame, variable=forcar_topologia_var, text="Forçar topologia", style='TCheckbutton')
-    btn_forcar_topologia.grid(row=4, column=0, **grid_style)
+    btn_forcar_topologia.grid(row=4, column=0, **grid_style_estilos)
 
     btn_mostrar_escala = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_escala_var, text='Mostrar escala')
-    btn_mostrar_escala.grid(row=5, column=0, **grid_style)
+    btn_mostrar_escala.grid(row=5, column=0, **grid_style_estilos)
 
     btn_mostrar_comprimento_ramos = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_comprimento_ramos_var,text='Mostrar o comprimento dos ramos', style='TCheckbutton')
-    btn_mostrar_comprimento_ramos.grid(row=5, column=0, **grid_style)
+    btn_mostrar_comprimento_ramos.grid(row=5, column=0, **grid_style_estilos)
 
     btn_salvar = tk.Button(popup_estilos_frame, text="Salvar", command=fechar_janela)
     btn_salvar.grid(row=100, column=0, padx=15, pady=5)
@@ -200,6 +200,11 @@ dados_comparativos = []
 def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
 
+    grid_style_comparador = {'padx': '5', 'pady': '3'}
+    
+    style = ttk.Style()
+    style.configure("TButton", font=("Arial", 13), width=20)
+
 
 
     def criar_dados():
@@ -227,7 +232,7 @@ def criar_arvore_a_partir_da_comparacao():
         label_instrucao_dados.grid(row=2, column=0, padx=10, pady=10)
 
         btn_salvar_dados_comparativos = ttk.Button(
-            janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos
+            janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos, style='TButton'
         )
         btn_salvar_dados_comparativos.grid(row=3, column=0, padx=5, pady=5)
 
@@ -309,17 +314,20 @@ def criar_arvore_a_partir_da_comparacao():
     btn_criar_dados = ttk.Button(
         janela_comparador, text="Adicionar dados", command=criar_dados
     )
-    btn_criar_dados.pack()
+    btn_criar_dados.grid(row=0, column=0, **grid_style_comparador)
 
     btn_criar_ancestral = ttk.Button(
         janela_comparador, text="Criar ancestral", command=criar_ancestral
     )
-    btn_criar_ancestral.pack()
+    btn_criar_ancestral.grid(row=1, column=0, **grid_style_comparador)
 
     btn_adicionar_descendente = ttk.Button(
         janela_comparador, text="Adicionar descendente", command=adicionar_descendente
     )
-    btn_adicionar_descendente.pack()
+    btn_adicionar_descendente.grid(row=2, column=0, **grid_style_comparador)
+
+    frame_comparador = ttk.Frame(janela_comparador)
+    frame_comparador.grid(row=0, rowspan=200, column=1, **grid_style_comparador)
 
 
     # recursos dev
@@ -332,7 +340,7 @@ def criar_arvore_a_partir_da_comparacao():
         print(descendentes)
         print(dados_comparativos)
     btn_dev = ttk.Button(janela_comparador, text='dev', command=testar)
-    btn_dev.pack()
+    btn_dev.grid(row=200, column=0, **grid_style_comparador)
 
 
 """
