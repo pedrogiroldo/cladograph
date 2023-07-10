@@ -203,7 +203,8 @@ def criar_arvore_a_partir_da_comparacao():
     grid_style_comparador = {'padx': '5', 'pady': '3'}
     
     style = ttk.Style()
-    style.configure("TButton", font=("Arial", 13), width=20)
+    style.configure("Button.TButton", font=("Arial", 13), width=20)
+    style.configure('Label.TLabel', font=('Arial', 13))
 
 
 
@@ -213,6 +214,8 @@ def criar_arvore_a_partir_da_comparacao():
             dados_comparativos = (
                 input_dados.get("1.0", tk.END).replace("\n", "").split(",")
             )
+            label_dados_criados.config(text=f"{input_dados.get('1.0', tk.END).replace('\n', '').replace(',', ', ')}")
+
             janela_dados_comparativos.destroy()
 
         janela_dados_comparativos = tk.Toplevel(janela_comparador)
@@ -243,6 +246,8 @@ def criar_arvore_a_partir_da_comparacao():
             for dado, var in dados_comparativos_nome_var.items():
                 valor = var.get()
                 ancestral[dado] = valor
+
+            label_ancestral_criado.config(text=f"Ancestral: {ancestral['nome']}")
 
             janela_ancestral.destroy()
 
@@ -283,6 +288,7 @@ def criar_arvore_a_partir_da_comparacao():
                 valor = var.get()
                 descendentes[nome_descendente][dado] = valor
 
+            label_descendentes_criados.config(text=f"Descendentes: {len(descendentes)}")
             janela_descendente.destroy()
 
         janela_descendente = tk.Toplevel(janela_comparador)
@@ -312,23 +318,31 @@ def criar_arvore_a_partir_da_comparacao():
         btn_salvar_descendente.pack()
 
     btn_criar_dados = ttk.Button(
-        janela_comparador, text="Adicionar dados", command=criar_dados
+        janela_comparador, text="Adicionar dados", command=criar_dados, style='Button.TButton'
     )
     btn_criar_dados.grid(row=0, column=0, **grid_style_comparador)
 
     btn_criar_ancestral = ttk.Button(
-        janela_comparador, text="Criar ancestral", command=criar_ancestral
+        janela_comparador, text="Criar ancestral", command=criar_ancestral, style='Button.TButton'
     )
     btn_criar_ancestral.grid(row=1, column=0, **grid_style_comparador)
 
     btn_adicionar_descendente = ttk.Button(
-        janela_comparador, text="Adicionar descendente", command=adicionar_descendente
+        janela_comparador, text="Adicionar descendente", command=adicionar_descendente, style='Button.TButton'
     )
     btn_adicionar_descendente.grid(row=2, column=0, **grid_style_comparador)
 
-    frame_comparador = ttk.Frame(janela_comparador)
-    frame_comparador.grid(row=0, rowspan=200, column=1, **grid_style_comparador)
+    frame_comparador = ttk.Frame(janela_comparador, relief='solid', borderwidth=5)
+    frame_comparador.grid(row=0, rowspan=300, column=1, sticky='ns', **grid_style_comparador)
 
+    label_dados_criados = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_dados_criados.grid(row=0, column=0, **grid_style_comparador)
+
+    label_ancestral_criado = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_ancestral_criado.grid(row=1, column=0, **grid_style_comparador)
+    
+    label_descendentes_criados = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_descendentes_criados.grid(row=2, column=0, **grid_style_comparador)
 
     # recursos dev
 
@@ -339,7 +353,7 @@ def criar_arvore_a_partir_da_comparacao():
         print(ancestral)
         print(descendentes)
         print(dados_comparativos)
-    btn_dev = ttk.Button(janela_comparador, text='dev', command=testar)
+    btn_dev = ttk.Button(janela_comparador, text='dev', command=testar, style='Button.TButton')
     btn_dev.grid(row=200, column=0, **grid_style_comparador)
 
 
