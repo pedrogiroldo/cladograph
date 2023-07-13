@@ -214,7 +214,8 @@ def criar_arvore_a_partir_da_comparacao():
             dados_comparativos = (
                 input_dados.get("1.0", tk.END).replace("\n", "").split(",")
             )
-            label_dados_criados.config(text=f"{input_dados.get('1.0', tk.END).replace('\n', '').replace(',', ', ')}")
+            dados_criados = input_dados.get('1.0', tk.END).replace('\n', '').replace(',', ', ')
+            label_dados_criados.config(text=dados_criados)
 
             janela_dados_comparativos.destroy()
 
@@ -287,6 +288,10 @@ def criar_arvore_a_partir_da_comparacao():
             for dado, var in dados_comparativos_nome_var.items():
                 valor = var.get()
                 descendentes[nome_descendente][dado] = valor
+            
+            descendentes[nome_descendente]["Sin"] = 0
+            descendentes[nome_descendente]["Ples"] = 0
+            descendentes[nome_descendente]["Apo"] = 0
 
             label_descendentes_criados.config(text=f"Descendentes: {len(descendentes)}")
             janela_descendente.destroy()
@@ -317,6 +322,40 @@ def criar_arvore_a_partir_da_comparacao():
         )
         btn_salvar_descendente.pack()
 
+
+
+    def gerar_newick ():
+        dados_comparativos_sin_apo = {}
+
+        for dado in dados_comparativos:
+            dados_comparativos_sin_apo[dado] = 0
+
+
+        for descendente, dado in descendentes.items():
+            for caracteristica in dados_comparativos:
+                    if ancestral[caracteristica] == True and ancestral[caracteristica] == descendentes[descendente][caracteristica]:
+                        descendentes[descendente]["Ples"] += 1
+                    else:
+                        if descendentes[descendente][caracteristica] == True:
+                            dados_comparativos_sin_apo[caracteristica] += 1
+
+
+        for descendente, dado in descendentes.items():
+            for caracteristica in dados_comparativos:
+                    if ancestral[caracteristica] == True and ancestral[caracteristica] == descendentes[descendente][caracteristica]:
+                        descendentes[descendente]["Ples"] += 0
+                    elif dados_comparativos_sin_apo[caracteristica] > 1:
+                        descendentes[descendente]['Sin'] += 1
+                    else:
+                        if descendentes[descendente][caracteristica] == True:
+                            descendentes[descendente]['Apo'] += 1
+
+        print(descendentes)
+        print(dados_comparativos_sin_apo)
+
+
+
+
     btn_criar_dados = ttk.Button(
         janela_comparador, text="Adicionar dados", command=criar_dados, style='Button.TButton'
     )
@@ -332,29 +371,32 @@ def criar_arvore_a_partir_da_comparacao():
     )
     btn_adicionar_descendente.grid(row=2, column=0, **grid_style_comparador)
 
+    btn_gerar_newick = ttk.Button(janela_comparador, text="Gerar Newick", command=gerar_newick, style='Button.TButton')
+    btn_gerar_newick.grid(row=3, column=0, **grid_style_comparador)
+
     frame_comparador = ttk.Frame(janela_comparador, relief='solid', borderwidth=5)
     frame_comparador.grid(row=0, rowspan=300, column=1, sticky='ns', **grid_style_comparador)
 
     label_dados_criados = ttk.Label(frame_comparador, text='', style='Label.TLabel')
     label_dados_criados.grid(row=0, column=0, **grid_style_comparador)
 
-    label_ancestral_criado = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_ancestral_criado = ttk.Label(frame_comparador, text='Ancestral:', style='Label.TLabel')
     label_ancestral_criado.grid(row=1, column=0, **grid_style_comparador)
     
-    label_descendentes_criados = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_descendentes_criados = ttk.Label(frame_comparador, text='Descesndentes:', style='Label.TLabel')
     label_descendentes_criados.grid(row=2, column=0, **grid_style_comparador)
 
     # recursos dev
 
-    def testar():
-        global ancestral
-        global descendentes
-        global dados_comparativos
-        print(ancestral)
-        print(descendentes)
-        print(dados_comparativos)
-    btn_dev = ttk.Button(janela_comparador, text='dev', command=testar, style='Button.TButton')
-    btn_dev.grid(row=200, column=0, **grid_style_comparador)
+    # def testar():
+    #     global ancestral
+    #     global descendentes
+    #     global dados_comparativos
+    #     print(ancestral)
+    #     print(descendentes)
+    #     print(dados_comparativos)
+    # btn_dev = ttk.Button(janela_comparador, text='dev', command=testar, style='Button.TButton')
+    # btn_dev.grid(row=200, column=0, **grid_style_comparador)
 
 
 """
@@ -363,7 +405,7 @@ Criação da janela
 ==================
 """
 
-root.title("Visualizador de Árvore")
+root.title("CladoGraph")
 
 
 
