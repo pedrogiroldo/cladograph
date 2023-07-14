@@ -327,6 +327,8 @@ def criar_arvore_a_partir_da_comparacao():
     def gerar_newick ():
         dados_comparativos_sin_apo = {}
 
+        newick = '('
+
         for dado in dados_comparativos:
             dados_comparativos_sin_apo[dado] = 0
 
@@ -350,9 +352,20 @@ def criar_arvore_a_partir_da_comparacao():
                         if descendentes[descendente][caracteristica] == True:
                             descendentes[descendente]['Apo'] += 1
 
-        print(descendentes)
-        print(dados_comparativos_sin_apo)
+        descendentes_ordenados = sorted(descendentes.items(), key=lambda descendente: (-descendente[1]['Sin'], -descendente[1]['Ples'], -descendente[1]['Apo']))
 
+        for descendente, dados in descendentes_ordenados:
+            newick += f'{descendente},('
+        else:
+            newick = newick[:-2]
+            for descendente, dados in descendentes_ordenados:
+                newick += ')'
+            else:
+                newick = newick[:-1]
+
+
+        newick += ');'
+        print(newick)
 
 
 
