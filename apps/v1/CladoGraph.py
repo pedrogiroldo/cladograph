@@ -1,5 +1,6 @@
 import tkinter as tk
 import sys
+import os
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
 
@@ -73,6 +74,9 @@ def abrir_janela_estilos():
 
 
     popup_estilos = tk.Toplevel(root)
+    if getattr(sys, 'frozen', False):
+        icon_path = resource_path('icon.ico')
+        popup_estilos.iconbitmap(icon_path)
     popup_estilos.title("Configrações de estilo")
 
     popup_estilos_frame = ttk.Frame(popup_estilos, padding=20)
@@ -163,7 +167,7 @@ def criar_arvore_Newick():
 
 def salvar_arvore():
     # Obtenha a entrada do usuário
-    entrada = entrada_text.get("1.0", tk.END).strip()
+    entrada = entrada
     formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
@@ -199,6 +203,9 @@ descendentes = {}
 dados_comparativos = []
 def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
+    if getattr(sys, 'frozen', False):
+        icon_path = resource_path('icon.ico')
+        janela_comparador.iconbitmap(icon_path)
 
     grid_style_comparador = {'padx': '5', 'pady': '3'}
     
@@ -220,6 +227,9 @@ def criar_arvore_a_partir_da_comparacao():
             janela_dados_comparativos.destroy()
 
         janela_dados_comparativos = tk.Toplevel(janela_comparador)
+        if getattr(sys, 'frozen', False):
+            icon_path = resource_path('icon.ico')
+            janela_dados_comparativos.iconbitmap(icon_path)
 
         label_criar_dados = ttk.Label(
             janela_dados_comparativos, text="Insira as características"
@@ -253,6 +263,9 @@ def criar_arvore_a_partir_da_comparacao():
             janela_ancestral.destroy()
 
         janela_ancestral = tk.Toplevel(janela_comparador)
+        if getattr(sys, 'frozen', False):
+            icon_path = resource_path('icon.ico')
+            janela_ancestral.iconbitmap(icon_path)
 
         global dados_comparativos
 
@@ -297,6 +310,9 @@ def criar_arvore_a_partir_da_comparacao():
             janela_descendente.destroy()
 
         janela_descendente = tk.Toplevel(janela_comparador)
+        if getattr(sys, 'frozen', False):
+            icon_path = resource_path('icon.ico')
+            janela_descendente.iconbitmap(icon_path)
 
         global dados_comparativos
 
@@ -365,7 +381,44 @@ def criar_arvore_a_partir_da_comparacao():
 
 
         newick += ');'
-        print(newick)
+        
+        def vizualizar_arvore():
+            t = Tree(newick, format=0)
+
+            for node in t.traverse():
+                node.set_style(ns)
+
+            t.show(tree_style=ts)
+
+        def salvar_arvore():
+            t = Tree(newick, format=0)
+
+            for node in t.traverse():
+                node.set_style(ns)
+
+            # Solicitar ao usuário o local para salvar o arquivo
+            filename = filedialog.asksaveasfilename(
+                defaultextension=".png",
+                filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")],
+            )
+
+            if filename:
+                # Salvar o cladograma no local escolhido pelo usuário
+                t.render(filename, w=4000, units="px", tree_style=ts)
+                status_label.config(text="Árvore salva com sucesso!")
+
+        btn_gerar_newick.grid_forget()
+
+        frame_vizualizar_salvar = ttk.Frame(janela_comparador)
+        frame_vizualizar_salvar.grid(row=3, column=0, **grid_style_comparador)
+
+
+        btn_visualizar_arvore_gerada = ttk.Button(frame_vizualizar_salvar, text='Visualizar', command=vizualizar_arvore)
+        btn_visualizar_arvore_gerada.grid(row=0, column=0)
+
+        btn_salvar_arvore_gerada = ttk.Button(frame_vizualizar_salvar, text='Salvar', command=salvar_arvore)
+        btn_salvar_arvore_gerada.grid(row=0, column=1)
+
 
 
 
@@ -384,7 +437,7 @@ def criar_arvore_a_partir_da_comparacao():
     )
     btn_adicionar_descendente.grid(row=2, column=0, **grid_style_comparador)
 
-    btn_gerar_newick = ttk.Button(janela_comparador, text="Gerar Newick", command=gerar_newick, style='Button.TButton')
+    btn_gerar_newick = ttk.Button(janela_comparador, text="Gerar árvore", command=gerar_newick, style='Button.TButton')
     btn_gerar_newick.grid(row=3, column=0, **grid_style_comparador)
 
     frame_comparador = ttk.Frame(janela_comparador, relief='solid', borderwidth=5)
@@ -423,7 +476,7 @@ root.title("CladoGraph")
 
 
 # Cria o campo de entrada de texto
-entrada_label = tk.Label(root, text="Insira a árvore no formato Newick:")
+entrada_label = tk.Label(root, text="Insira a árvore no formato Newick ou use o comparador de características:")
 entrada_label.grid(row=0, column=0, padx=5, pady=5)
 
 entrada_text = tk.Text(root, height=5)
