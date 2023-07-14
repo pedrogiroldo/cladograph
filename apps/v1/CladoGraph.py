@@ -452,6 +452,13 @@ def criar_arvore_a_partir_da_comparacao():
     label_descendentes_criados = ttk.Label(frame_comparador, text='Descesndentes:', style='Label.TLabel')
     label_descendentes_criados.grid(row=2, column=0, **grid_style_comparador)
 
+    if ancestral:
+        label_ancestral_criado.config(text=f"Ancestral: {ancestral['nome']}")
+    if descendentes:
+        label_descendentes_criados.config(text=f"Descendentes: {len(descendentes)}")
+    if dados_comparativos:
+        label_dados_criados.config(label_dados_criados.config(text=f'{dados_comparativos}'.replace('\n', '').replace(',', ', ').replace("'", '').replace('[', '').replace(']', '')))
+
     # recursos dev
 
     # def testar():
