@@ -203,6 +203,9 @@ descendentes = {}
 dados_comparativos = []
 def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
+
+    janela_comparador.resizable(False, False)
+    
     if getattr(sys, 'frozen', False):
         icon_path = resource_path('icon.ico')
         janela_comparador.iconbitmap(icon_path)
