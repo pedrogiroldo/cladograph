@@ -167,7 +167,7 @@ def criar_arvore_Newick():
 
 def salvar_arvore():
     # Obtenha a entrada do usuário
-    entrada = entrada
+    entrada = entrada_text.get("1.0", tk.END).strip()
     formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
@@ -185,7 +185,7 @@ def salvar_arvore():
         # Solicitar ao usuário o local para salvar o arquivo
         filename = filedialog.asksaveasfilename(
             defaultextension=".png",
-            filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")],
+            filetypes=[("JPEG Image", "*.jpeg"), ("All Files", "*.*")],
         )
 
         if filename:
@@ -205,7 +205,7 @@ def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
 
     janela_comparador.resizable(False, False)
-    
+
     if getattr(sys, 'frozen', False):
         icon_path = resource_path('icon.ico')
         janela_comparador.iconbitmap(icon_path)
