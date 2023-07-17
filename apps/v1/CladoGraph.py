@@ -422,6 +422,16 @@ def criar_arvore_a_partir_da_comparacao():
         btn_salvar_arvore_gerada = ttk.Button(frame_vizualizar_salvar, text='Salvar', command=salvar_arvore)
         btn_salvar_arvore_gerada.grid(row=0, column=1)
 
+        newick_gerado = tk.Text(frame_comparador, height=1, width=15)
+        newick_gerado.insert('1.0', f'{newick}')
+        newick_gerado.grid(row=3, column=0, **grid_style_comparador)
+
+        def copiar_newick():
+            janela_comparador.clipboard_clear()
+            janela_comparador.clipboard_append(newick)
+        btn_copiar_newick = ttk.Button(frame_comparador, text='Copiar newick', command=copiar_newick)
+        btn_copiar_newick.grid(row=4, column=0,**grid_style_comparador)
+
 
 
 
