@@ -371,7 +371,7 @@ def criar_arvore_a_partir_da_comparacao():
                         if descendentes[descendente][caracteristica] == True:
                             descendentes[descendente]['Apo'] += 1
 
-        descendentes_ordenados = sorted(descendentes.items(), key=lambda descendente: (-descendente[1]['Sin'], -descendente[1]['Ples'], -descendente[1]['Apo']))
+        descendentes_ordenados = sorted(descendentes.items(), key=lambda descendente: (-descendente[1]['Sin'], descendente[1]['Ples'], -descendente[1]['Apo']))
 
         for descendente, dados in descendentes_ordenados:
             newick += f'{descendente},('
