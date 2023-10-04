@@ -3,7 +3,7 @@ import sys
 import os
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
-import resources
+import modules.generatePDF as generatePDF
 
 if getattr(sys, "frozen", False):
     import pyi_splash
