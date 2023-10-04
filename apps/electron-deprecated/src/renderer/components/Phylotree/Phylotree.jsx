@@ -1,6 +1,7 @@
 import { phylotree } from 'phylotree';
 import { useRef, useLayoutEffect } from 'react';
 import $ from 'jquery';
+import './style.css';
 
 export default function Phylotree() {
   const treeContainer = useRef();
