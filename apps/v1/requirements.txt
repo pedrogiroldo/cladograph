@@ -1,6 +1,2 @@
-ete3
-six
-numpy
-tk
-PyQt5
-Pillow
+ete3==3.1.3
+fpdf==1.7.2

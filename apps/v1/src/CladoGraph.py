@@ -3,12 +3,13 @@ import sys
 import os
 from tkinter import ttk, filedialog
 from ete3 import Tree, TreeStyle, NodeStyle
+import resources
 
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
     import pyi_splash
 
     def resource_path(relative_path):
-        """ Get absolute path to resource, works for dev and for PyInstaller """
+        """Get absolute path to resource, works for dev and for PyInstaller"""
         try:
             # PyInstaller creates a temp folder and stores path in _MEIPASS
             base_path = sys._MEIPASS
@@ -30,7 +31,7 @@ leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 semi_circular_var = tk.BooleanVar()
 forcar_topologia_var = tk.BooleanVar()
-mostrar_escala_var =tk.BooleanVar(value=True)
+mostrar_escala_var = tk.BooleanVar(value=True)
 mostrar_comprimento_ramos_var = tk.BooleanVar()
 
 
@@ -65,17 +66,20 @@ def atualizar_estilos():
 
 def abrir_janela_estilos():
     def fechar_janela():
-        if semi_circular_var.get() != circular_var.get() or semi_circular_var.get() == False and circular_var.get() == False:
+        if (
+            semi_circular_var.get() != circular_var.get()
+            or semi_circular_var.get() == False
+            and circular_var.get() == False
+        ):
             atualizar_estilos()
             popup_estilos.destroy()
         elif semi_circular_var.get() == circular_var.get():
             label_erro.config(text="Escolha entre circular e semi circular")
             label_erro.grid(row=200, column=0)
 
-
     popup_estilos = tk.Toplevel(root)
-    if getattr(sys, 'frozen', False):
-        icon_path = resource_path('icon.ico')
+    if getattr(sys, "frozen", False):
+        icon_path = resource_path("icon.ico")
         popup_estilos.iconbitmap(icon_path)
     popup_estilos.title("Configrações de estilo")
 
@@ -85,7 +89,7 @@ def abrir_janela_estilos():
     style = ttk.Style()
     style.configure("TCheckbutton", font=("Arial", 13))
 
-    grid_style_estilos = {'padx':10, 'pady':7, 'stick':"w"}
+    grid_style_estilos = {"padx": 10, "pady": 7, "stick": "w"}
 
     btn_leaf_name = ttk.Checkbutton(
         popup_estilos_frame,
@@ -97,28 +101,45 @@ def abrir_janela_estilos():
     btn_circular = ttk.Checkbutton(
         popup_estilos_frame,
         variable=circular_var,
-        text="Circular", style='TCheckbutton'
+        text="Circular",
+        style="TCheckbutton",
     )
     btn_circular.grid(row=2, column=0, **grid_style_estilos)
 
     btn_semi_circular = ttk.Checkbutton(
-        popup_estilos_frame, variable=semi_circular_var, text="Semi Circular", style='TCheckbutton'
+        popup_estilos_frame,
+        variable=semi_circular_var,
+        text="Semi Circular",
+        style="TCheckbutton",
     )
     btn_semi_circular.grid(row=3, column=0, **grid_style_estilos)
 
-    btn_forcar_topologia = ttk.Checkbutton(popup_estilos_frame, variable=forcar_topologia_var, text="Forçar topologia", style='TCheckbutton')
+    btn_forcar_topologia = ttk.Checkbutton(
+        popup_estilos_frame,
+        variable=forcar_topologia_var,
+        text="Forçar topologia",
+        style="TCheckbutton",
+    )
     btn_forcar_topologia.grid(row=4, column=0, **grid_style_estilos)
 
-    btn_mostrar_escala = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_escala_var, text='Mostrar escala')
+    btn_mostrar_escala = ttk.Checkbutton(
+        popup_estilos_frame, variable=mostrar_escala_var, text="Mostrar escala"
+    )
     btn_mostrar_escala.grid(row=5, column=0, **grid_style_estilos)
 
-    btn_mostrar_comprimento_ramos = ttk.Checkbutton(popup_estilos_frame, variable=mostrar_comprimento_ramos_var,text='Mostrar o comprimento dos ramos', style='TCheckbutton')
+    btn_mostrar_comprimento_ramos = ttk.Checkbutton(
+        popup_estilos_frame,
+        variable=mostrar_comprimento_ramos_var,
+        text="Mostrar o comprimento dos ramos",
+        style="TCheckbutton",
+    )
     btn_mostrar_comprimento_ramos.grid(row=5, column=0, **grid_style_estilos)
 
     btn_salvar = tk.Button(popup_estilos_frame, text="Salvar", command=fechar_janela)
     btn_salvar.grid(row=100, column=0, padx=15, pady=5)
 
-    label_erro = ttk.Label(popup_estilos_frame, text='', foreground='red')
+    label_erro = ttk.Label(popup_estilos_frame, text="", foreground="red")
+
 
 """
 ==================================================
@@ -126,25 +147,25 @@ Executa as funções principais (donwload e mostrar)
 ==================================================
 """
 
-    
+
 def criar_arvore_Newick():
     # Obtenha a entrada do usuário
     entrada = entrada_text.get("1.0", tk.END).strip()
-    
+
     formatoNewick = None
 
     if box_Newick.get():
-      formatoNewick = int(box_Newick.get())
+        formatoNewick = int(box_Newick.get())
 
     # Verifique se a entrada está vazia
     if not entrada:
         status_label.config(text="Erro: insira uma árvore válida")
         return
-    
-    '''
+
+    """
     Para mostrar o erro caso não tenha nenhum newick no input, porem se o valor for 0, ele retorna falso e o erro aparece, por isso antes temos q verificar antes se é 0
-    '''
-    
+    """
+
     if formatoNewick != 0:
         if not formatoNewick:
             status_label.config(text="Erro: insira um tipo de Newick")
@@ -201,22 +222,22 @@ def salvar_arvore():
 ancestral = {}
 descendentes = {}
 dados_comparativos = []
+
+
 def criar_arvore_a_partir_da_comparacao():
     janela_comparador = tk.Toplevel(root)
 
     janela_comparador.resizable(False, False)
 
-    if getattr(sys, 'frozen', False):
-        icon_path = resource_path('icon.ico')
+    if getattr(sys, "frozen", False):
+        icon_path = resource_path("icon.ico")
         janela_comparador.iconbitmap(icon_path)
 
-    grid_style_comparador = {'padx': '5', 'pady': '3'}
-    
+    grid_style_comparador = {"padx": "5", "pady": "3"}
+
     style = ttk.Style()
     style.configure("Button.TButton", font=("Arial", 13), width=20)
-    style.configure('Label.TLabel', font=('Arial', 13))
-
-
+    style.configure("Label.TLabel", font=("Arial", 13))
 
     def criar_dados():
         def salvar_dados_comparativos():
@@ -224,14 +245,16 @@ def criar_arvore_a_partir_da_comparacao():
             dados_comparativos = (
                 input_dados.get("1.0", tk.END).replace("\n", "").split(",")
             )
-            dados_criados = input_dados.get('1.0', tk.END).replace('\n', '').replace(',', ', ')
+            dados_criados = (
+                input_dados.get("1.0", tk.END).replace("\n", "").replace(",", ", ")
+            )
             label_dados_criados.config(text=dados_criados)
 
             janela_dados_comparativos.destroy()
 
         janela_dados_comparativos = tk.Toplevel(janela_comparador)
-        if getattr(sys, 'frozen', False):
-            icon_path = resource_path('icon.ico')
+        if getattr(sys, "frozen", False):
+            icon_path = resource_path("icon.ico")
             janela_dados_comparativos.iconbitmap(icon_path)
 
         label_criar_dados = ttk.Label(
@@ -249,7 +272,10 @@ def criar_arvore_a_partir_da_comparacao():
         label_instrucao_dados.grid(row=2, column=0, padx=10, pady=10)
 
         btn_salvar_dados_comparativos = ttk.Button(
-            janela_dados_comparativos, text="Salvar", command=salvar_dados_comparativos, style='TButton'
+            janela_dados_comparativos,
+            text="Salvar",
+            command=salvar_dados_comparativos,
+            style="TButton",
         )
         btn_salvar_dados_comparativos.grid(row=3, column=0, padx=5, pady=5)
 
@@ -266,8 +292,8 @@ def criar_arvore_a_partir_da_comparacao():
             janela_ancestral.destroy()
 
         janela_ancestral = tk.Toplevel(janela_comparador)
-        if getattr(sys, 'frozen', False):
-            icon_path = resource_path('icon.ico')
+        if getattr(sys, "frozen", False):
+            icon_path = resource_path("icon.ico")
             janela_ancestral.iconbitmap(icon_path)
 
         global dados_comparativos
@@ -294,7 +320,6 @@ def criar_arvore_a_partir_da_comparacao():
         )
         btn_salvar_ancestral.pack()
 
-
     def adicionar_descendente():
         def salvar_descendente():
             nome_descendente = nome_text.get("1.0", tk.END).replace("\n", "")
@@ -304,7 +329,7 @@ def criar_arvore_a_partir_da_comparacao():
             for dado, var in dados_comparativos_nome_var.items():
                 valor = var.get()
                 descendentes[nome_descendente][dado] = valor
-            
+
             descendentes[nome_descendente]["Sin"] = 0
             descendentes[nome_descendente]["Ples"] = 0
             descendentes[nome_descendente]["Apo"] = 0
@@ -313,8 +338,8 @@ def criar_arvore_a_partir_da_comparacao():
             janela_descendente.destroy()
 
         janela_descendente = tk.Toplevel(janela_comparador)
-        if getattr(sys, 'frozen', False):
-            icon_path = resource_path('icon.ico')
+        if getattr(sys, "frozen", False):
+            icon_path = resource_path("icon.ico")
             janela_descendente.iconbitmap(icon_path)
 
         global dados_comparativos
@@ -332,7 +357,9 @@ def criar_arvore_a_partir_da_comparacao():
 
         for dado in dados_comparativos:
             Checkbutton = ttk.Checkbutton(
-                janela_descendente, text=dado, variable=dados_comparativos_nome_var[dado]
+                janela_descendente,
+                text=dado,
+                variable=dados_comparativos_nome_var[dado],
             )
             Checkbutton.pack()
 
@@ -341,50 +368,60 @@ def criar_arvore_a_partir_da_comparacao():
         )
         btn_salvar_descendente.pack()
 
-
-
-    def gerar_newick ():
+    def gerar_newick():
         dados_comparativos_sin_apo = {}
 
-        newick = '('
+        newick = "("
 
         for dado in dados_comparativos:
             dados_comparativos_sin_apo[dado] = 0
 
+        for descendente, dado in descendentes.items():
+            for caracteristica in dados_comparativos:
+                if (
+                    ancestral[caracteristica] == True
+                    and ancestral[caracteristica]
+                    == descendentes[descendente][caracteristica]
+                ):
+                    descendentes[descendente]["Ples"] += 1
+                else:
+                    if descendentes[descendente][caracteristica] == True:
+                        dados_comparativos_sin_apo[caracteristica] += 1
 
         for descendente, dado in descendentes.items():
             for caracteristica in dados_comparativos:
-                    if ancestral[caracteristica] == True and ancestral[caracteristica] == descendentes[descendente][caracteristica]:
-                        descendentes[descendente]["Ples"] += 1
-                    else:
-                        if descendentes[descendente][caracteristica] == True:
-                            dados_comparativos_sin_apo[caracteristica] += 1
+                if (
+                    ancestral[caracteristica] == True
+                    and ancestral[caracteristica]
+                    == descendentes[descendente][caracteristica]
+                ):
+                    descendentes[descendente]["Ples"] += 0
+                elif dados_comparativos_sin_apo[caracteristica] > 1:
+                    descendentes[descendente]["Sin"] += 1
+                else:
+                    if descendentes[descendente][caracteristica] == True:
+                        descendentes[descendente]["Apo"] += 1
 
-
-        for descendente, dado in descendentes.items():
-            for caracteristica in dados_comparativos:
-                    if ancestral[caracteristica] == True and ancestral[caracteristica] == descendentes[descendente][caracteristica]:
-                        descendentes[descendente]["Ples"] += 0
-                    elif dados_comparativos_sin_apo[caracteristica] > 1:
-                        descendentes[descendente]['Sin'] += 1
-                    else:
-                        if descendentes[descendente][caracteristica] == True:
-                            descendentes[descendente]['Apo'] += 1
-
-        descendentes_ordenados = sorted(descendentes.items(), key=lambda descendente: (-descendente[1]['Sin'], descendente[1]['Ples'], -descendente[1]['Apo']))
+        descendentes_ordenados = sorted(
+            descendentes.items(),
+            key=lambda descendente: (
+                descendente[1]["Sin"],
+                -descendente[1]["Ples"],
+                descendente[1]["Apo"],
+            ),
+        )
 
         for descendente, dados in descendentes_ordenados:
-            newick += f'{descendente},('
+            newick += f"{descendente},("
         else:
             newick = newick[:-2]
             for descendente, dados in descendentes_ordenados:
-                newick += ')'
+                newick += ")"
             else:
                 newick = newick[:-1]
 
+        newick += ");"
 
-        newick += ');'
-        
         def vizualizar_arvore():
             t = Tree(newick, format=0)
 
@@ -415,54 +452,77 @@ def criar_arvore_a_partir_da_comparacao():
         frame_vizualizar_salvar = ttk.Frame(janela_comparador)
         frame_vizualizar_salvar.grid(row=3, column=0, **grid_style_comparador)
 
-
-        btn_visualizar_arvore_gerada = ttk.Button(frame_vizualizar_salvar, text='Visualizar', command=vizualizar_arvore)
+        btn_visualizar_arvore_gerada = ttk.Button(
+            frame_vizualizar_salvar, text="Visualizar", command=vizualizar_arvore
+        )
         btn_visualizar_arvore_gerada.grid(row=0, column=0)
 
-        btn_salvar_arvore_gerada = ttk.Button(frame_vizualizar_salvar, text='Salvar', command=salvar_arvore)
+        btn_salvar_arvore_gerada = ttk.Button(
+            frame_vizualizar_salvar, text="Salvar", command=salvar_arvore
+        )
         btn_salvar_arvore_gerada.grid(row=0, column=1)
 
         newick_gerado = tk.Text(frame_comparador, height=1, width=15)
-        newick_gerado.insert('1.0', f'{newick}')
+        newick_gerado.insert("1.0", f"{newick}")
         newick_gerado.grid(row=3, column=0, **grid_style_comparador)
 
         def copiar_newick():
             janela_comparador.clipboard_clear()
             janela_comparador.clipboard_append(newick)
-        btn_copiar_newick = ttk.Button(frame_comparador, text='Copiar newick', command=copiar_newick)
-        btn_copiar_newick.grid(row=4, column=0,**grid_style_comparador)
 
-
-
+        btn_copiar_newick = ttk.Button(
+            frame_comparador, text="Copiar newick", command=copiar_newick
+        )
+        btn_copiar_newick.grid(row=4, column=0, **grid_style_comparador)
 
     btn_criar_dados = ttk.Button(
-        janela_comparador, text="Adicionar dados", command=criar_dados, style='Button.TButton'
+        janela_comparador,
+        text="Adicionar dados",
+        command=criar_dados,
+        style="Button.TButton",
     )
     btn_criar_dados.grid(row=0, column=0, **grid_style_comparador)
 
     btn_criar_ancestral = ttk.Button(
-        janela_comparador, text="Criar ancestral", command=criar_ancestral, style='Button.TButton'
+        janela_comparador,
+        text="Criar ancestral",
+        command=criar_ancestral,
+        style="Button.TButton",
     )
     btn_criar_ancestral.grid(row=1, column=0, **grid_style_comparador)
 
     btn_adicionar_descendente = ttk.Button(
-        janela_comparador, text="Adicionar descendente", command=adicionar_descendente, style='Button.TButton'
+        janela_comparador,
+        text="Adicionar descendente",
+        command=adicionar_descendente,
+        style="Button.TButton",
     )
     btn_adicionar_descendente.grid(row=2, column=0, **grid_style_comparador)
 
-    btn_gerar_newick = ttk.Button(janela_comparador, text="Gerar árvore", command=gerar_newick, style='Button.TButton')
+    btn_gerar_newick = ttk.Button(
+        janela_comparador,
+        text="Gerar árvore",
+        command=gerar_newick,
+        style="Button.TButton",
+    )
     btn_gerar_newick.grid(row=3, column=0, **grid_style_comparador)
 
-    frame_comparador = ttk.Frame(janela_comparador, relief='solid', borderwidth=5)
-    frame_comparador.grid(row=0, rowspan=300, column=1, sticky='ns', **grid_style_comparador)
+    frame_comparador = ttk.Frame(janela_comparador, relief="solid", borderwidth=5)
+    frame_comparador.grid(
+        row=0, rowspan=300, column=1, sticky="ns", **grid_style_comparador
+    )
 
-    label_dados_criados = ttk.Label(frame_comparador, text='', style='Label.TLabel')
+    label_dados_criados = ttk.Label(frame_comparador, text="", style="Label.TLabel")
     label_dados_criados.grid(row=0, column=0, **grid_style_comparador)
 
-    label_ancestral_criado = ttk.Label(frame_comparador, text='Ancestral:', style='Label.TLabel')
+    label_ancestral_criado = ttk.Label(
+        frame_comparador, text="Ancestral:", style="Label.TLabel"
+    )
     label_ancestral_criado.grid(row=1, column=0, **grid_style_comparador)
-    
-    label_descendentes_criados = ttk.Label(frame_comparador, text='Descesndentes:', style='Label.TLabel')
+
+    label_descendentes_criados = ttk.Label(
+        frame_comparador, text="Descesndentes:", style="Label.TLabel"
+    )
     label_descendentes_criados.grid(row=2, column=0, **grid_style_comparador)
 
     if ancestral:
@@ -470,7 +530,15 @@ def criar_arvore_a_partir_da_comparacao():
     if descendentes:
         label_descendentes_criados.config(text=f"Descendentes: {len(descendentes)}")
     if dados_comparativos:
-        label_dados_criados.config(label_dados_criados.config(text=f'{dados_comparativos}'.replace('\n', '').replace(',', ', ').replace("'", '').replace('[', '').replace(']', '')))
+        label_dados_criados.config(
+            label_dados_criados.config(
+                text=f"{dados_comparativos}".replace("\n", "")
+                .replace(",", ", ")
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+            )
+        )
 
     # recursos dev
 
@@ -494,9 +562,11 @@ Criação da janela
 root.title("CladoGraph")
 
 
-
 # Cria o campo de entrada de texto
-entrada_label = tk.Label(root, text="Insira a árvore no formato Newick ou use o comparador de características:")
+entrada_label = tk.Label(
+    root,
+    text="Insira a árvore no formato Newick ou use o comparador de características:",
+)
 entrada_label.grid(row=0, column=0, padx=5, pady=5)
 
 entrada_text = tk.Text(root, height=5)
@@ -509,18 +579,25 @@ box_Newick = ttk.Combobox(
 box_Newick.grid(row=1, column=1, padx=5, pady=5)
 
 # Cria os botões
-btn_criar = tk.Button(root, text="Vizualizar Árvore", command=criar_arvore_Newick, width=20)
+btn_criar = tk.Button(
+    root, text="Vizualizar Árvore", command=criar_arvore_Newick, width=20
+)
 btn_criar.grid(row=2, column=1, padx=5, pady=5)
 
 btn_salvar = tk.Button(root, text="Baixar Árvore", command=salvar_arvore, width=20)
 btn_salvar.grid(row=3, column=1, padx=5, pady=5)
 
 btn_converter = tk.Button(
-    root, text="Comparador de caract.", command=criar_arvore_a_partir_da_comparacao, width=20
+    root,
+    text="Comparador de caract.",
+    command=criar_arvore_a_partir_da_comparacao,
+    width=20,
 )
 btn_converter.grid(row=5, column=1, padx=5, pady=5)
 
-btn_estilos = tk.Button(root, text="Configurar estilos", command=abrir_janela_estilos, width=20)
+btn_estilos = tk.Button(
+    root, text="Configurar estilos", command=abrir_janela_estilos, width=20
+)
 btn_estilos.grid(row=6, column=1, padx=5, pady=5)
 
 # Cria a etiqueta de status
@@ -532,9 +609,9 @@ root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
 
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
     pyi_splash.close()
-    icon_path = resource_path('icon.ico')
+    icon_path = resource_path("icon.ico")
     root.iconbitmap(icon_path)
 
 root.mainloop()
