@@ -1,1 +1,1 @@
-from generatePDF import phylogeneticTreePDF
+from . import phylogeneticTreePDF
