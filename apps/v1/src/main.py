@@ -220,9 +220,184 @@ def salvar_arvore():
         status_label.config(text=f"Erro: {str(e)}")
 
 
-ancestral = {}
-descendentes = {}
-dados_comparativos = []
+"""
+formato ancestral
+{
+    'nome': nome do ancestral,
+    'característica_1': boolean característica 1,
+    'característica_2': boolean característica 2,
+    'característica_3': boolean característica 3,
+    ...
+}
+
+"""
+ancestral = {
+    "nome": "ancestral",
+    "a": True,
+    "b": False,
+    "c": False,
+    "d": False,
+    "e": False,
+    "f": False,
+    "g": False,
+    "h": False,
+    "i": False,
+    "j": False,
+    "k": False,
+    "l": False,
+    "m": False,
+    "n": False,
+}
+"""
+formato descendente
+{
+    'descendente_1': {
+        'nome': 'descendente_1',
+        'característica_1': boolean característica 1,
+        'característica_2': boolean característica 2,
+        'característica_3': boolean característica 3,
+        ...
+        'Sin': 0
+        'Ples': 0
+        'Apo': 0
+    },
+    'descendente_2': {
+        'nome': 'descendente_2',
+        'característica_1': boolean característica 1,
+        'característica_2': boolean característica 2,
+        'característica_3': boolean característica 3,
+        ...
+        'Sin': 0
+        'Ples': 0
+        'Apo': 0
+    },
+    ...
+}
+
+"""
+descendentes = {
+    "1": {
+        "nome": "1",
+        "a": True,
+        "b": True,
+        "c": False,
+        "d": False,
+        "e": True,
+        "f": True,
+        "g": False,
+        "h": True,
+        "i": True,
+        "j": True,
+        "k": False,
+        "l": False,
+        "m": True,
+        "n": True,
+        "Sin": 0,
+        "Ples": 0,
+        "Apo": 0,
+    },
+    "2": {
+        "nome": "2",
+        "a": True,
+        "b": True,
+        "c": True,
+        "d": False,
+        "e": False,
+        "f": True,
+        "g": True,
+        "h": True,
+        "i": False,
+        "j": True,
+        "k": True,
+        "l": False,
+        "m": False,
+        "n": False,
+        "Sin": 0,
+        "Ples": 0,
+        "Apo": 0,
+    },
+    "3": {
+        "nome": "3",
+        "a": False,
+        "b": True,
+        "c": True,
+        "d": False,
+        "e": True,
+        "f": True,
+        "g": False,
+        "h": True,
+        "i": True,
+        "j": False,
+        "k": False,
+        "l": True,
+        "m": True,
+        "n": False,
+        "Sin": 0,
+        "Ples": 0,
+        "Apo": 0,
+    },
+    "4": {
+        "nome": "4",
+        "a": False,
+        "b": False,
+        "c": False,
+        "d": True,
+        "e": True,
+        "f": False,
+        "g": True,
+        "h": False,
+        "i": False,
+        "j": True,
+        "k": True,
+        "l": True,
+        "m": True,
+        "n": False,
+        "Sin": 0,
+        "Ples": 0,
+        "Apo": 0,
+    },
+    "5": {
+        "nome": "5",
+        "a": False,
+        "b": True,
+        "c": True,
+        "d": True,
+        "e": True,
+        "f": True,
+        "g": False,
+        "h": True,
+        "i": True,
+        "j": False,
+        "k": True,
+        "l": True,
+        "m": True,
+        "n": False,
+        "Sin": 0,
+        "Ples": 0,
+        "Apo": 0,
+    },
+}
+"""
+formato dados comparativos
+
+['característica_1','característica_2','característica_3']
+"""
+dados_comparativos = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+]
 
 
 def criar_arvore_a_partir_da_comparacao():
@@ -370,6 +545,14 @@ def criar_arvore_a_partir_da_comparacao():
         btn_salvar_descendente.pack()
 
     def gerar_newick():
+        # formato dos dados_comparativos_sin_apo
+        """
+        {
+            'característica_1': 0,
+            'característica_2': 0,
+            'característica_3': 0,
+        }
+        """
         dados_comparativos_sin_apo = {}
 
         newick = "("
@@ -384,7 +567,7 @@ def criar_arvore_a_partir_da_comparacao():
                     and ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
-                    descendentes[descendente]["Ples"] += 1
+                    pass
                 else:
                     if descendentes[descendente][caracteristica] == True:
                         dados_comparativos_sin_apo[caracteristica] += 1
@@ -396,8 +579,8 @@ def criar_arvore_a_partir_da_comparacao():
                     and ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
-                    descendentes[descendente]["Ples"] += 0
-                elif dados_comparativos_sin_apo[caracteristica] > 1:
+                    descendentes[descendente]["Ples"] += 1
+                elif dados_comparativos_sin_apo[caracteristica] < 1:
                     descendentes[descendente]["Sin"] += 1
                 else:
                     if descendentes[descendente][caracteristica] == True:
