@@ -12,7 +12,6 @@ def generatePDF():
     on text, such as <A HREF="http://www.fpdf.org">www.fpdf.org</A>,
     or on an image: click on the logo.<br>
     <center>
-    <A HREF="http://www.fpdf.org"><img src="tutorial/logo.png" width="104" height="71"></A>
     </center>
     <h3>Sample List</h3>
     <ul><li>option 1</li>
@@ -39,7 +38,4 @@ def generatePDF():
         filetypes=[("All Files", "*.*")],
     )
 
-    pdf.output(filename, "F")
-
-
-generatePDF()
+    pdf.output(filename)

@@ -563,28 +563,24 @@ def criar_arvore_a_partir_da_comparacao():
         for descendente, dado in descendentes.items():
             for caracteristica in dados_comparativos:
                 if (
-                    ancestral[caracteristica] == True
-                    and ancestral[caracteristica]
+                    ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
                     pass
                 else:
-                    if descendentes[descendente][caracteristica] == True:
-                        dados_comparativos_sin_apo[caracteristica] += 1
+                    dados_comparativos_sin_apo[caracteristica] += 1
 
         for descendente, dado in descendentes.items():
             for caracteristica in dados_comparativos:
                 if (
-                    ancestral[caracteristica] == True
-                    and ancestral[caracteristica]
+                    ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
                     descendentes[descendente]["Ples"] += 1
-                elif dados_comparativos_sin_apo[caracteristica] < 1:
+                elif dados_comparativos_sin_apo[caracteristica] > 1:
                     descendentes[descendente]["Sin"] += 1
-                else:
-                    if descendentes[descendente][caracteristica] == True:
-                        descendentes[descendente]["Apo"] += 1
+                elif descendentes[descendente][caracteristica] == True:
+                    descendentes[descendente]["Apo"] += 1
 
         descendentes_ordenados = sorted(
             descendentes.items(),
