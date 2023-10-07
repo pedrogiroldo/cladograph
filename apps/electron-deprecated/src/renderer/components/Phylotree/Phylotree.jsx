@@ -1,11 +1,12 @@
-import { phylotree } from 'phylotree';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { phylotree as Phylotree } from 'phylotree';
 import { useRef, useLayoutEffect } from 'react';
 import $ from 'jquery';
 import './style.css';
 
-export default function Phylotree() {
+export default function treeComponent() {
   const treeContainer = useRef();
-  const tree = new phylotree('(2,(1,(4,(3,(Maria Clara)))));');
+  const tree = new Phylotree('(2,(1,(4,(3,(Maria Clara)))));');
   useLayoutEffect(() => {
     tree.render({
       container: treeContainer.current,
@@ -13,7 +14,7 @@ export default function Phylotree() {
       width: 500,
       'left-right-spacing': 'fit-to-size',
       'top-bottom-spacing': 'fit-to-size',
-      zoom: true,
+      zoom: false,
     });
 
     $(tree.display.container).append(tree.display.show());
