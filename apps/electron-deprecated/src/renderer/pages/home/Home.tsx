@@ -1,5 +1,5 @@
-import PhylotreeComponent from '../../components/Phylotree/Phylotree';
+import Tree from '../../components/Tree/Tree';
 
 export default function Home() {
-  return <PhylotreeComponent newick="(2,(1,(4,(3,(Mariaaaaa)))));" />;
+  return <Tree newick="(2,(1,(4,(3,(Mariaaaaa)))));" />;
 }

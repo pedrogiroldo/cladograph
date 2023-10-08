@@ -5,7 +5,7 @@ import $ from 'jquery';
 import './style.css';
 import saveTree from '../../../scripts/saveTree';
 
-export default function treeComponent({ newick }) {
+export default function Tree({ newick }) {
   const treeContainer = useRef();
   const tree = new Phylotree(newick);
 
