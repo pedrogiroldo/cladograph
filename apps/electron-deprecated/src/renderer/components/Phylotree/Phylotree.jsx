@@ -3,10 +3,12 @@ import { phylotree as Phylotree } from 'phylotree';
 import { useRef, useLayoutEffect } from 'react';
 import $ from 'jquery';
 import './style.css';
+import saveTree from '../../../scripts/saveTree';
 
-export default function treeComponent() {
+export default function treeComponent({ newick }) {
   const treeContainer = useRef();
-  const tree = new Phylotree('(2,(1,(4,(3,(Maria Clara)))));');
+  const tree = new Phylotree(newick);
+
   useLayoutEffect(() => {
     tree.render({
       container: treeContainer.current,
@@ -17,8 +19,20 @@ export default function treeComponent() {
       zoom: false,
     });
 
+    $(tree.display.container).empty();
     $(tree.display.container).append(tree.display.show());
   });
 
-  return <div className="tree" ref={treeContainer} />;
+  return (
+    <div>
+      <button
+        type="button"
+        id="save_image"
+        onClick={() => saveTree('svg', '#tree')}
+      >
+        baixar
+      </button>
+      <div className="tree" id="tree" ref={treeContainer} />
+    </div>
+  );
 }

@@ -4,7 +4,6 @@
  */
 body {
   position: relative;
-  color: white;
   height: 100vh;
   /* background: linear-gradient(
     200.96deg,
@@ -19,7 +18,7 @@ body {
   align-items: center;
 }
 
-button {
+/* button {
   background-color: white;
   padding: 10px 20px;
   border-radius: 10px;
@@ -31,12 +30,12 @@ button {
   transition: all ease-in 0.1s;
   cursor: pointer;
   opacity: 0.9;
-}
+} */
 
-button:hover {
+/* button:hover {
   transform: scale(1.05);
   opacity: 1;
-}
+} */
 
 li {
   list-style: none;
@@ -52,11 +51,4 @@ a {
 a:hover {
   opacity: 1;
   text-decoration: none;
-}
-
-.Hello {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
 }
