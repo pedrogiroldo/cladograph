@@ -17,6 +17,8 @@ def generatePDF():
 <center>
 <img src="src/modules/generatePDF/assets/cacheTree.png" width=500 />
 </center>
+{threeSpaces}
+
 
     """
     pdf = FPDF()
