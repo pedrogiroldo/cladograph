@@ -57,6 +57,15 @@ def generateCaracterísticasTable(dados_comparativos, ancestral, descendentes):
     return "".join(tabelas_html)
 
 
+def generateSinPlesApoTable(descendentes):
+    htmlTable = "<table border='2' align='center'><tr><th>Descendentes</th><th>Sinapomorfias</th><th>Plesiomorfias</th><th>Apomorfias</th>"
+    for descendente, dados_descendente in descendentes.items():
+        htmlTable += f"<tr><td>{dados_descendente['nome']}</td><td>{dados_descendente['Sin']}</td><td>{dados_descendente['Ples']}</td><td>{dados_descendente['Apo']}</td>"
+
+    htmlTable += "</table>"
+    return htmlTable
+
+
 def generatePDF(dados_comparativos, ancestral, descendentes):
     html = f"""
 <img src="src/modules/generatePDF/assets/logo_cladograph_pdf.png" width=250 />
@@ -66,13 +75,15 @@ def generatePDF(dados_comparativos, ancestral, descendentes):
 </center>
 {threeSpaces}
 {
+    generateSinPlesApoTable(descendentes=descendentes)
+}
+{
     generateCaracterísticasTable(
     dados_comparativos=dados_comparativos,
     ancestral=ancestral, 
     descendentes=descendentes
     )
     }
-
 
     """
     pdf = FPDF()
@@ -89,147 +100,147 @@ def generatePDF(dados_comparativos, ancestral, descendentes):
     pdf.output(filename)
 
 
-ancestral = {
-    "nome": "ancestral",
-    "a": True,
-    "b": False,
-    "c": False,
-    "d": False,
-    "e": False,
-    "f": False,
-    "g": False,
-    "h": False,
-    "i": False,
-    "j": False,
-    "k": False,
-    "l": False,
-    "m": False,
-    "n": False,
-}
+# ancestral = {
+#     "nome": "ancestral",
+#     "a": True,
+#     "b": False,
+#     "c": False,
+#     "d": False,
+#     "e": False,
+#     "f": False,
+#     "g": False,
+#     "h": False,
+#     "i": False,
+#     "j": False,
+#     "k": False,
+#     "l": False,
+#     "m": False,
+#     "n": False,
+# }
 
-descendentes = {
-    "1": {
-        "nome": "1",
-        "a": True,
-        "b": True,
-        "c": False,
-        "d": False,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": True,
-        "k": False,
-        "l": False,
-        "m": True,
-        "n": True,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "2": {
-        "nome": "2",
-        "a": True,
-        "b": True,
-        "c": True,
-        "d": False,
-        "e": False,
-        "f": True,
-        "g": True,
-        "h": True,
-        "i": False,
-        "j": True,
-        "k": True,
-        "l": False,
-        "m": False,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "3": {
-        "nome": "3",
-        "a": False,
-        "b": True,
-        "c": True,
-        "d": False,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": False,
-        "k": False,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "4": {
-        "nome": "4",
-        "a": False,
-        "b": False,
-        "c": False,
-        "d": True,
-        "e": True,
-        "f": False,
-        "g": True,
-        "h": False,
-        "i": False,
-        "j": True,
-        "k": True,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "5": {
-        "nome": "5",
-        "a": False,
-        "b": True,
-        "c": True,
-        "d": True,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": False,
-        "k": True,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-}
+# descendentes = {
+#     "1": {
+#         "nome": "1",
+#         "a": True,
+#         "b": True,
+#         "c": False,
+#         "d": False,
+#         "e": True,
+#         "f": True,
+#         "g": False,
+#         "h": True,
+#         "i": True,
+#         "j": True,
+#         "k": False,
+#         "l": False,
+#         "m": True,
+#         "n": True,
+#         "Sin": 0,
+#         "Ples": 0,
+#         "Apo": 0,
+#     },
+#     "2": {
+#         "nome": "2",
+#         "a": True,
+#         "b": True,
+#         "c": True,
+#         "d": False,
+#         "e": False,
+#         "f": True,
+#         "g": True,
+#         "h": True,
+#         "i": False,
+#         "j": True,
+#         "k": True,
+#         "l": False,
+#         "m": False,
+#         "n": False,
+#         "Sin": 0,
+#         "Ples": 0,
+#         "Apo": 0,
+#     },
+#     "3": {
+#         "nome": "3",
+#         "a": False,
+#         "b": True,
+#         "c": True,
+#         "d": False,
+#         "e": True,
+#         "f": True,
+#         "g": False,
+#         "h": True,
+#         "i": True,
+#         "j": False,
+#         "k": False,
+#         "l": True,
+#         "m": True,
+#         "n": False,
+#         "Sin": 2,
+#         "Ples": 0,
+#         "Apo": 0,
+#     },
+#     "4": {
+#         "nome": "4",
+#         "a": False,
+#         "b": False,
+#         "c": False,
+#         "d": True,
+#         "e": True,
+#         "f": False,
+#         "g": True,
+#         "h": False,
+#         "i": False,
+#         "j": True,
+#         "k": True,
+#         "l": True,
+#         "m": True,
+#         "n": False,
+#         "Sin": 0,
+#         "Ples": 0,
+#         "Apo": 0,
+#     },
+#     "5": {
+#         "nome": "5",
+#         "a": False,
+#         "b": True,
+#         "c": True,
+#         "d": True,
+#         "e": True,
+#         "f": True,
+#         "g": False,
+#         "h": True,
+#         "i": True,
+#         "j": False,
+#         "k": True,
+#         "l": True,
+#         "m": True,
+#         "n": False,
+#         "Sin": 0,
+#         "Ples": 0,
+#         "Apo": 0,
+#     },
+# }
 
-dados_comparativos = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-]
+# dados_comparativos = [
+#     "a",
+#     "b",
+#     "c",
+#     "d",
+#     "e",
+#     "f",
+#     "g",
+#     "h",
+#     "i",
+#     "j",
+#     "k",
+#     "l",
+#     "m",
+#     "n",
+# ]
 
 
-generatePDF(
-    dados_comparativos=dados_comparativos,
-    ancestral=ancestral,
-    descendentes=descendentes,
-)
+# generatePDF(
+#     dados_comparativos=dados_comparativos,
+#     ancestral=ancestral,
+#     descendentes=descendentes,
+# )
