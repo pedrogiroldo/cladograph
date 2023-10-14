@@ -667,6 +667,16 @@ def criar_arvore_a_partir_da_comparacao():
             frame_comparador, text="Copiar newick", command=copiar_newick
         )
         btn_copiar_newick.grid(row=4, column=0, **grid_style_comparador)
+        
+        def gerar_pdf_relatorio():
+            generatePDF.phylogeneticTreePDF.generatePDF(descendentes=descendentes, ancestral=ancestral, dados_comparativos=dados_comparativos)
+        
+        btn_gerar_pdf= ttk.Button(
+            frame_comparador, text="Gerar PDF", command=gerar_pdf_relatorio
+        )
+        btn_gerar_pdf.grid(row=5, column=0, **grid_style_comparador)
+        
+            
 
     btn_criar_dados = ttk.Button(
         janela_comparador,

@@ -20,14 +20,14 @@ def generateCaracterísticasTable(dados_comparativos, ancestral, descendentes):
 
     # Dividir os descendentes em grupos de 3
     grupos_descendentes = [
-        list(descendentes.keys())[i : i + 3] for i in range(0, len(descendentes), 3)
+        list(descendentes.keys())[i : i + 6] for i in range(0, len(descendentes), 6)
     ]
 
     tabelas_html = []  # Lista para armazenar as tabelas HTML
 
     for grupo in grupos_descendentes:
         # Iniciar a string HTML com a tabela
-        tabela_html = "<table border='2' align='center'><tr><th>Características</th><th>Ancestral</th>"
+        tabela_html = "<table border='2' align='center'><tr><th>Características</th><th>Ances.</th>"
 
         # Adicionar os nomes dos descendentes como cabeçalhos de coluna
         for nome in grupo:
@@ -39,12 +39,12 @@ def generateCaracterísticasTable(dados_comparativos, ancestral, descendentes):
             tabela_html += "<tr><td>{}</td>".format(caracteristica)
             # Adicionar "Sim" ou "Não" para o ancestral
             valor_ancestral = ancestral.get(caracteristica, False)
-            tabela_html += "<td>{}</td>".format("Sim" if valor_ancestral else "Não")
+            tabela_html += "<td>{}</td>".format("X" if valor_ancestral else "")
             # Adicionar "Sim" ou "Não" para cada descendente no grupo
             for nome in grupo:
                 valor_descendente = descendentes[nome].get(caracteristica, False)
                 tabela_html += "<td>{}</td>".format(
-                    "Sim" if valor_descendente else "Não"
+                    "X" if valor_descendente else ""
                 )
             tabela_html += "</tr>"
 
@@ -77,6 +77,7 @@ def generatePDF(dados_comparativos, ancestral, descendentes):
 {
     generateSinPlesApoTable(descendentes=descendentes)
 }
+{threeSpaces}
 {
     generateCaracterísticasTable(
     dados_comparativos=dados_comparativos,
