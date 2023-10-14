@@ -2,3 +2,4 @@ build/
 teste.py
 output/
 dist/
+src/modules/generatePDF/assets/cacheTree.png
