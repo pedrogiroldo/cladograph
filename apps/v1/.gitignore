@@ -3,3 +3,4 @@ teste.py
 output/
 dist/
 src/modules/generatePDF/assets/cacheTree.png
+src/modules/generatePDF/__pycache__
