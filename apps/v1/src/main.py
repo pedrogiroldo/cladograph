@@ -31,7 +31,7 @@ Funções janela de estilos
 leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 semi_circular_var = tk.BooleanVar()
-forcar_topologia_var = tk.BooleanVar()
+forcar_topologia_var = tk.BooleanVar(value=True)
 mostrar_escala_var = tk.BooleanVar(value=True)
 mostrar_comprimento_ramos_var = tk.BooleanVar()
 
@@ -42,6 +42,8 @@ ts = TreeStyle()
 ns = NodeStyle()
 ns["hz_line_width"] = 1
 ns["vt_line_width"] = 1
+ts.force_topology = forcar_topologia_var.get()
+
 
 
 def atualizar_estilos():
