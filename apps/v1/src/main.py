@@ -31,7 +31,7 @@ Funções janela de estilos
 leaf_name_var = tk.BooleanVar(value=True)
 circular_var = tk.BooleanVar()
 semi_circular_var = tk.BooleanVar()
-forcar_topologia_var = tk.BooleanVar()
+forcar_topologia_var = tk.BooleanVar(value=True)
 mostrar_escala_var = tk.BooleanVar(value=True)
 mostrar_comprimento_ramos_var = tk.BooleanVar()
 
@@ -42,6 +42,8 @@ ts = TreeStyle()
 ns = NodeStyle()
 ns["hz_line_width"] = 1
 ns["vt_line_width"] = 1
+ts.force_topology = forcar_topologia_var.get()
+
 
 
 def atualizar_estilos():
@@ -164,7 +166,9 @@ def criar_arvore_Newick():
         return
 
     """
-    Para mostrar o erro caso não tenha nenhum newick no input, porem se o valor for 0, ele retorna falso e o erro aparece, por isso antes temos q verificar antes se é 0
+    Para mostrar o erro caso não tenha nenhum newick no input, 
+    porem se o valor for 0, ele retorna falso e o erro aparece,
+    por isso antes temos q verificar antes se é 0
     """
 
     if formatoNewick != 0:
@@ -232,21 +236,21 @@ formato ancestral
 
 """
 ancestral = {
-    "nome": "ancestral",
-    "a": True,
-    "b": False,
-    "c": False,
-    "d": False,
-    "e": False,
-    "f": False,
-    "g": False,
-    "h": False,
-    "i": False,
-    "j": False,
-    "k": False,
-    "l": False,
-    "m": False,
-    "n": False,
+    # "nome": "ancestral",
+    # "a": True,
+    # "b": False,
+    # "c": False,
+    # "d": False,
+    # "e": False,
+    # "f": False,
+    # "g": False,
+    # "h": False,
+    # "i": False,
+    # "j": False,
+    # "k": False,
+    # "l": False,
+    # "m": False,
+    # "n": False,
 }
 """
 formato descendente
@@ -276,106 +280,106 @@ formato descendente
 
 """
 descendentes = {
-    "1": {
-        "nome": "1",
-        "a": True,
-        "b": True,
-        "c": False,
-        "d": False,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": True,
-        "k": False,
-        "l": False,
-        "m": True,
-        "n": True,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "2": {
-        "nome": "2",
-        "a": True,
-        "b": True,
-        "c": True,
-        "d": False,
-        "e": False,
-        "f": True,
-        "g": True,
-        "h": True,
-        "i": False,
-        "j": True,
-        "k": True,
-        "l": False,
-        "m": False,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "3": {
-        "nome": "3",
-        "a": False,
-        "b": True,
-        "c": True,
-        "d": False,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": False,
-        "k": False,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "4": {
-        "nome": "4",
-        "a": False,
-        "b": False,
-        "c": False,
-        "d": True,
-        "e": True,
-        "f": False,
-        "g": True,
-        "h": False,
-        "i": False,
-        "j": True,
-        "k": True,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
-    "5": {
-        "nome": "5",
-        "a": False,
-        "b": True,
-        "c": True,
-        "d": True,
-        "e": True,
-        "f": True,
-        "g": False,
-        "h": True,
-        "i": True,
-        "j": False,
-        "k": True,
-        "l": True,
-        "m": True,
-        "n": False,
-        "Sin": 0,
-        "Ples": 0,
-        "Apo": 0,
-    },
+    # "1": {
+    #     "nome": "1",
+    #     "a": True,
+    #     "b": True,
+    #     "c": False,
+    #     "d": False,
+    #     "e": True,
+    #     "f": True,
+    #     "g": False,
+    #     "h": True,
+    #     "i": True,
+    #     "j": True,
+    #     "k": False,
+    #     "l": False,
+    #     "m": True,
+    #     "n": True,
+    #     "Sin": 0,
+    #     "Ples": 0,
+    #     "Apo": 0,
+    # },
+    # "2": {
+    #     "nome": "2",
+    #     "a": True,
+    #     "b": True,
+    #     "c": True,
+    #     "d": False,
+    #     "e": False,
+    #     "f": True,
+    #     "g": True,
+    #     "h": True,
+    #     "i": False,
+    #     "j": True,
+    #     "k": True,
+    #     "l": False,
+    #     "m": False,
+    #     "n": False,
+    #     "Sin": 0,
+    #     "Ples": 0,
+    #     "Apo": 0,
+    # },
+    # "3": {
+    #     "nome": "3",
+    #     "a": False,
+    #     "b": True,
+    #     "c": True,
+    #     "d": False,
+    #     "e": True,
+    #     "f": True,
+    #     "g": False,
+    #     "h": True,
+    #     "i": True,
+    #     "j": False,
+    #     "k": False,
+    #     "l": True,
+    #     "m": True,
+    #     "n": False,
+    #     "Sin": 0,
+    #     "Ples": 0,
+    #     "Apo": 0,
+    # },
+    # "4": {
+    #     "nome": "4",
+    #     "a": False,
+    #     "b": False,
+    #     "c": False,
+    #     "d": True,
+    #     "e": True,
+    #     "f": False,
+    #     "g": True,
+    #     "h": False,
+    #     "i": False,
+    #     "j": True,
+    #     "k": True,
+    #     "l": True,
+    #     "m": True,
+    #     "n": False,
+    #     "Sin": 0,
+    #     "Ples": 0,
+    #     "Apo": 0,
+    # },
+    # "5": {
+    #     "nome": "5",
+    #     "a": False,
+    #     "b": True,
+    #     "c": True,
+    #     "d": True,
+    #     "e": True,
+    #     "f": True,
+    #     "g": False,
+    #     "h": True,
+    #     "i": True,
+    #     "j": False,
+    #     "k": True,
+    #     "l": True,
+    #     "m": True,
+    #     "n": False,
+    #     "Sin": 0,
+    #     "Ples": 0,
+    #     "Apo": 0,
+    # },
 }
 """
 formato dados comparativos
@@ -383,20 +387,20 @@ formato dados comparativos
 ['característica_1','característica_2','característica_3']
 """
 dados_comparativos = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
+    # "a",
+    # "b",
+    # "c",
+    # "d",
+    # "e",
+    # "f",
+    # "g",
+    # "h",
+    # "i",
+    # "j",
+    # "k",
+    # "l",
+    # "m",
+    # "n",
 ]
 
 
@@ -563,28 +567,24 @@ def criar_arvore_a_partir_da_comparacao():
         for descendente, dado in descendentes.items():
             for caracteristica in dados_comparativos:
                 if (
-                    ancestral[caracteristica] == True
-                    and ancestral[caracteristica]
+                    ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
                     pass
                 else:
-                    if descendentes[descendente][caracteristica] == True:
-                        dados_comparativos_sin_apo[caracteristica] += 1
+                    dados_comparativos_sin_apo[caracteristica] += 1
 
         for descendente, dado in descendentes.items():
             for caracteristica in dados_comparativos:
                 if (
-                    ancestral[caracteristica] == True
-                    and ancestral[caracteristica]
+                    ancestral[caracteristica]
                     == descendentes[descendente][caracteristica]
                 ):
                     descendentes[descendente]["Ples"] += 1
-                elif dados_comparativos_sin_apo[caracteristica] < 1:
+                elif dados_comparativos_sin_apo[caracteristica] > 1:
                     descendentes[descendente]["Sin"] += 1
-                else:
-                    if descendentes[descendente][caracteristica] == True:
-                        descendentes[descendente]["Apo"] += 1
+                elif descendentes[descendente][caracteristica] == True:
+                    descendentes[descendente]["Apo"] += 1
 
         descendentes_ordenados = sorted(
             descendentes.items(),
@@ -605,6 +605,17 @@ def criar_arvore_a_partir_da_comparacao():
                 newick = newick[:-1]
 
         newick += ");"
+
+        cacheTree = Tree(newick, format=0)
+        for node in cacheTree.traverse():
+            node.set_style(ns)
+
+        cacheTree.render(
+            "src/modules/generatePDF/assets/cacheTree.png",
+            w=4000,
+            units="px",
+            tree_style=ts,
+        )
 
         def vizualizar_arvore():
             t = Tree(newick, format=0)
@@ -658,6 +669,16 @@ def criar_arvore_a_partir_da_comparacao():
             frame_comparador, text="Copiar newick", command=copiar_newick
         )
         btn_copiar_newick.grid(row=4, column=0, **grid_style_comparador)
+        
+        def gerar_pdf_relatorio():
+            generatePDF.phylogeneticTreePDF.generatePDF(descendentes=descendentes, ancestral=ancestral, dados_comparativos=dados_comparativos)
+        
+        btn_gerar_pdf= ttk.Button(
+            frame_comparador, text="Gerar PDF", command=gerar_pdf_relatorio
+        )
+        btn_gerar_pdf.grid(row=5, column=0, **grid_style_comparador)
+        
+            
 
     btn_criar_dados = ttk.Button(
         janela_comparador,
