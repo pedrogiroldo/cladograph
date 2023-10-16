@@ -1,0 +1,34 @@
+.Home {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+
+}
+
+.treeArea {
+  margin-right: 6vw;
+  width: 500px;
+}
+
+.optionsArea {
+  height: 90vh;
+  width: 45vh;
+  border: solid;
+  border-color: gray;
+}
+
+.topArea {
+  display: flex;
+  margin-top: 2vh;
+}
+
+.apiButton {
+  margin-right: 1vw;
+  margin-left: auto;
+}
+
+.nwkInput {
+  margin-left: 1vw;
+  margin-right: auto;
+}

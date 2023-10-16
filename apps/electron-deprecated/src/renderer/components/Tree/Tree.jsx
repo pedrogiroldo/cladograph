@@ -10,14 +10,18 @@ export default function Tree({ newick }) {
   const tree = new Phylotree(newick);
 
   useLayoutEffect(() => {
-    tree.render({
-      container: treeContainer.current,
-      height: 500,
-      width: 500,
-      'left-right-spacing': 'fit-to-size',
-      'top-bottom-spacing': 'fit-to-size',
-      zoom: false,
-    });
+    try {
+      tree.render({
+        container: treeContainer.current,
+        height: 500,
+        width: 500,
+        'left-right-spacing': 'fit-to-size',
+        'top-bottom-spacing': 'fit-to-size',
+        zoom: false,
+      });
+    } catch (error) {
+      return;
+    }
 
     $(tree.display.container).empty();
     $(tree.display.container).append(tree.display.show());
