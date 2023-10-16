@@ -4,3 +4,5 @@ output/
 dist/
 src/modules/generatePDF/assets/cacheTree.png
 src/modules/generatePDF/__pycache__
+__pycache__/
+auto-py-to-exe.config.json

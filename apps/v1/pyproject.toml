@@ -13,6 +13,9 @@ six = "^1.16.0"
 numpy = "^1.26.0"
 pyqt5 = "^5.15.9"
 
+[tool.poetry.scripts]
+build = "scripts.build:buildCladograph"
+
 
 [build-system]
 requires = ["poetry-core"]
