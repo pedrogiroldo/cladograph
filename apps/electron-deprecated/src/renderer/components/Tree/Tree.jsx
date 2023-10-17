@@ -7,7 +7,13 @@ import saveTree from '../../../scripts/saveTree';
 
 export default function Tree({ newick }) {
   const treeContainer = useRef();
-  const tree = new Phylotree(newick);
+  let tree;
+  try {
+    tree = new Phylotree(newick);
+  } catch (error) {
+    // eslint-disable-next-line no-void
+    void 0;
+  }
 
   useLayoutEffect(() => {
     try {

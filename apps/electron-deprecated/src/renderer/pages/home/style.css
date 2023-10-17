@@ -1,21 +1,24 @@
 .Home {
-  width: 100%;
   height: 100%;
+  width: 100%;
   display: flex;
   position: relative;
 
 }
 
 .treeArea {
-  margin-right: 6vw;
+  margin-left: 2vw;
+  margin-right: auto;
   width: 500px;
 }
 
 .optionsArea {
   height: 90vh;
-  width: 45vh;
+  width: 60vh;
   border: solid;
   border-color: gray;
+  margin-right: 2vw;
+  margin-left: auto;
 }
 
 .topArea {
@@ -31,4 +34,8 @@
 .nwkInput {
   margin-left: 1vw;
   margin-right: auto;
+}
+
+.generateNwkButton {
+  margin-left: 0.5vw;
 }
