@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-no-bind */
 import { useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import Tree from '../../components/Tree/Tree';
 import './style.css';
 
@@ -26,22 +28,26 @@ export default function Home() {
       <div className="optionsArea">
         <div className="topArea">
           <div className="nwkInputAndButton">
-            <input
+            <TextField
+              variant="standard"
               className="nwkInput"
               type="text"
               placeholder="Insira um newick aqui"
               onChange={setNwkInputValueFunc}
             />
-
-            <button
-              type="button"
-              className="generateNwkButton"
-              onClick={updateTree}
-            >
+            <Button className="generateNwkButton" onClick={updateTree}>
               Gerar
-            </button>
+            </Button>
           </div>
           <div className="apiButton">Templates</div>
+        </div>
+        <div className="comparatorArea">
+          <div className="buttonsArea">
+            <div>Adicionar características</div>
+            <div>Adicionar ancestral</div>
+            <div>Adicionar descendente</div>
+            <div>Gerar árvore</div>
+          </div>
         </div>
       </div>
     </div>
