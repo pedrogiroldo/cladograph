@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import { useState } from 'react';
-import { Button, ButtonGroup, TextField } from '@mui/material';
+import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
 import Tree from '../../components/Tree/Tree';
 import './style.css';
 
@@ -43,7 +43,9 @@ export default function Home() {
               Gerar
             </Button>
           </div>
-          <Button id="apiButton">Templates</Button>
+          <Button id="apiButton" size="large">
+            Templates
+          </Button>
         </div>
         <div className="comparatorArea">
           <h1 id="comparatorTitle">Comparador</h1>
@@ -53,6 +55,41 @@ export default function Home() {
             <Button>Adicionar descendente</Button>
             <Button>Gerar árvore</Button>
           </ButtonGroup>
+          <Grid container>
+            <Grid item xs={6}>
+              <div className="comparasionInfoButtons">
+                <Button
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                  id="comparasionInfoButtonId"
+                >
+                  Visualizar carac.
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                  id="comparasionInfoButtonId"
+                >
+                  Visualizar ancestral
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                  id="comparasionInfoButtonId"
+                >
+                  Visualizar descendentes
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className="comparasionInfoContainer">
+                <div>aa</div>
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </div>

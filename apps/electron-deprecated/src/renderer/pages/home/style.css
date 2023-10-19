@@ -53,3 +53,22 @@
 #comparatorTitle {
   color: #1976D2;
 }
+
+.comparasionInfoContainer {
+  margin-top: 5vh;
+  border: solid;
+  border-color: #1976D2;
+  width: auto;
+  height: 25vh;
+}
+
+.comparasionInfoButtons {
+  margin-top: 5vh;
+  width: auto;
+  height: 40vh;
+  padding-right: 2vw;
+}
+
+#comparasionInfoButtonId {
+  margin-top: 2.5vh;
+}
