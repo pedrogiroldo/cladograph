@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { Button } from '@mui/material';
 import { phylotree as Phylotree } from 'phylotree';
 import { useRef, useLayoutEffect } from 'react';
 import $ from 'jquery';
@@ -35,14 +36,15 @@ export default function Tree({ newick }) {
 
   return (
     <div>
-      <button
+      <div className="tree" id="tree" ref={treeContainer} />
+      <Button
         type="button"
-        id="save_image"
+        id="saveImageButton"
         onClick={() => saveTree('svg', '#tree')}
+        variant="outlined"
       >
         baixar
-      </button>
-      <div className="tree" id="tree" ref={treeContainer} />
+      </Button>
     </div>
   );
 }

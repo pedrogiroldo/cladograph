@@ -10,15 +10,17 @@
   margin-left: 2vw;
   margin-right: auto;
   width: 500px;
+  margin-top: 3.5vh;
 }
 
 .optionsArea {
   height: 90vh;
-  width: 60vh;
-  border: solid;
-  border-color: gray;
-  margin-right: 2vw;
+  width: 80vh;
+  /* border: solid;
+  border-color: gray; */
+  margin-right: 4vw;
   margin-left: auto;
+  margin-top: 1vh;
 }
 
 .topArea {
@@ -26,8 +28,8 @@
   margin-top: 2vh;
 }
 
-.apiButton {
-  margin-right: 1vw;
+#apiButton {
+  margin-right: 3vw;
   margin-left: auto;
 }
 
@@ -36,10 +38,18 @@
   margin-right: auto;
 }
 
-.generateNwkButton {
-  margin-left: 0.5vw;
+#generateNwkButton {
+  margin-left: 2vw;
 }
 
 .comparatorArea {
-  margin-top: 5vh;
+  margin-top: 10vh;
+}
+
+.nwkInputAndButton {
+  display: flex;
+}
+
+#comparatorTitle {
+  color: #1976D2;
 }
