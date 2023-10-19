@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['src\\main.py'],
+    ['C:/Users/Pedro Giroldo/Documents/Codes/Cladograph-V1/src/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('icon.ico', '.')],
+    datas=[('C:/Users/Pedro Giroldo/Documents/Codes/Cladograph-V1/icon.ico', '.'), ('C:/Users/Pedro Giroldo/Documents/Codes/Cladograph-V1/src', 'src/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -14,12 +14,23 @@ a = Analysis(
     noarchive=False,
 )
 pyz = PYZ(a.pure)
+splash = Splash(
+    'C:/Users/Pedro Giroldo/Documents/Codes/Cladograph-V1/splash_cladograph.png',
+    binaries=a.binaries,
+    datas=a.datas,
+    text_pos=None,
+    text_size=12,
+    minify_script=True,
+    always_on_top=True,
+)
 
 exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
     a.datas,
+    splash,
+    splash.binaries,
     [],
     name='main',
     debug=False,
@@ -34,5 +45,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.ico'],
+    icon=['C:\\Users\\Pedro Giroldo\\Documents\\Codes\\Cladograph-V1\\icon.ico'],
 )

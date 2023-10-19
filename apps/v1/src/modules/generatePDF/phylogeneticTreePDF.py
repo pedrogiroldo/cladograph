@@ -43,9 +43,7 @@ def generateCaracterísticasTable(dados_comparativos, ancestral, descendentes):
             # Adicionar "Sim" ou "Não" para cada descendente no grupo
             for nome in grupo:
                 valor_descendente = descendentes[nome].get(caracteristica, False)
-                tabela_html += "<td>{}</td>".format(
-                    "X" if valor_descendente else ""
-                )
+                tabela_html += "<td>{}</td>".format("X" if valor_descendente else "")
             tabela_html += "</tr>"
 
         # Fechar a tabela HTML
@@ -68,10 +66,10 @@ def generateSinPlesApoTable(descendentes):
 
 def generatePDF(dados_comparativos, ancestral, descendentes):
     html = f"""
-<img src="src/modules/generatePDF/assets/logo_cladograph_pdf.png" width=250 />
+<img src="_internal/src/modules/generatePDF/assets/logo_cladograph_pdf.png" width=250 />
 {threeSpaces}
 <center>
-<img src="src/modules/generatePDF/assets/cacheTree.png" width=500 />
+<img src="_internal/src/modules/generatePDF/assets/cacheTree.png" width=500 />
 </center>
 {threeSpaces}
 {

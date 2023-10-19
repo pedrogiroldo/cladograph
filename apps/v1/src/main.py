@@ -45,7 +45,6 @@ ns["vt_line_width"] = 1
 ts.force_topology = forcar_topologia_var.get()
 
 
-
 def atualizar_estilos():
     ts.show_leaf_name = leaf_name_var.get()
     ts.force_topology = forcar_topologia_var.get()
@@ -611,7 +610,7 @@ def criar_arvore_a_partir_da_comparacao():
             node.set_style(ns)
 
         cacheTree.render(
-            "src/modules/generatePDF/assets/cacheTree.png",
+            "_internal/src/modules/generatePDF/assets/cacheTree.png",
             w=4000,
             units="px",
             tree_style=ts,
@@ -669,16 +668,18 @@ def criar_arvore_a_partir_da_comparacao():
             frame_comparador, text="Copiar newick", command=copiar_newick
         )
         btn_copiar_newick.grid(row=4, column=0, **grid_style_comparador)
-        
+
         def gerar_pdf_relatorio():
-            generatePDF.phylogeneticTreePDF.generatePDF(descendentes=descendentes, ancestral=ancestral, dados_comparativos=dados_comparativos)
-        
-        btn_gerar_pdf= ttk.Button(
+            generatePDF.phylogeneticTreePDF.generatePDF(
+                descendentes=descendentes,
+                ancestral=ancestral,
+                dados_comparativos=dados_comparativos,
+            )
+
+        btn_gerar_pdf = ttk.Button(
             frame_comparador, text="Gerar PDF", command=gerar_pdf_relatorio
         )
         btn_gerar_pdf.grid(row=5, column=0, **grid_style_comparador)
-        
-            
 
     btn_criar_dados = ttk.Button(
         janela_comparador,
