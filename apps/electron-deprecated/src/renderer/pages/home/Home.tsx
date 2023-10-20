@@ -86,7 +86,20 @@ export default function Home() {
             </Grid>
             <Grid item xs={6}>
               <div className="comparasionInfoContainer">
-                <div>aa</div>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <div>Descendentes:</div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div>5</div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div>Características:</div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div>5</div>
+                  </Grid>
+                </Grid>
               </div>
             </Grid>
           </Grid>
