@@ -55,7 +55,7 @@ export default function Home() {
           <h1 id="comparatorTitle">Comparador</h1>
           <ButtonGroup variant="outlined" size="medium">
             <Button>Adicionar características</Button>
-            <Button>Adicionar ancestral</Button>
+            <Button>Adicionar grupo ext.</Button>
             <Button>Adicionar descendente</Button>
             <Button>Gerar árvore</Button>
           </ButtonGroup>
@@ -76,7 +76,7 @@ export default function Home() {
                   fullWidth
                   id="comparasionInfoButtonId"
                 >
-                  Visualizar ancestral
+                  Visualizar grupo ext.
                 </Button>
                 <Button
                   variant="contained"
