@@ -45,7 +45,7 @@ export default function TraitsListItem(props: Props) {
             style={traitTextField}
           />
           <IconButton onClick={handleSaveClick} style={saveButton}>
-            <FaCheck />
+            <FaCheck color="green" />
           </IconButton>
         </>
       ) : (
@@ -60,12 +60,12 @@ export default function TraitsListItem(props: Props) {
             }}
           />
           <IconButton onClick={handleEditClick} style={pencilButton}>
-            <FaPencilAlt />
+            <FaPencilAlt color="#1976D2" />
           </IconButton>
         </div>
       )}
       <IconButton onClick={trashFunc} style={trashButton}>
-        <FaTrashAlt />
+        <FaTrashAlt color="#1976D2" />
       </IconButton>
     </div>
   );

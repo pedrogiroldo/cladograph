@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AiOutlineHome } from 'react-icons/ai';
 import { Button, TextField } from '@mui/material';
 import TraitsListItem from '../../components/TraitsListItem/TraitsListItem';
 import {
   addTraitButton,
   addTraitsActionArea,
-  homeButton,
   inputs,
   main,
-  navbar,
   saveButton,
 } from './styles';
 import { Traits } from '../../../models/traitsTypes';
@@ -17,10 +13,9 @@ import {
   getTraits,
   saveTraits,
 } from '../../../scripts/cacheManager/traitsCRUD';
+import Navbar from '../../components/Navbar/Navbar';
 
 export default function AddTraitsPage() {
-  const navigate = useNavigate();
-
   const [traits, setTraits] = useState<Traits>([]); // Use state to manage traits
 
   useEffect(() => {
@@ -54,18 +49,16 @@ export default function AddTraitsPage() {
     setTraits(updatedTraits);
   };
 
-  const saveTraitsInSessionStorage = () => saveTraits(traits);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const saveTraitsInSessionStorage = () => {
+    setIsSaved(true);
+    saveTraits(traits);
+  };
 
   return (
     <div style={main}>
-      <div style={navbar}>
-        <div>Logo</div>
-        <AiOutlineHome
-          onClick={() => navigate('/')}
-          size="2.5em"
-          style={homeButton}
-        />
-      </div>
+      <Navbar />
       <div style={addTraitsActionArea}>
         <div style={inputs}>
           <TextField
@@ -96,13 +89,24 @@ export default function AddTraitsPage() {
             );
           })}
         </div>
-        <Button
-          variant="outlined"
-          onClick={() => saveTraitsInSessionStorage()}
-          style={saveButton}
-        >
-          Salvar
-        </Button>
+        {isSaved ? (
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => saveTraitsInSessionStorage()}
+            style={saveButton}
+          >
+            Salvar
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={() => saveTraitsInSessionStorage()}
+            style={saveButton}
+          >
+            Salvar
+          </Button>
+        )}
       </div>
       {/* <Button onClick={() => console.log(traits)}>log</Button> */}
     </div>

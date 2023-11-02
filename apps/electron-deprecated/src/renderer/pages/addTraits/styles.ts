@@ -25,7 +25,6 @@ export const addTraitsActionArea: CSS.Properties = {
   width: '100%',
   height: '90vh',
   display: 'flex',
-  // justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
 };

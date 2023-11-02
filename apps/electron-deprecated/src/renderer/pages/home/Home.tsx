@@ -56,7 +56,9 @@ export default function Home() {
             <Button onClick={() => navigate('/addTraits')}>
               Adicionar características
             </Button>
-            <Button>Adicionar grupo ext.</Button>
+            <Button onClick={() => navigate('/addExternalGroup')}>
+              Adicionar grupo ext.
+            </Button>
             <Button>Adicionar descendente</Button>
             <Button>Gerar árvore</Button>
           </ButtonGroup>
