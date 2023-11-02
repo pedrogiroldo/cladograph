@@ -13,3 +13,16 @@ export const actionArea: CSS.Properties = {};
 export const externalGroupTraits: CSS.Properties = {
   color: '#1976D2',
 };
+
+export const inputs: CSS.Properties = {
+  display: 'flex',
+  marginBottom: '2vh',
+};
+
+export const addTraitButton: CSS.Properties = {
+  marginLeft: '2vw',
+};
+
+export const saveButton: CSS.Properties = {
+  marginTop: '2vh',
+};
