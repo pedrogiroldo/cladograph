@@ -25,7 +25,7 @@ export const addTraitsActionArea: CSS.Properties = {
   width: '100%',
   height: '90vh',
   display: 'flex',
-  justifyContent: 'center',
+  // justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
 };
@@ -37,4 +37,8 @@ export const inputs: CSS.Properties = {
 
 export const addTraitButton: CSS.Properties = {
   marginLeft: '2vw',
+};
+
+export const saveButton: CSS.Properties = {
+  marginTop: '2vh',
 };

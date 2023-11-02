@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 import { Button, TextField } from '@mui/material';
@@ -10,12 +10,24 @@ import {
   inputs,
   main,
   navbar,
+  saveButton,
 } from './styles';
+import { Traits } from '../../../models/traitsTypes';
+import {
+  getTraits,
+  saveTraits,
+} from '../../../scripts/cacheManager/traitsCRUD';
 
 export default function AddTraitsPage() {
   const navigate = useNavigate();
 
-  const [traits, setTraits] = useState<string[]>([]); // Use state to manage traits
+  const [traits, setTraits] = useState<Traits>([]); // Use state to manage traits
+
+  useEffect(() => {
+    const cachedTraits: Traits | undefined = getTraits();
+    if (cachedTraits === undefined) return;
+    setTraits(cachedTraits);
+  }, []);
 
   const [inputValue, setInputValue] = useState('');
   const setInputValueFunc = (e: any) => {
@@ -41,6 +53,8 @@ export default function AddTraitsPage() {
     );
     setTraits(updatedTraits);
   };
+
+  const saveTraitsInSessionStorage = () => saveTraits(traits);
 
   return (
     <div style={main}>
@@ -82,6 +96,13 @@ export default function AddTraitsPage() {
             );
           })}
         </div>
+        <Button
+          variant="outlined"
+          onClick={() => saveTraitsInSessionStorage()}
+          style={saveButton}
+        >
+          Salvar
+        </Button>
       </div>
       {/* <Button onClick={() => console.log(traits)}>log</Button> */}
     </div>
