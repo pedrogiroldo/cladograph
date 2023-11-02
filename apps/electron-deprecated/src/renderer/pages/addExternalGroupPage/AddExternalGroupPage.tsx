@@ -16,24 +16,35 @@ import {
   saveTraits,
 } from '../../../scripts/cacheManager/traitsCRUD';
 import { ExternalGroup } from '../../../models/externalGroupTypes';
+import {
+  getExternalGroup,
+  saveExternalGroup,
+} from '../../../scripts/cacheManager/externalGroupCRUD';
 
 export default function AddExternalGroupPage() {
   const [traits, setTraits] = useState<Traits>([]);
-  const [selectedTraits, setSelectedTraits] = useState<ExternalGroup>({});
+  const [externalGroup, setExternalGroup] = useState<ExternalGroup>({});
 
   useEffect(() => {
     const cachedTraits: Traits | undefined = getTraits();
     if (cachedTraits === undefined) return;
+
     const initialExternalGroup: ExternalGroup = {};
     cachedTraits.forEach((trait) => {
       initialExternalGroup[trait] = false; // Initialize all traits with false value
     });
+
     setTraits(cachedTraits);
-    setSelectedTraits(initialExternalGroup);
+    setExternalGroup(initialExternalGroup);
+
+    const cachedExternalGroup = getExternalGroup();
+    if (cachedExternalGroup !== undefined) {
+      setExternalGroup(cachedExternalGroup);
+    }
   }, []);
 
   const handleTraitChange = (trait: string) => {
-    setSelectedTraits((prevState) => ({
+    setExternalGroup((prevState) => ({
       ...prevState,
       [trait]: !prevState[trait], // Toggles the trait value
     }));
@@ -50,8 +61,8 @@ export default function AddExternalGroupPage() {
       const newTraits = [inputValue, ...traits];
       setTraits(newTraits);
 
-      // Atualizando selectedTraits com a nova característica
-      setSelectedTraits((prevState) => {
+      // Atualizando externalGroup com a nova característica
+      setExternalGroup((prevState) => {
         return { [inputValue]: false, ...prevState };
       });
       setInputValue(''); // Reset inputValue
@@ -60,9 +71,10 @@ export default function AddExternalGroupPage() {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  const saveTraitsInSessionStorage = () => {
+  const saveTraitsAndExternalGroupInSessionStorage = () => {
     setIsSaved(true);
     saveTraits(traits);
+    saveExternalGroup(externalGroup);
   };
 
   return (
@@ -92,7 +104,7 @@ export default function AddExternalGroupPage() {
               key={trait}
               control={
                 <BpCheckbox
-                  checked={!!selectedTraits[trait]} // Checking if the trait exists in selectedTraits
+                  checked={!!externalGroup[trait]} // Checking if the trait exists in externalGroup
                   onChange={() => handleTraitChange(trait)}
                 />
               }
@@ -104,7 +116,7 @@ export default function AddExternalGroupPage() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => saveTraitsInSessionStorage()}
+            onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
             style={saveButton}
           >
             Salvar
@@ -112,13 +124,13 @@ export default function AddExternalGroupPage() {
         ) : (
           <Button
             variant="outlined"
-            onClick={() => saveTraitsInSessionStorage()}
+            onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
             style={saveButton}
           >
             Salvar
           </Button>
         )}
-        <Button onClick={() => console.log(selectedTraits)}>ver</Button>
+        <Button onClick={() => console.log(externalGroup)}>ver</Button>
       </div>
     </div>
   );
