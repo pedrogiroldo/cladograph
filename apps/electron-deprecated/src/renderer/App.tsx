@@ -2,7 +2,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 // import icon from '../../assets/icon.svg';
 import Home from './pages/home/Home';
 import './App.css';
-import AddTraitsPage from './pages/addTraits/AddTraitsPage';
+import AddTraitsPage from './pages/addTraitsPage/AddTraitsPage';
 import AddExternalGroupPage from './pages/addExternalGroupPage/AddExternalGroupPage';
 
 export default function App() {

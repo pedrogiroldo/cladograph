@@ -65,7 +65,7 @@ export default function TraitsListItem(props: Props) {
         </div>
       )}
       <IconButton onClick={trashFunc} style={trashButton}>
-        <FaTrashAlt color="#1976D2" />
+        <FaTrashAlt color="#de0a26" />
       </IconButton>
     </div>
   );
