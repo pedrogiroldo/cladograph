@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import {
   actionArea,
   addTraitButton,
+  checkButton,
   externalGroupTraits,
   inputs,
   main,
@@ -106,32 +107,33 @@ export default function AddExternalGroupPage() {
                 <BpCheckbox
                   checked={!!externalGroup[trait]} // Checking if the trait exists in externalGroup
                   onChange={() => handleTraitChange(trait)}
+                  style={checkButton}
                 />
               }
               label={trait}
             />
           ))}
         </FormGroup>
-        {isSaved ? (
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
-            style={saveButton}
-          >
-            Salvar
-          </Button>
-        ) : (
-          <Button
-            variant="outlined"
-            onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
-            style={saveButton}
-          >
-            Salvar
-          </Button>
-        )}
-        <Button onClick={() => console.log(externalGroup)}>ver</Button>
       </div>
+      {isSaved ? (
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
+          style={saveButton}
+        >
+          Salvar
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          onClick={() => saveTraitsAndExternalGroupInSessionStorage()}
+          style={saveButton}
+        >
+          Salvar
+        </Button>
+      )}
+      {/* <Button onClick={() => console.log(externalGroup)}>ver</Button> */}
     </div>
   );
 }
