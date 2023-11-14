@@ -1,26 +1,27 @@
-import { Traits } from '../../models/traitsTypes';
+import { TraitsObject } from '../../models/traitsTypes';
 
-export function saveTraits(traits: Traits) {
-  sessionStorage.setItem('traits', JSON.stringify(traits));
-  return traits;
-}
+export function getTraits(): TraitsObject | undefined {
+  const traitsObject: string | null = sessionStorage.getItem('traitsObject');
+  if (traitsObject === null) return undefined;
 
-export function getTraits(): Traits | undefined {
-  const traits: string | null = sessionStorage.getItem('traits');
-  if (traits === null) return undefined;
-
-  const parsedTraits: Traits = JSON.parse(traits);
+  const parsedTraits: TraitsObject = JSON.parse(traitsObject);
 
   return parsedTraits;
+}
+
+export function saveTraits(traitsObject: TraitsObject) {
+  sessionStorage.setItem('traitsObject', JSON.stringify(traitsObject));
+
+  return traitsObject;
 }
 
 export function deleteTraits() {
-  const traits: string | null = sessionStorage.getItem('traits');
-  sessionStorage.removeItem('traits');
+  const traitsObject: string | null = sessionStorage.getItem('traitsObject');
+  sessionStorage.removeItem('traitsObject');
 
-  if (traits === null) return null;
+  if (traitsObject === null) return null;
 
-  const parsedTraits: Traits = JSON.parse(traits);
+  const parsedTraitsObject: TraitsObject = JSON.parse(traitsObject);
 
-  return parsedTraits;
+  return parsedTraitsObject;
 }
