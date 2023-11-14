@@ -1,5 +1,5 @@
 export interface Trait {
-  id: string;
+  id: number;
   traitName: string;
   lastTraitName: string | undefined; // help to handle errors it's a possbile function for this
   active: boolean; // save the history of traits

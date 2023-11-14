@@ -1,3 +1,7 @@
+/**
+ * @todo revisar código depois de escrever
+ */
+
 import { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import TraitsListItem from '../../components/TraitsListItem/TraitsListItem';
@@ -8,23 +12,24 @@ import {
   main,
   saveButton,
 } from './styles';
-import { Traits } from '../../../models/traitsTypes';
 import {
   getTraits,
   saveTraits,
 } from '../../../scripts/cacheManager/traitsCRUD';
 import Navbar from '../../components/Navbar/Navbar';
+import { Trait, TraitsObject } from '../../../models/traitsTypes';
 
 export default function AddTraitsPage() {
-  const [traits, setTraits] = useState<Traits>([]); // Use state to manage traits
+  const [traits, setTraits] = useState<TraitsObject>([]); // Use state to manage traits
 
   useEffect(() => {
-    const cachedTraits: Traits | undefined = getTraits();
+    const cachedTraits: TraitsObject | undefined = getTraits();
     if (cachedTraits === undefined) return;
     setTraits(cachedTraits);
   }, []);
 
   const [inputValue, setInputValue] = useState('');
+
   const setInputValueFunc = (e: any) => {
     setInputValue(e.target.value);
   };
@@ -32,7 +37,16 @@ export default function AddTraitsPage() {
   const addInputValueToTraitsArray = () => {
     if (inputValue.trim() !== '') {
       // Check for non-empty input
-      setTraits([inputValue, ...traits]); // Update traits using setTraits
+
+      const newTrait: Trait = {
+        // adcionar verificação de id
+        id: 1,
+        traitName: inputValue,
+        lastTraitName: undefined,
+        active: true,
+      };
+
+      setTraits([newTrait, ...traits]); // Update traits using setTraits
       setInputValue(''); // Reset inputValue
     }
   };
@@ -79,9 +93,9 @@ export default function AddTraitsPage() {
         <div>
           {traits.map((trait) => {
             return (
-              <div key={trait}>
+              <div key={trait.id}>
                 <TraitsListItem
-                  value={trait}
+                  value={trait.traitName}
                   trashFunc={() => deleteTraitFromArray(trait)}
                   pencilFunc={editTraitFromArray}
                 />
@@ -108,6 +122,7 @@ export default function AddTraitsPage() {
           </Button>
         )}
       </div>
+      {/* testing button */}
       {/* <Button onClick={() => console.log(traits)}>log</Button> */}
     </div>
   );
