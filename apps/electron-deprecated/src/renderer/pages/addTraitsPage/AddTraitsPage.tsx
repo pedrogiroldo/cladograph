@@ -1,7 +1,3 @@
-/**
- * @todo revisar código depois de escrever
- */
-
 import { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import TraitsListItem from '../../components/TraitsListItem/TraitsListItem';
@@ -35,16 +31,14 @@ export default function AddTraitsPage() {
   };
 
   const addInputValueToTraitsArray = () => {
+    // Check for non-empty input
     if (inputValue.trim() !== '') {
-      // Check for non-empty input
-
       // pick the last trait to use its id
       const lastTraitAdded = traits[0];
 
       const lastTraitAddedId = lastTraitAdded ? lastTraitAdded.id + 1 : 1; // autoincrement id system
 
       const newTrait: Trait = {
-        // adcionar verificação de id
         id: lastTraitAddedId,
         traitName: inputValue,
         lastTraitName: undefined,
@@ -81,7 +75,7 @@ export default function AddTraitsPage() {
     setTraits(updatedTraits);
   };
 
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(false); // for button style
 
   const saveTraitsInSessionStorage = () => {
     setIsSaved(true);
