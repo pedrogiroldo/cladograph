@@ -38,9 +38,14 @@ export default function AddTraitsPage() {
     if (inputValue.trim() !== '') {
       // Check for non-empty input
 
+      // pick the last trait to use its id
+      const lastTraitAdded = traits[0];
+
+      const lastTraitAddedId = lastTraitAdded ? lastTraitAdded.id + 1 : 1; // autoincrement id system
+
       const newTrait: Trait = {
         // adcionar verificação de id
-        id: 1,
+        id: lastTraitAddedId,
         traitName: inputValue,
         lastTraitName: undefined,
         active: true,
@@ -51,15 +56,28 @@ export default function AddTraitsPage() {
     }
   };
 
-  const deleteTraitFromArray = (trait: string) => {
-    const updatedTraits = traits.filter((item) => item !== trait);
-    setTraits(updatedTraits);
+  const deleteTraitFromArray = (traitId: number) => {
+    const newTraits = traits.map((trait) => {
+      if (trait.id === traitId) {
+        return { ...trait, active: false };
+      }
+      return trait;
+    });
+
+    setTraits(newTraits);
   };
 
-  const editTraitFromArray = (oldTrait: string, newTrait: string) => {
-    const updatedTraits = traits.map((item) =>
-      item === oldTrait ? newTrait : item,
-    );
+  const editTraitFromArray = (traitId: number, newTraitName: string) => {
+    const updatedTraits = traits.map((trait) => {
+      if (trait.id === traitId) {
+        return {
+          ...trait,
+          traitName: newTraitName,
+          lastTraitName: trait.traitName,
+        };
+      }
+      return trait;
+    });
     setTraits(updatedTraits);
   };
 
@@ -92,15 +110,19 @@ export default function AddTraitsPage() {
         </div>
         <div>
           {traits.map((trait) => {
-            return (
-              <div key={trait.id}>
-                <TraitsListItem
-                  value={trait.traitName}
-                  trashFunc={() => deleteTraitFromArray(trait)}
-                  pencilFunc={editTraitFromArray}
-                />
-              </div>
-            );
+            if (trait.active === true) {
+              return (
+                <div key={trait.id}>
+                  <TraitsListItem
+                    id={trait.id}
+                    value={trait.traitName}
+                    trashFunc={() => deleteTraitFromArray(trait.id)}
+                    pencilFunc={editTraitFromArray}
+                  />
+                </div>
+              );
+            }
+            return undefined;
           })}
         </div>
         {isSaved ? (
