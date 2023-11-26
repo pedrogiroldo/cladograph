@@ -11,7 +11,7 @@ import {
   main,
   saveButton,
 } from './styles';
-import { Traits } from '../../../models/traitsTypes';
+import { TraitsObject } from '../../../models/traitsTypes';
 import {
   getTraits,
   saveTraits,
@@ -23,11 +23,15 @@ import {
 } from '../../../scripts/cacheManager/externalGroupCRUD';
 
 export default function AddExternalGroupPage() {
-  const [traits, setTraits] = useState<Traits>([]);
+  const [traits, setTraits] = useState<TraitsObject>([]);
   const [externalGroup, setExternalGroup] = useState<ExternalGroup>({});
+  const [
+    traitsExternalGroupRelationsArray,
+    setTraitsExternalGroupRelationsArray,
+  ] = useState<string[][] | undefined>(undefined);
 
   useEffect(() => {
-    const cachedTraits: Traits | undefined = getTraits();
+    const cachedTraits: TraitsObject | undefined = getTraits();
     if (cachedTraits === undefined) return;
 
     const initialExternalGroup: ExternalGroup = {};
@@ -44,11 +48,12 @@ export default function AddExternalGroupPage() {
     }
   }, []);
 
-  const handleTraitChange = (trait: string) => {
-    setExternalGroup((prevState) => ({
-      ...prevState,
-      [trait]: !prevState[trait], // Toggles the trait value
-    }));
+  const handleTraitChange = (traitId: number) => {
+    // setExternalGroup((prevState) => ({
+    //   ...prevState,
+    //   [trait]: !prevState[trait], // Toggles the trait value
+    // }));
+    const newTraitsExternalGroupRelationsArray = traitsExternalGroupRelationsArray.
   };
 
   const [inputValue, setInputValue] = useState('');
