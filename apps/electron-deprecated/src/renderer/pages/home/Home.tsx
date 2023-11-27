@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, ButtonGroup, TextField } from '@mui/material';
 import Tree from '../../components/Tree/Tree';
 import './style.css';
-import { TraitsObject } from '../../../models/traitsTypes';
+import { TraitObjectsArray } from '../../../models/traitsTypes';
 import { getTraits } from '../../../scripts/cacheManager/traitsCRUD';
 import defaultNewick from './defaultTree';
 
@@ -12,7 +12,7 @@ export default function Home() {
   const [alreadyAddedTraits, setAlreadyAddedTraits] = useState(false);
 
   useEffect(() => {
-    const cachedTraits: TraitsObject | undefined = getTraits();
+    const cachedTraits: TraitObjectsArray | undefined = getTraits();
     if (cachedTraits === undefined) {
       setAlreadyAddedTraits(false);
     } else if (!cachedTraits[0]) {
@@ -78,7 +78,9 @@ export default function Home() {
             <Button onClick={() => navigate('/addExternalGroup')}>
               Adicionar grupo ext.
             </Button>
-            <Button>Adicionar descendente</Button>
+            <Button onClick={() => navigate('/addDescendants')}>
+              Adicionar descendente
+            </Button>
             <Button>Gerar árvore</Button>
           </ButtonGroup>
           {/* <Grid container>
