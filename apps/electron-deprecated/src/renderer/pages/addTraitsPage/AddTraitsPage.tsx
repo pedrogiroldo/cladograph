@@ -13,13 +13,13 @@ import {
   saveTraits,
 } from '../../../scripts/cacheManager/traitsCRUD';
 import Navbar from '../../components/Navbar/Navbar';
-import { Trait, TraitsObject } from '../../../models/traitsTypes';
+import { Trait, TraitObjectsArray } from '../../../models/traitsTypes';
 
 export default function AddTraitsPage() {
-  const [traits, setTraits] = useState<TraitsObject>([]); // Use state to manage traits
+  const [traits, setTraits] = useState<TraitObjectsArray>([]); // Use state to manage traits
 
   useEffect(() => {
-    const cachedTraits: TraitsObject | undefined = getTraits();
+    const cachedTraits: TraitObjectsArray | undefined = getTraits();
     if (cachedTraits === undefined) return;
     setTraits(cachedTraits);
   }, []);
