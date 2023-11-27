@@ -1,3 +1,3 @@
 export interface ExternalGroup {
-  [trait: string]: boolean;
+  traits?: Array<number>;
 }

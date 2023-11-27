@@ -11,7 +11,7 @@ import {
   main,
   saveButton,
 } from './styles';
-import { TraitsObject } from '../../../models/traitsTypes';
+import { TraitObjectsArray } from '../../../models/traitsTypes';
 import {
   getTraits,
   saveTraits,
@@ -23,24 +23,14 @@ import {
 } from '../../../scripts/cacheManager/externalGroupCRUD';
 
 export default function AddExternalGroupPage() {
-  const [traits, setTraits] = useState<TraitsObject>([]);
+  const [traits, setTraits] = useState<TraitObjectsArray>([]);
   const [externalGroup, setExternalGroup] = useState<ExternalGroup>({});
-  const [
-    traitsExternalGroupRelationsArray,
-    setTraitsExternalGroupRelationsArray,
-  ] = useState<string[][] | undefined>(undefined);
 
   useEffect(() => {
-    const cachedTraits: TraitsObject | undefined = getTraits();
-    if (cachedTraits === undefined) return;
-
-    const initialExternalGroup: ExternalGroup = {};
-    cachedTraits.forEach((trait) => {
-      initialExternalGroup[trait] = false; // Initialize all traits with false value
-    });
-
-    setTraits(cachedTraits);
-    setExternalGroup(initialExternalGroup);
+    const cachedTraits: TraitObjectsArray | undefined = getTraits();
+    if (cachedTraits !== undefined) {
+      setTraits(cachedTraits);
+    }
 
     const cachedExternalGroup = getExternalGroup();
     if (cachedExternalGroup !== undefined) {
@@ -49,11 +39,13 @@ export default function AddExternalGroupPage() {
   }, []);
 
   const handleTraitChange = (traitId: number) => {
-    // setExternalGroup((prevState) => ({
-    //   ...prevState,
-    //   [trait]: !prevState[trait], // Toggles the trait value
-    // }));
-    const newTraitsExternalGroupRelationsArray = traitsExternalGroupRelationsArray.
+    const alreadyAddedTraitsInExternalGroup = externalGroup.traits;
+    if (externalGroup && alreadyAddedTraitsInExternalGroup) {
+      const newExternalGroup: ExternalGroup = {
+        traits: [...alreadyAddedTraitsInExternalGroup, traitId],
+      };
+      setExternalGroup(newExternalGroup);
+    }
   };
 
   const [inputValue, setInputValue] = useState('');
@@ -62,15 +54,22 @@ export default function AddExternalGroupPage() {
   };
 
   const addInputValueToTraitsArray = () => {
+    // Check for non-empty input
     if (inputValue.trim() !== '') {
-      // Check for non-empty input
-      const newTraits = [inputValue, ...traits];
-      setTraits(newTraits);
+      const lastTraitAdded = traits[0];
+      const lastTraitAddedId = lastTraitAdded ? lastTraitAdded.id + 1 : 1; // autoincrement id system
 
-      // Atualizando externalGroup com a nova característica
-      setExternalGroup((prevState) => {
-        return { [inputValue]: false, ...prevState };
-      });
+      const newTraitObjectsArray: TraitObjectsArray = [
+        {
+          id: lastTraitAddedId, // autoincrement system for those ids
+          traitName: inputValue,
+          lastTraitName: undefined,
+          active: true,
+        },
+        ...traits,
+      ];
+      setTraits(newTraitObjectsArray);
+
       setInputValue(''); // Reset inputValue
     }
   };
@@ -105,19 +104,28 @@ export default function AddExternalGroupPage() {
           </Button>
         </div>
         <FormGroup>
-          {traits.map((trait) => (
-            <FormControlLabel
-              key={trait}
-              control={
-                <BpCheckbox
-                  checked={!!externalGroup[trait]} // Checking if the trait exists in externalGroup
-                  onChange={() => handleTraitChange(trait)}
-                  style={checkButton}
+          {traits.map((trait) => {
+            if (trait.active === true) {
+              return (
+                <FormControlLabel
+                  key={trait.id}
+                  control={
+                    <BpCheckbox
+                      checked={
+                        externalGroup.traits
+                          ? !!externalGroup.traits[trait.id]
+                          : false
+                      } // Checking if the trait exists in externalGroup traits array
+                      onChange={() => handleTraitChange(trait.id)}
+                      style={checkButton}
+                    />
+                  }
+                  label={trait.traitName}
                 />
-              }
-              label={trait}
-            />
-          ))}
+              );
+            }
+            return undefined;
+          })}
         </FormGroup>
       </div>
       {isSaved ? (

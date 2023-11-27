@@ -5,4 +5,4 @@ export interface Trait {
   active: boolean; // save the history of traits
 }
 
-export type TraitsObject = Trait[];
+export type TraitObjectsArray = Array<Trait>;
