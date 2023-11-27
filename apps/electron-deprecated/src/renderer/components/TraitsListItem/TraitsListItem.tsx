@@ -10,13 +10,14 @@ import {
 } from './styles';
 
 interface Props {
+  id: number;
   value: string;
   trashFunc: any;
   pencilFunc: any;
 }
 
 export default function TraitsListItem(props: Props) {
-  const { value, trashFunc, pencilFunc } = props;
+  const { value, trashFunc, pencilFunc, id } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [editedValue, setEditedValue] = useState(value);
 
@@ -26,7 +27,7 @@ export default function TraitsListItem(props: Props) {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    pencilFunc(value, editedValue); // Aqui você pode executar a função para salvar o valor editado
+    pencilFunc(id, editedValue); // Aqui você pode executar a função para salvar o valor editado
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,26 +1,32 @@
-import { Traits } from '../../models/traitsTypes';
+import { TraitObjectsArray } from '../../models/traitsTypes';
 
-export function saveTraits(traits: Traits) {
-  sessionStorage.setItem('traits', JSON.stringify(traits));
-  return traits;
-}
+export function getTraits(): TraitObjectsArray | undefined {
+  const traitObjectsArray: string | null =
+    sessionStorage.getItem('traitObjectsArray');
+  if (traitObjectsArray === null) return undefined;
 
-export function getTraits(): Traits | undefined {
-  const traits: string | null = sessionStorage.getItem('traits');
-  if (traits === null) return undefined;
-
-  const parsedTraits: Traits = JSON.parse(traits);
+  const parsedTraits: TraitObjectsArray = JSON.parse(traitObjectsArray);
 
   return parsedTraits;
+}
+
+export function saveTraits(traitObjectsArray: TraitObjectsArray) {
+  sessionStorage.setItem(
+    'traitObjectsArray',
+    JSON.stringify(traitObjectsArray),
+  );
+
+  return traitObjectsArray;
 }
 
 export function deleteTraits() {
-  const traits: string | null = sessionStorage.getItem('traits');
-  sessionStorage.removeItem('traits');
+  const traitObjectsArray: string | null =
+    sessionStorage.getItem('traitObjectsArray');
+  sessionStorage.removeItem('traitsObject');
 
-  if (traits === null) return null;
+  if (traitObjectsArray === null) return null;
 
-  const parsedTraits: Traits = JSON.parse(traits);
+  const parsedTraitsObject: TraitObjectsArray = JSON.parse(traitObjectsArray);
 
-  return parsedTraits;
+  return parsedTraitsObject;
 }

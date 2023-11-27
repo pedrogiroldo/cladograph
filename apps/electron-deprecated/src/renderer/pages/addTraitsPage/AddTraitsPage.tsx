@@ -8,48 +8,74 @@ import {
   main,
   saveButton,
 } from './styles';
-import { Traits } from '../../../models/traitsTypes';
 import {
   getTraits,
   saveTraits,
 } from '../../../scripts/cacheManager/traitsCRUD';
 import Navbar from '../../components/Navbar/Navbar';
+import { Trait, TraitObjectsArray } from '../../../models/traitsTypes';
 
 export default function AddTraitsPage() {
-  const [traits, setTraits] = useState<Traits>([]); // Use state to manage traits
+  const [traits, setTraits] = useState<TraitObjectsArray>([]); // Use state to manage traits
 
   useEffect(() => {
-    const cachedTraits: Traits | undefined = getTraits();
+    const cachedTraits: TraitObjectsArray | undefined = getTraits();
     if (cachedTraits === undefined) return;
     setTraits(cachedTraits);
   }, []);
 
   const [inputValue, setInputValue] = useState('');
+
   const setInputValueFunc = (e: any) => {
     setInputValue(e.target.value);
   };
 
   const addInputValueToTraitsArray = () => {
+    // Check for non-empty input
     if (inputValue.trim() !== '') {
-      // Check for non-empty input
-      setTraits([inputValue, ...traits]); // Update traits using setTraits
+      // pick the last trait to use its id
+      const lastTraitAdded = traits[0];
+
+      const lastTraitAddedId = lastTraitAdded ? lastTraitAdded.id + 1 : 1; // autoincrement id system
+
+      const newTrait: Trait = {
+        id: lastTraitAddedId,
+        traitName: inputValue,
+        lastTraitName: undefined,
+        active: true,
+      };
+
+      setTraits([newTrait, ...traits]); // Update traits using setTraits
       setInputValue(''); // Reset inputValue
     }
   };
 
-  const deleteTraitFromArray = (trait: string) => {
-    const updatedTraits = traits.filter((item) => item !== trait);
+  const deleteTraitFromArray = (traitId: number) => {
+    const newTraits = traits.map((trait) => {
+      if (trait.id === traitId) {
+        return { ...trait, active: false };
+      }
+      return trait;
+    });
+
+    setTraits(newTraits);
+  };
+
+  const editTraitFromArray = (traitId: number, newTraitName: string) => {
+    const updatedTraits = traits.map((trait) => {
+      if (trait.id === traitId) {
+        return {
+          ...trait,
+          traitName: newTraitName,
+          lastTraitName: trait.traitName,
+        };
+      }
+      return trait;
+    });
     setTraits(updatedTraits);
   };
 
-  const editTraitFromArray = (oldTrait: string, newTrait: string) => {
-    const updatedTraits = traits.map((item) =>
-      item === oldTrait ? newTrait : item,
-    );
-    setTraits(updatedTraits);
-  };
-
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(false); // for button style
 
   const saveTraitsInSessionStorage = () => {
     setIsSaved(true);
@@ -78,15 +104,19 @@ export default function AddTraitsPage() {
         </div>
         <div>
           {traits.map((trait) => {
-            return (
-              <div key={trait}>
-                <TraitsListItem
-                  value={trait}
-                  trashFunc={() => deleteTraitFromArray(trait)}
-                  pencilFunc={editTraitFromArray}
-                />
-              </div>
-            );
+            if (trait.active === true) {
+              return (
+                <div key={trait.id}>
+                  <TraitsListItem
+                    id={trait.id}
+                    value={trait.traitName}
+                    trashFunc={() => deleteTraitFromArray(trait.id)}
+                    pencilFunc={editTraitFromArray}
+                  />
+                </div>
+              );
+            }
+            return undefined;
           })}
         </div>
         {isSaved ? (
@@ -108,6 +138,7 @@ export default function AddTraitsPage() {
           </Button>
         )}
       </div>
+      {/* testing button */}
       {/* <Button onClick={() => console.log(traits)}>log</Button> */}
     </div>
   );
