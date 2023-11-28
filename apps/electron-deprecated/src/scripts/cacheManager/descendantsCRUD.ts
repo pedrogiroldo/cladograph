@@ -1,5 +1,9 @@
 import { DescendantObjectsArray } from '../../models/descendantsTypes';
 
+/**
+ *
+ * @returns descendants object array or null
+ */
 export function getDescendants(): DescendantObjectsArray | undefined {
   const descendantObjectsArray: string | null = sessionStorage.getItem(
     'descendantObjectsArray',
@@ -13,6 +17,11 @@ export function getDescendants(): DescendantObjectsArray | undefined {
   return parsedDescendantObjectsArray;
 }
 
+/**
+ *
+ * @param {DescendantObjectsArray} descendantObjectsArray - the object which contains the descendants who will be saved
+ * @returns saved descendants object
+ */
 export function saveDescendants(
   descendantObjectsArray: DescendantObjectsArray,
 ): DescendantObjectsArray {
@@ -24,6 +33,10 @@ export function saveDescendants(
   return descendantObjectsArray;
 }
 
+/**
+ *
+ * @returns the deleted object
+ */
 export function deleteDescendants() {
   const descendantObjectsArray: string | null = sessionStorage.getItem(
     'descendantObjectsArray',
@@ -32,9 +45,9 @@ export function deleteDescendants() {
 
   if (descendantObjectsArray === null) return null;
 
-  const parsedTraitsObject: DescendantObjectsArray = JSON.parse(
+  const parsedDescendantObjectsArray: DescendantObjectsArray = JSON.parse(
     descendantObjectsArray,
   );
 
-  return parsedTraitsObject;
+  return parsedDescendantObjectsArray;
 }
