@@ -22,11 +22,36 @@
   align-items: center;
 }
 
-.input {
+.inputs {
+  display: flex;
+  flex-direction: row;
+}
+
+.newDescendantInput {
   display: flex;
   margin-bottom: 2vh;
 }
 
 .addDescendantButton {
   margin-left: 2vw;
+}
+
+.newTraitInput {
+  margin-left: 10vw;
+  height: 100%;
+  display: flex;
+}
+
+.descendantsArea {
+  width: 100%;
+}
+
+.descendantNameH1 {
+  color: #1976D2;
+}
+
+.descendantsItems {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

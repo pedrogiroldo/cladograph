@@ -2,7 +2,7 @@ import { DescendantObjectsArray } from '../../models/descendantsTypes';
 
 /**
  *
- * @returns descendants object array or null
+ * @returns descendants object array or undefined
  */
 export function getDescendants(): DescendantObjectsArray | undefined {
   const descendantObjectsArray: string | null = sessionStorage.getItem(
