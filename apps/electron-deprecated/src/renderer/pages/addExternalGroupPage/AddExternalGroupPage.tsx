@@ -38,13 +38,35 @@ export default function AddExternalGroupPage() {
     }
   }, []);
 
-  const handleTraitChange = (traitId: number) => {
-    const alreadyAddedTraitsInExternalGroup = externalGroup.traits;
-    if (externalGroup && alreadyAddedTraitsInExternalGroup) {
-      const newExternalGroup: ExternalGroup = {
-        traits: [...alreadyAddedTraitsInExternalGroup, traitId],
-      };
-      setExternalGroup(newExternalGroup);
+  /**
+   *
+   * @param traitId - id of the trait to be changed
+   * @param remove - this boolean says if the trait is to be added or removed
+   */
+  const handleTraitChange = (traitId: number, remove: boolean | undefined) => {
+    if (!remove) {
+      let alreadyAddedTraitsInExternalGroup = externalGroup.traitsIds;
+      if (!alreadyAddedTraitsInExternalGroup) {
+        alreadyAddedTraitsInExternalGroup = [];
+      }
+      if (externalGroup && alreadyAddedTraitsInExternalGroup) {
+        const newExternalGroup: ExternalGroup = {
+          traitsIds: [...alreadyAddedTraitsInExternalGroup, traitId],
+        };
+        setExternalGroup(newExternalGroup);
+      }
+    } else if (remove === true) {
+      const alreadyAddedTraitsInExternalGroup = externalGroup.traitsIds;
+      const indexOfTraitToBeDeleted =
+        alreadyAddedTraitsInExternalGroup?.indexOf(traitId);
+      if (
+        externalGroup &&
+        alreadyAddedTraitsInExternalGroup &&
+        (indexOfTraitToBeDeleted || indexOfTraitToBeDeleted === 0)
+      ) {
+        alreadyAddedTraitsInExternalGroup.splice(indexOfTraitToBeDeleted, 1);
+        setExternalGroup({ traitsIds: alreadyAddedTraitsInExternalGroup });
+      }
     }
   };
 
@@ -111,12 +133,13 @@ export default function AddExternalGroupPage() {
                   key={trait.id}
                   control={
                     <BpCheckbox
-                      checked={
-                        externalGroup.traits
-                          ? !!externalGroup.traits[trait.id]
-                          : false
-                      } // Checking if the trait exists in externalGroup traits array
-                      onChange={() => handleTraitChange(trait.id)}
+                      checked={externalGroup.traitsIds?.includes(trait.id)} // Checking if the trait exists in externalGroup traits array
+                      onChange={() =>
+                        handleTraitChange(
+                          trait.id,
+                          externalGroup.traitsIds?.includes(trait.id),
+                        )
+                      }
                       style={checkButton}
                     />
                   }
@@ -124,7 +147,7 @@ export default function AddExternalGroupPage() {
                 />
               );
             }
-            return undefined;
+            return null;
           })}
         </FormGroup>
       </div>
