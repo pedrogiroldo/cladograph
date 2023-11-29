@@ -1,7 +1,7 @@
 {
   "name": "CladoGraph",
-  "version": "2.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Programa didático interativo para análises filogenéticas.",
   "license": "",
   "author": {
     "name": "Pedro Andrade Giroldo",
