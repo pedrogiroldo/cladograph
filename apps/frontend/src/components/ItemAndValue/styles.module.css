@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #1976d2
+}
+
+.value {
+  margin-left: 0.5vw;
+  font-size: 1.2em;
+}

@@ -1,0 +1,2 @@
+export const loremIpsum =
+  'Lorem ipsum dolor sit amet. Qui eligendi veritatis ea sapiente cupiditate est consequatur repellendus eum tempora maxime. Et exercitationem quae eum adipisci sapiente et illo voluptas eum natus soluta qui provident fuga sed perspiciatis magnam non doloremque repudiandae? Aut voluptatem pariatur et omnis placeat non error esse in Quis deserunt et voluptas voluptatem ea nesciunt dolores eos esse quidem? Sit modi totam non voluptatum quisquam in dolores exercitationem et vitae quidem ut expedita quia eum Quis ullam?';
