@@ -1,72 +1,17 @@
 .main {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.nav {
-  display: flex;
-  width: 100%;
-  height: 10vh;
-  flex-direction: column;
-}
-
-.arrowLeft {
-  margin-left: 1.5vw;
-  margin-top: 3vh;
-  cursor: pointer;
-}
-
-.infoArea {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80vw;
-  margin-top: 5vh;
-
+  flex-direction: column;
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-}
-
-.coverFrame {
-  width: 35%;
-  height: 36vh;
-  overflow: hidden;
-  border-radius: 5%;
+.gridArea {
+  width: 75%;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.coverImage {
-  width: 100%;
-  border-radius: 5%;
-  height: auto;
-
+.title {
+  margin-bottom: 10vh;
 }
-
-.leftSide {
-  display: flex;
-  flex-direction: column;
-  margin-left: 5vw;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-  justify-content: space-between;
-}
-
-.description {
-  margin-top: 7vh;
-}
-
-.tree {
-  margin-top: 6vh;
-  width: 100%;
-}
-
-.traitsTable {}

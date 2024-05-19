@@ -1,11 +1,15 @@
-import { Rating } from '@mui/material';
-import { loremIpsum } from './loremIpsum';
-import styles from './styles.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Rating } from "@mui/material";
+import { loremIpsum } from "./loremIpsum";
+import styles from "./styles.module.css";
+import { useRouter } from "next/navigation";
+
 export default function TemplateItem() {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
-    <div className={styles.container} onClick={() => navigate('/templates/2')}>
+    <div
+      className={styles.container}
+      onClick={() => router.replace("/templates/2")}
+    >
       <div className={styles.coverImg} />
       <div className={styles.name}>Morcegos</div>
       <div className={styles.description}>
@@ -13,7 +17,7 @@ export default function TemplateItem() {
           const maxLength = 80;
           let trimmedText = loremIpsum.substring(0, maxLength);
           if (loremIpsum.length > maxLength) {
-            trimmedText += '...';
+            trimmedText += "...";
           }
           return trimmedText;
         })()}
