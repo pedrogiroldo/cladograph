@@ -9,7 +9,9 @@ describe('PhylogeneticTreeScriptsService', () => {
       providers: [PhylogeneticTreeScriptsService],
     }).compile();
 
-    service = module.get<PhylogeneticTreeScriptsService>(PhylogeneticTreeScriptsService);
+    service = module.get<PhylogeneticTreeScriptsService>(
+      PhylogeneticTreeScriptsService,
+    );
   });
 
   it('should be defined', () => {

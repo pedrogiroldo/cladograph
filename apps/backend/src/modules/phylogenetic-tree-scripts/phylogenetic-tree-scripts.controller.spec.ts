@@ -11,7 +11,9 @@ describe('PhylogeneticTreeScriptsController', () => {
       providers: [PhylogeneticTreeScriptsService],
     }).compile();
 
-    controller = module.get<PhylogeneticTreeScriptsController>(PhylogeneticTreeScriptsController);
+    controller = module.get<PhylogeneticTreeScriptsController>(
+      PhylogeneticTreeScriptsController,
+    );
   });
 
   it('should be defined', () => {
