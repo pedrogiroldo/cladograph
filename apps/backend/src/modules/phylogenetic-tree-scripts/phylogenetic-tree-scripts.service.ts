@@ -1,26 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePhylogeneticTreeScriptDto } from './dto/create-phylogenetic-tree-script.dto';
-import { UpdatePhylogeneticTreeScriptDto } from './dto/update-phylogenetic-tree-script.dto';
+import { DescendantObjectsArray } from '../../models/descendantsTypes';
+import { ExternalGroup } from '../../models/externalGroupTypes';
+import { TraitObjectsArray } from '../../models/traitsTypes';
+
+interface Props {
+  traits: TraitObjectsArray;
+  externalGroup: ExternalGroup;
+  descendants: DescendantObjectsArray;
+}
 
 @Injectable()
 export class PhylogeneticTreeScriptsService {
-  create(createPhylogeneticTreeScriptDto: CreatePhylogeneticTreeScriptDto) {
-    return 'This action adds a new phylogeneticTreeScript';
-  }
-
-  findAll() {
-    return `This action returns all phylogeneticTreeScripts`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} phylogeneticTreeScript`;
-  }
-
-  update(id: number, updatePhylogeneticTreeScriptDto: UpdatePhylogeneticTreeScriptDto) {
-    return `This action updates a #${id} phylogeneticTreeScript`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} phylogeneticTreeScript`;
+  generateNewick(props: Props) {
+    console.log(this.generateNewick(props));
+    return this.generateNewick(props);
   }
 }
