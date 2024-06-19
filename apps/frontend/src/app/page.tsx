@@ -7,7 +7,6 @@ import Tree from "../components/Tree/Tree";
 import { TraitObjectsArray } from "../models/traitsTypes";
 import { getTraits } from "../scripts/cacheManager/traitsCRUD";
 import defaultNewick from "./defaultTree";
-import generateNewick from "../scripts/phylogeneticTreesScripts/generateNewick";
 import { ExternalGroup } from "../models/externalGroupTypes";
 import { getExternalGroup } from "../scripts/cacheManager/externalGroupCRUD";
 import { DescendantObjectsArray } from "../models/descendantsTypes";
@@ -17,7 +16,7 @@ import {
   saveTreeNewick,
 } from "../scripts/cacheManager/treeNewickCRUD";
 import styles from "./page.module.css";
-
+import generateNewick from "../requests/phylogeneticTreeScrip.js";
 export default function Home() {
   const [cachedTraits, setCachedTraits] = useState<
     TraitObjectsArray | undefined
@@ -100,17 +99,18 @@ export default function Home() {
               Adicionar descendentes
             </Button>
             <Button
-              onClick={() => {
+              onClick={async () => {
                 if (
                   cachedTraits !== undefined &&
                   cachedExternalGroup !== undefined &&
                   cachedDescendants !== undefined
                 ) {
-                  const newick = generateNewick({
+                  const newick: Response = await generateNewick({
                     traits: cachedTraits,
                     externalGroup: cachedExternalGroup,
                     descendants: cachedDescendants,
                   });
+                  console.log(newick);
                   setActiveNwkOnTree(newick);
                   saveTreeNewick(newick);
                 } else {
