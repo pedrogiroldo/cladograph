@@ -105,7 +105,7 @@ export default function Home() {
                   cachedExternalGroup !== undefined &&
                   cachedDescendants !== undefined
                 ) {
-                  const newick: Response = await generateNewick({
+                  const newick: string = await generateNewick({
                     traits: cachedTraits,
                     externalGroup: cachedExternalGroup,
                     descendants: cachedDescendants,
