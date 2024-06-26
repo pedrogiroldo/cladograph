@@ -1,30 +1,63 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/databse/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService) {}
 
-  create(data: Prisma.UserCreateArgs) {
-    return this.prismaService.user.create(data);
+  create(data: Prisma.UserCreateInput) {
+    try {
+      const createdUser = this.prismaService.user.create({
+        data,
+      });
+      return createdUser;
+    } catch (error) {
+      return error;
+    }
   }
 
   findAll() {
-    return `This action returns all users`;
+    try {
+      const allUsers = this.prismaService.user.findMany();
+      return allUsers;
+    } catch (error) {
+      return error;
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    try {
+      const user = this.prismaService.user.findUnique({
+        where: { id },
+      });
+      return user;
+    } catch (error) {
+      return error;
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, data: Prisma.UserUpdateInput) {
+    try {
+      const updatedUser = this.prismaService.user.update({
+        where: { id },
+        data,
+      });
+      return updatedUser;
+    } catch (error) {
+      return error;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    try {
+      const deletedUser = this.prismaService.user.delete({
+        where: { id },
+      });
+
+      return deletedUser;
+    } catch (error) {
+      return error;
+    }
   }
 }
