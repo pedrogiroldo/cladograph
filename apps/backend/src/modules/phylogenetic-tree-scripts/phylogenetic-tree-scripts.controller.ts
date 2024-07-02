@@ -74,7 +74,7 @@ export class PhylogeneticTreeScriptsController {
         // define value for syn, ples and apo for all descendants
         descendant.synapomorphies = 0;
         descendant.plesiomorphies = 0;
-        descendant.apomorphies = 0;
+        descendant.apomorphines = 0;
 
         // search for plesiomorphies
         descendant.plesiomorphies = filteredTraits.length;
@@ -117,9 +117,9 @@ export class PhylogeneticTreeScriptsController {
                   // console.log('sinapomorfia', descendant, trait);
                 } else if (
                   trait.descendants === 1 &&
-                  (descendant.apomorphies || descendant.apomorphies === 0)
+                  (descendant.apomorphines || descendant.apomorphines === 0)
                 ) {
-                  descendant.apomorphies += 1;
+                  descendant.apomorphines += 1;
                 }
               }
             }

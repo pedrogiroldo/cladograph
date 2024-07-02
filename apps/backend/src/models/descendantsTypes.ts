@@ -5,7 +5,7 @@ export interface Descendant {
   active: boolean;
   synapomorphies?: number;
   plesiomorphies?: number;
-  apomorphies?: number;
+  apomorphines?: number;
 }
 
 export type DescendantObjectsArray = Array<Descendant>;
