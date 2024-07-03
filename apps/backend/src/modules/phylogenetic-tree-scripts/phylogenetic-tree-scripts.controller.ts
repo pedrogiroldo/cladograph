@@ -91,7 +91,7 @@ export class PhylogeneticTreeScriptsController {
           }
         });
 
-        // serach for syn and apo
+        // search for syn and apo
         filteredTraits.forEach((trait) => {
           if (
             trait !== null &&
@@ -139,7 +139,7 @@ export class PhylogeneticTreeScriptsController {
       } else if (a.plesiomorphies !== b.plesiomorphies) {
         return b.plesiomorphies - a.plesiomorphies; // Ordena por Ples em ordem ascendente
       } else {
-        return a.apomorphies - b.apomorphies; // Ordena por Apo em ordem descendente
+        return a.apomorphines - b.apomorphines; // Ordena por Apo em ordem descendente
       }
     };
 
