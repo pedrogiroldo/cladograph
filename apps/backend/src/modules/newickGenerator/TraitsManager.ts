@@ -1,9 +1,9 @@
 import { TraitObjectsArray } from 'src/models/traitsTypes';
 
-export default class Traits {
+export default class TraitsManager {
   private unprocessedTraits: TraitObjectsArray;
   private traits: TraitObjectsArray;
-  private deletedTraits: TraitObjectsArray;
+  private deactivatedTraits: TraitObjectsArray;
 
   public setTraits(traits: TraitObjectsArray) {
     this.unprocessedTraits = traits;
@@ -16,15 +16,15 @@ export default class Traits {
   }
 
   public getDeletedTraits() {
-    return this.deletedTraits;
+    return this.deactivatedTraits;
   }
 
   private filterNonActiveTraits() {
-    this.traits = this.filterActivatedTraits();
-    this.deletedTraits = this.filterDeactivatedTraits();
+    this.traits = this.filterOnlyActivatedTraits();
+    this.deactivatedTraits = this.filterOnlyDeactivatedTraits();
   }
 
-  private filterActivatedTraits() {
+  private filterOnlyActivatedTraits() {
     return this.unprocessedTraits
       .map((trait) => {
         if (trait.active !== true) {
@@ -36,7 +36,7 @@ export default class Traits {
       .filter((trait) => trait !== null);
   }
 
-  private filterDeactivatedTraits() {
+  private filterOnlyDeactivatedTraits() {
     return this.unprocessedTraits
       .map((trait) => {
         if (trait.active !== true) {

@@ -6,3 +6,10 @@ export interface Trait {
 }
 
 export type TraitObjectsArray = Array<Trait>;
+
+export interface TraitAndNumberOfDescendantsThatHaveThem extends Trait {
+  descendants: number;
+}
+
+export type TraitAndNumberOfDescendantsThatHaveThemeObjectsArray =
+  Array<TraitAndNumberOfDescendantsThatHaveThem>;
