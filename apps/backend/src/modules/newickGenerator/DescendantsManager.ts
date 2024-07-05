@@ -1,4 +1,5 @@
 import { DescendantObjectsArray } from 'src/models/descendantsTypes';
+import { TraitObjectsArray } from 'src/models/traitsTypes';
 
 export default class DescendantsManager {
   private unprocessedDescendants: DescendantObjectsArray;
@@ -7,6 +8,7 @@ export default class DescendantsManager {
 
   public setDescendants(descendants: DescendantObjectsArray) {
     this.unprocessedDescendants = descendants;
+
     this.filterNonActiveDescendants();
     return descendants;
   }
@@ -56,9 +58,12 @@ export default class DescendantsManager {
     );
   }
 
-  private deleteDeactivatedTraits(descendants, traits) {
-    return descendants.map((descendant) => {
-      traits
+  private deleteDeactivatedTraits(
+    descendants: DescendantObjectsArray,
+    traits: TraitObjectsArray,
+  ): DescendantObjectsArray {
+    const newDescendants = descendants.map((descendant) => {
+      const traitList = traits
         .map((trait) => {
           if (trait !== null && descendant.traitsIds.includes(trait.id)) {
             return trait.id;
@@ -66,6 +71,12 @@ export default class DescendantsManager {
           return null;
         })
         .filter((trait) => trait !== null);
+      return {
+        ...descendant,
+        traitsIds: traitList,
+      };
     });
+
+    return newDescendants;
   }
 }

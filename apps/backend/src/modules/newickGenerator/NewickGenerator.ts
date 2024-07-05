@@ -8,36 +8,43 @@ import {
 } from 'src/models/traitsTypes';
 
 export default class NewickGenerator {
-  private traits: TraitsManager;
+  private traits = new TraitsManager();
   private traitsAndNumberOfDescendantsThatHaveThem: TraitAndNumberOfDescendantsThatHaveThemeObjectsArray;
   private externalGroup: ExternalGroup;
-  private descendants: DescendantsManager;
+  protected descendants = new DescendantsManager();
+  private newick: string;
 
   constructor(traits, externalGroup, descendants) {
     this.traits.setTraits(traits);
     this.descendants.setDescendants(descendants);
-    this.descendants.removeDeletedTraitsFromBothTypesOfDescendants(this.traits);
+    this.descendants.removeDeletedTraitsFromBothTypesOfDescendants(
+      this.traits.getTraits(),
+    );
     this.externalGroup = externalGroup;
 
-    this.generateNewick();
+    this.newick = this.generateNewick();
+  }
+
+  public getNewick() {
+    return this.newick;
   }
 
   public generateNewick() {
     this.traitsAndNumberOfDescendantsThatHaveThem =
       this.returnTraitWithNumberOfDescendantsWhoHaveIt();
 
-    const descendants = this.descendants.getDescendants();
-    const descendantsWithSinPlesAndApo = descendants.map((descendant) => {
-      descendant.synapomorphies = this.calculateSynapomorphies(descendant);
-      descendant.plesiomorphies = this.calculatePlesiomorphies(descendant);
-      descendant.apomorphies = this.calculateApomorphies(descendant);
-    });
+    const descendantsWithSinPlesAndApo = this.calculateSynPlesioAndApo();
 
     const sortedDescendants = descendantsWithSinPlesAndApo.sort(
       this.compareDescendants,
     );
 
-    return sortedDescendants;
+    const newick =
+      sortedDescendants
+        .map(({ descendantName }) => `(${descendantName},`)
+        .join('')
+        .slice(0, -1) + Array(sortedDescendants.length + 1).join(')');
+    return newick;
   }
 
   private returnTraitWithNumberOfDescendantsWhoHaveIt() {
@@ -52,13 +59,26 @@ export default class NewickGenerator {
   }
 
   private calculateDescendantsOfATrait(trait: Trait): number {
-    return this.descendants.getDescendants().reduce((count, descendant) => {
+    const descendants = this.descendants.getDescendants();
+    return descendants.reduce((count, descendant) => {
       if (descendant.traitsIds.includes(trait.id)) {
         return count + 1;
       }
       return count;
     }, 0);
   }
+
+  private calculateSynPlesioAndApo() {
+    const descendants = this.descendants.getDescendants();
+    return descendants.map((descendant) => {
+      descendant.synapomorphies = this.calculateSynapomorphies(descendant);
+      descendant.plesiomorphies = this.calculatePlesiomorphies(descendant);
+      descendant.apomorphies = this.calculateApomorphies(descendant);
+
+      return descendant;
+    });
+  }
+
   private calculatePlesiomorphies(descendant: Descendant): number {
     let plesiomorphies = 0;
 
@@ -136,7 +156,7 @@ export default class NewickGenerator {
         !externalGroupTraits.includes(traitId) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
           (traitWithNumberOfDescendants) => {
-            traitWithNumberOfDescendants.id = traitId;
+            return (traitWithNumberOfDescendants.id = traitId);
           },
         ).descendants > 1
       ) {
@@ -160,7 +180,7 @@ export default class NewickGenerator {
         !descendant.traitsIds.includes(trait.id) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
           (traitWithNumberOfDescendants) => {
-            traitWithNumberOfDescendants.id = trait.id;
+            return traitWithNumberOfDescendants.id === trait.id;
           },
         ).descendants <
           this.descendants.getDescendants().length - 1
@@ -199,7 +219,7 @@ export default class NewickGenerator {
         !externalGroupTraits.includes(traitId) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
           (traitWithNumberOfDescendants) => {
-            traitWithNumberOfDescendants.id = traitId;
+            return (traitWithNumberOfDescendants.id = traitId);
           },
         ).descendants === 1
       ) {
@@ -223,7 +243,7 @@ export default class NewickGenerator {
         !descendant.traitsIds.includes(trait.id) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
           (traitWithNumberOfDescendants) => {
-            traitWithNumberOfDescendants.id = trait.id;
+            return traitWithNumberOfDescendants.id === trait.id;
           },
         ).descendants ===
           this.descendants.getDescendants().length - 1
