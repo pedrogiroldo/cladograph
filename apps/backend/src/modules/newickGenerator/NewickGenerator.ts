@@ -102,15 +102,6 @@ export default class NewickGenerator {
     const externalGroupTraits = this.externalGroup.traitsIds;
 
     descendant.traitsIds.forEach((traitId) => {
-      console.log(this.traitsAndNumberOfDescendantsThatHaveThem);
-      console.log(traitId);
-      console.log(
-        this.traitsAndNumberOfDescendantsThatHaveThem.find(
-          (traitWithNumberOfDescendants) => {
-            return traitWithNumberOfDescendants.id === traitId;
-          },
-        ),
-      );
       if (
         !externalGroupTraits.includes(traitId) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
