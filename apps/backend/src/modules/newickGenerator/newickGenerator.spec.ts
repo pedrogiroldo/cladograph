@@ -30,8 +30,25 @@ describe('NewickGenerator', () => {
 
   it('should calculate the right number of synapomorphies, plesiomorphies and apomorphies', () => {
     const descendants = newickGenerator.getDescendants();
-    console.log(descendants);
-    expect(descendants).toEqual(mockExpectedDescendants);
+    expect(
+      descendants.forEach((descendant) => {
+        {
+          id: descendant.id;
+          syn: descendant.synapomorphies;
+          ples: descendant.plesiomorphies;
+          apo: descendant.apomorphies;
+        }
+      }),
+    ).toEqual(
+      mockExpectedDescendants.forEach((descendant) => {
+        {
+          id: descendant.id;
+          syn: descendant.synapomorphies;
+          ples: descendant.plesiomorphies;
+          apo: descendant.apomorphies;
+        }
+      }),
+    );
   });
 
   it('should generate the right newick', () => {

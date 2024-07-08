@@ -79,6 +79,78 @@ export default class NewickGenerator {
     });
   }
 
+  private calculateSynapomorphies(descendant: Descendant) {
+    let synapomorphies = 0;
+
+    synapomorphies +=
+      this.calculateSynOfTraitsThatMoreThanOneDescendantsHaveAndExternalGroupDoNot(
+        descendant,
+      );
+
+    synapomorphies +=
+      this.calculateSynOfTraitsThatExternalGroupHaveAndMoreThanOneDescendantsDoNot(
+        descendant,
+      );
+
+    return synapomorphies;
+  }
+
+  private calculateSynOfTraitsThatMoreThanOneDescendantsHaveAndExternalGroupDoNot(
+    descendant: Descendant,
+  ) {
+    let synapomorphies = 0;
+    const externalGroupTraits = this.externalGroup.traitsIds;
+
+    descendant.traitsIds.forEach((traitId) => {
+      console.log(this.traitsAndNumberOfDescendantsThatHaveThem);
+      console.log(traitId);
+      console.log(
+        this.traitsAndNumberOfDescendantsThatHaveThem.find(
+          (traitWithNumberOfDescendants) => {
+            return traitWithNumberOfDescendants.id === traitId;
+          },
+        ),
+      );
+      if (
+        !externalGroupTraits.includes(traitId) &&
+        this.traitsAndNumberOfDescendantsThatHaveThem.find(
+          (traitWithNumberOfDescendants) => {
+            return traitWithNumberOfDescendants.id === traitId;
+          },
+        ).descendants > 1
+      ) {
+        synapomorphies += 1;
+      }
+    });
+
+    return synapomorphies;
+  }
+
+  private calculateSynOfTraitsThatExternalGroupHaveAndMoreThanOneDescendantsDoNot(
+    descendant: Descendant,
+  ) {
+    let synapomorphies = 0;
+    const allTraits = this.traits.getTraits();
+    const externalGroupTraits = this.externalGroup.traitsIds;
+
+    allTraits.forEach((trait) => {
+      if (
+        externalGroupTraits.includes(trait.id) &&
+        !descendant.traitsIds.includes(trait.id) &&
+        this.traitsAndNumberOfDescendantsThatHaveThem.find(
+          (traitWithNumberOfDescendants) => {
+            return traitWithNumberOfDescendants.id === trait.id;
+          },
+        ).descendants <
+          this.descendants.getDescendants().length - 1
+      ) {
+        synapomorphies += 1;
+      }
+    });
+
+    return synapomorphies;
+  }
+
   private calculatePlesiomorphies(descendant: Descendant): number {
     let plesiomorphies = 0;
 
@@ -129,69 +201,6 @@ export default class NewickGenerator {
     return plesiomorphies;
   }
 
-  private calculateSynapomorphies(descendant: Descendant) {
-    let synapomorphies = 0;
-
-    synapomorphies +=
-      this.calculateSynOfTraitsThatMoreThanOneDescendantsHaveAndExternalGroupDoNot(
-        descendant,
-      );
-
-    synapomorphies +=
-      this.calculateSynOfTraitsThatExternalGroupHaveAndMoreThanOneDescendantsDoNot(
-        descendant,
-      );
-
-    return synapomorphies;
-  }
-
-  private calculateSynOfTraitsThatMoreThanOneDescendantsHaveAndExternalGroupDoNot(
-    descendant: Descendant,
-  ) {
-    let synapomorphies = 0;
-    const externalGroupTraits = this.externalGroup.traitsIds;
-
-    descendant.traitsIds.forEach((traitId) => {
-      if (
-        !externalGroupTraits.includes(traitId) &&
-        this.traitsAndNumberOfDescendantsThatHaveThem.find(
-          (traitWithNumberOfDescendants) => {
-            return (traitWithNumberOfDescendants.id = traitId);
-          },
-        ).descendants > 1
-      ) {
-        synapomorphies += 1;
-      }
-    });
-
-    return synapomorphies;
-  }
-
-  private calculateSynOfTraitsThatExternalGroupHaveAndMoreThanOneDescendantsDoNot(
-    descendant: Descendant,
-  ) {
-    let synapomorphies = 0;
-    const allTraits = this.traits.getTraits();
-    const externalGroupTraits = this.externalGroup.traitsIds;
-
-    allTraits.forEach((trait) => {
-      if (
-        externalGroupTraits.includes(trait.id) &&
-        !descendant.traitsIds.includes(trait.id) &&
-        this.traitsAndNumberOfDescendantsThatHaveThem.find(
-          (traitWithNumberOfDescendants) => {
-            return traitWithNumberOfDescendants.id === trait.id;
-          },
-        ).descendants <
-          this.descendants.getDescendants().length - 1
-      ) {
-        synapomorphies += 1;
-      }
-    });
-
-    return synapomorphies;
-  }
-
   private calculateApomorphies(descendant: Descendant) {
     let apomorphies = 0;
 
@@ -219,7 +228,7 @@ export default class NewickGenerator {
         !externalGroupTraits.includes(traitId) &&
         this.traitsAndNumberOfDescendantsThatHaveThem.find(
           (traitWithNumberOfDescendants) => {
-            return (traitWithNumberOfDescendants.id = traitId);
+            return traitWithNumberOfDescendants.id === traitId;
           },
         ).descendants === 1
       ) {
