@@ -91,7 +91,7 @@ export class PhylogeneticTreeScriptsController {
           }
         });
 
-        // serach for syn and apo
+        // search for syn and apo
         filteredTraits.forEach((trait) => {
           if (
             trait !== null &&

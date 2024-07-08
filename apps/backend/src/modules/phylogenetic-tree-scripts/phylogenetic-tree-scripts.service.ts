@@ -12,7 +12,6 @@ interface Props {
 @Injectable()
 export class PhylogeneticTreeScriptsService {
   generateNewick(props: Props) {
-    console.log(this.generateNewick(props));
     return this.generateNewick(props);
   }
 }

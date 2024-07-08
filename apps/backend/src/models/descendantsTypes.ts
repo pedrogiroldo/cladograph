@@ -3,9 +3,9 @@ export interface Descendant {
   descendantName: string;
   traitsIds: Array<number>;
   active: boolean;
-  synapomorphies?: number;
-  plesiomorphies?: number;
-  apomorphies?: number;
+  synapomorphies: number;
+  plesiomorphies: number;
+  apomorphies: number;
 }
 
 export type DescendantObjectsArray = Array<Descendant>;
