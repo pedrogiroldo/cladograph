@@ -5,7 +5,7 @@ import {
   mockExpectedNewick,
   mockTraits,
 } from './mockedVars';
-import NewickGenerator from './NewickGenerator';
+import NewickGenerator from '../NewickGenerator';
 
 class NewickGeneratorTester extends NewickGenerator {
   constructor(traits, externalGroup, descendants) {

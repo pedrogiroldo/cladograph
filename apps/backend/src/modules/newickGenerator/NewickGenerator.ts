@@ -1,3 +1,6 @@
+// TODO criar documentação sobre classificação biológica para
+// ajudar na compreensão do código
+
 import { ExternalGroup } from 'src/models/externalGroupTypes';
 import TraitsManager from './TraitsManager';
 import DescendantsManager from './DescendantsManager';
@@ -22,28 +25,26 @@ export default class NewickGenerator {
     );
     this.externalGroup = externalGroup;
 
-    this.newick = this.generateNewick();
+    this.newick = this.main();
   }
 
   public getNewick() {
     return this.newick;
   }
 
-  public generateNewick() {
+  private main() {
+    // it's an important info to compare the traits after
     this.traitsAndNumberOfDescendantsThatHaveThem =
       this.returnTraitWithNumberOfDescendantsWhoHaveIt();
 
     const descendantsWithSinPlesAndApo = this.calculateSynPlesioAndApo();
 
     const sortedDescendants = descendantsWithSinPlesAndApo.sort(
-      this.compareDescendants,
+      this.logicToCompareDescendants,
     );
 
-    const newick =
-      sortedDescendants
-        .map(({ descendantName }) => `(${descendantName},`)
-        .join('')
-        .slice(0, -1) + Array(sortedDescendants.length + 1).join(')');
+    const newick = this.generateNewickWithSortedDescendants(sortedDescendants);
+
     return newick;
   }
 
@@ -255,7 +256,7 @@ export default class NewickGenerator {
     return apomorphies;
   }
 
-  private compareDescendants(a: any, b: any) {
+  private logicToCompareDescendants(a: any, b: any) {
     if (a.synapomorphies !== b.synapomorphies) {
       return a.synapomorphies - b.synapomorphies; // Ordena por Sin em ordem descendente
     } else if (a.plesiomorphies !== b.plesiomorphies) {
@@ -263,5 +264,14 @@ export default class NewickGenerator {
     } else {
       return a.apomorphies - b.apomorphies; // Ordena por Apo em ordem descendente
     }
+  }
+
+  private generateNewickWithSortedDescendants(sortedDescendants) {
+    return (
+      sortedDescendants
+        .map(({ descendantName }) => `(${descendantName},`)
+        .join('')
+        .slice(0, -1) + Array(sortedDescendants.length + 1).join(')')
+    );
   }
 }
