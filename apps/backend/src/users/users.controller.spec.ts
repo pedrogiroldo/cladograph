@@ -1,20 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { CommonsModule } from '../../commons/commons.module';
+import { CommonsModule } from '../commons/commons.module';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('UsersController', () => {
+  let controller: UsersController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      controllers: [UsersController],
       providers: [UsersService],
       imports: [CommonsModule],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    controller = module.get<UsersController>(UsersController);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(controller).toBeDefined();
   });
 });
