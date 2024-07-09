@@ -1,18 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import PrismaMiddlewares from './prisma.middlewares';
 
-async function excludePasswordMiddleware(params, next) {
-  const result = await next(params);
-  if (params?.model === 'User' && params?.args?.select?.password !== true) {
-    delete result.password;
-  }
-  return result;
-}
+const prismaMiddlewares = new PrismaMiddlewares();
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   async onModuleInit() {
-    await this.$use(excludePasswordMiddleware);
+    await this.$use(prismaMiddlewares.excludePassword);
+    await this.$use(prismaMiddlewares.blockFields);
     await this.$connect();
   }
 }
