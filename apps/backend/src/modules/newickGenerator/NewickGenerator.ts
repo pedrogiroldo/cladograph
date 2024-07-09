@@ -33,7 +33,7 @@ export default class NewickGenerator {
   }
 
   private main() {
-    // it's an important info to compare the traits after
+    // it's an important info to compare the traits later
     this.traitsAndNumberOfDescendantsThatHaveThem =
       this.returnTraitWithNumberOfDescendantsWhoHaveIt();
 
