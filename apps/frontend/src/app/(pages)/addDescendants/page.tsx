@@ -262,6 +262,7 @@ export default function AddDescendantsPage() {
               {descendantObjectsArray.map((descendant: Descendant) => {
                 if (descendant.active === true) {
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <div className={styles.descendantsItems}>
                       <DescendantListItem
                         id={descendant.id}

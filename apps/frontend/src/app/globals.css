@@ -4,10 +4,19 @@
  */
 body {
   position: relative;
-  /* Adicione a propriedade position com o valor desejado */
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*
+    a proporção é 730 x 1180
+  */
+  height: 61.8644068%;
+  /* 61.8644068% da altura da viewport */
   width: 100%;
+  /* 100% da largura da viewport */
   font-family: sans-serif;
+  margin: 0;
+  /* Remove qualquer margem padrão */
 
 }
 
