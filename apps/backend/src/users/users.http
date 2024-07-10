@@ -11,3 +11,13 @@ content-type: application/json
     "username": "teste",
     "password": "teste"
 }
+
+###
+
+POST http://localhost:3333/users/auth
+content-type: application/json
+
+{
+    "email": "pedrogiroldo40@gmail.com",
+    "password": "123"
+}

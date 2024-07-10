@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
+import { AuthUserDto } from './dto/auth-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -27,6 +28,11 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
+  }
+
+  @Post('/auth')
+  login(@Body() authUserDto: AuthUserDto) {
+    return this.usersService.authenticate(authUserDto);
   }
 
   @Patch(':id')
