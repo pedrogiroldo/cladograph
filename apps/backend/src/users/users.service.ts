@@ -85,10 +85,6 @@ export class UsersService {
         this.wrongCredentialsError();
       }
 
-      // await this.prismaService.refreshToken.deleteMany({
-      //   where: { userId: token.userId },
-      // });
-
       return this.generateUserTokens(token.token, token.userId);
     } catch (error) {
       return error;
