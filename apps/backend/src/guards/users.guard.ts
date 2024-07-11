@@ -10,7 +10,7 @@ import { Request } from 'express';
 import extractTokenFromHeader from '../utils/extractTokenFromHeader.util';
 import { JwtService } from '@nestjs/jwt';
 
-interface RequestWithUserId extends Request {
+export interface RequestWithUserId extends Request {
   userId: string;
 }
 

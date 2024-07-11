@@ -163,6 +163,9 @@ export class UsersService {
       const user = await this.prismaService.user.findUnique({
         where: { id },
       });
+
+      user.password = undefined;
+
       return user;
     } catch (error) {
       return error;
