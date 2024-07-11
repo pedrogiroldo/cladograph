@@ -20,6 +20,7 @@ import generateNewick from "../requests/phylogeneticTreeScript.requests.js";
 import { FaRegUserCircle } from "react-icons/fa";
 import { userButton } from "./userButtonStyles";
 import Requests from "@/requests/requests";
+import StorageManager from "@/utils/storageManager/storageManager.util";
 
 const requests = new Requests();
 
@@ -117,13 +118,15 @@ export default function Home() {
                   cachedExternalGroup !== undefined &&
                   cachedDescendants !== undefined
                 ) {
+                  console.log(StorageManager.Token.getAccess());
                   const newick: string =
                     await requests.phylogeneticTreeScriptRequests.generateNewick(
                       {
                         traits: cachedTraits,
                         externalGroup: cachedExternalGroup,
                         descendants: cachedDescendants,
-                      }
+                      },
+                      StorageManager.Token.getAccess()
                     );
                   console.log(newick);
                   setActiveNwkOnTree(newick);

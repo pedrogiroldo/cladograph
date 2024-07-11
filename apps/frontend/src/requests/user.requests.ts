@@ -9,6 +9,16 @@ interface LoginUserDto {
   password: string;
 }
 
+interface ResponseBody {
+  auth: boolean;
+  tokens: Tokens | undefined;
+}
+
+interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export default class UserRequests {
   private baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
@@ -19,7 +29,21 @@ export default class UserRequests {
       body: JSON.stringify(userUpdateData),
     });
   }
-  public async login(userLoginData: LoginUserDto) {
-    await fetch();
+  public async login(loginUserData: LoginUserDto): Promise<ResponseBody> {
+    const response = await fetch(`${this.baseUrl}/login`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(loginUserData),
+    });
+
+    const responseBody: any = await response.json();
+
+    if (responseBody.auth === true) {
+      return { auth: true, tokens: responseBody.tokens };
+    } else if (responseBody.auth === false) {
+      return { auth: false, tokens: undefined };
+    } else {
+      return { auth: false, tokens: undefined };
+    }
   }
 }
