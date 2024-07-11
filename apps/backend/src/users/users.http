@@ -23,4 +23,4 @@ content-type: application/json
 
 ###
 
-POST http://localhost:3333/users/refresh/c6949e4d-b097-43bb-817b-b8cfcb128832
+POST http://localhost:3333/users/refresh/3aa06cf0-01f3-46e7-960f-980f8575f6d2

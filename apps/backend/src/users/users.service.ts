@@ -10,6 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PasswordHasherService } from '../modules/password-hasher/password-hasher.service';
 import { JwtService } from '@nestjs/jwt';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
@@ -131,11 +132,12 @@ export class UsersService {
     const expiryDate = new Date();
     // Calculate expiry date 14 days from now
     expiryDate.setDate(expiryDate.getDate() + 14);
+    const newToken = uuidv4();
 
     const refreshToken = await this.prismaService.refreshToken.upsert({
       where: { userId },
       update: {
-        token,
+        token: newToken,
         expiryDate,
       },
       create: {
