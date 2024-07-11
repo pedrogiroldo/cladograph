@@ -13,7 +13,7 @@ import { UsersService } from './users.service';
 import { AuthUserDto } from './dto/auth-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { RequestWithUserId, UsersGuard } from 'src/guards/users.guard';
+import { RequestWithUserId, UsersGuard } from '../guards/users.guard';
 
 @Controller('users')
 export class UsersController {

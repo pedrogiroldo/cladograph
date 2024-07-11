@@ -39,9 +39,9 @@ export class UsersService {
         data: { name, email, password: hashedPassword },
       });
 
-      createdUser.password = undefined;
+      const tokens = await this.generateUserTokens(undefined, createdUser.id);
 
-      return createdUser;
+      return { message: 'Success', tokens };
     } catch (error) {
       return error;
     }
