@@ -2,7 +2,6 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
@@ -38,7 +37,6 @@ export class UsersGuard implements CanActivate {
       });
       request.userId = payload.userId;
     } catch (error) {
-      Logger.error(error.message);
       throw new UnauthorizedException('Invalid token!');
     }
 
