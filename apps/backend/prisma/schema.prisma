@@ -17,11 +17,21 @@ model User {
   id              String           @id @default(uuid())
   name            String
   email           String           @unique
-  username        String           @unique
   password        String
   TemplatesRating TemplateRating[]
   created_at      DateTime         @default(now())
   updated_at      DateTime         @updatedAt
+  RefreshToken    RefreshToken?
+}
+
+model RefreshToken {
+  id         String   @id @default(uuid())
+  token      String?  @unique @default(uuid())
+  User       User     @relation(fields: [userId], references: [id])
+  userId     String   @unique
+  expiryDate DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Template {

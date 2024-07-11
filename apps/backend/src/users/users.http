@@ -2,22 +2,25 @@ GET http://localhost:3333/users
 
 ###
 
-POST http://localhost:3333/users
+POST http://localhost:3333/users/signup
 content-type: application/json
 
 {
-    "name": "teste",
-    "email": "pedrogiroldo2@gmail.com",
-    "username": "teste",
-    "password": "teste"
+    "name": "Pedro Andrade Giroldo",
+    "email": "pedrogiroldo40@gmail.com",
+    "password": "teste1"
 }
 
 ###
 
-POST http://localhost:3333/users/auth
+POST http://localhost:3333/users/login
 content-type: application/json
 
 {
     "email": "pedrogiroldo40@gmail.com",
-    "password": "123"
+    "password": "teste1"
 }
+
+###
+
+POST http://localhost:3333/users/refresh/c6949e4d-b097-43bb-817b-b8cfcb128832

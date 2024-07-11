@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PhylogeneticTreeScriptsController } from './phylogenetic-tree-scripts.controller';
 import { PhylogeneticTreeScriptsService } from './phylogenetic-tree-scripts.service';
+import { CommonsModule } from '../commons/commons.module';
 
 describe('PhylogeneticTreeScriptsController', () => {
   let controller: PhylogeneticTreeScriptsController;
@@ -9,6 +10,7 @@ describe('PhylogeneticTreeScriptsController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PhylogeneticTreeScriptsController],
       providers: [PhylogeneticTreeScriptsService],
+      imports: [CommonsModule],
     }).compile();
 
     controller = module.get<PhylogeneticTreeScriptsController>(
