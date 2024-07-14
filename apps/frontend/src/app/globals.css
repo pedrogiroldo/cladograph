@@ -3,21 +3,23 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 body {
-  position: relative;
+  height: 100%;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  /*
-    a proporção é 730 x 1180
-  */
-  height: 61.8644068%;
-  /* 61.8644068% da altura da viewport */
-  width: 100%;
-  /* 100% da largura da viewport */
-  font-family: sans-serif;
-  margin: 0;
-  /* Remove qualquer margem padrão */
+  /* background-color: #f0f0f0; */
+}
 
+.container {
+  /*
+    a proporção é 1180 x 730
+  */
+  width: 100%;
+  max-width: calc(100vh * 1180 / 730);
+  aspect-ratio: 1180 / 730;
+  background-color: white;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 h1,

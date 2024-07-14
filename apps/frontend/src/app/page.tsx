@@ -15,8 +15,7 @@ import {
   getTreeNewick,
   saveTreeNewick,
 } from "../scripts/cacheManager/treeNewickCRUD";
-import styles from "./page.module.css";
-import generateNewick from "../requests/phylogeneticTreeScript.requests.js";
+import styles from "./styles.module.css";
 import { FaRegUserCircle } from "react-icons/fa";
 import { userButton } from "./userButtonStyles";
 import Requests from "@/requests/requests";
@@ -77,17 +76,18 @@ export default function Home() {
               onChange={setNwkInputValueFunc}
             />
             <Button
-              id="generateNwkButton"
+              id={styles.generateNwkButton}
               onClick={updateTree}
-              variant="contained"
+              variant="outlined"
             >
               Gerar
             </Button>
           </div>
           <Button
-            id="templateButton"
+            id={styles.templateButton}
             size="large"
             onClick={() => router.replace("/templates")}
+            variant="contained"
           >
             Templates
           </Button>
@@ -99,8 +99,13 @@ export default function Home() {
           />
         </div>
         <div className={styles.comparatorArea}>
-          <h1 id="comparatorTitle">Comparador</h1>
-          <ButtonGroup variant="outlined" size="large" orientation="vertical">
+          <h1 id={styles.comparatorTitle}>Comparador</h1>
+          <ButtonGroup
+            className={styles.buttonGroup}
+            variant="outlined"
+            size="large"
+            orientation="vertical"
+          >
             <Button onClick={() => router.replace("/addTraits")}>
               Adicionar características
             </Button>
@@ -118,7 +123,6 @@ export default function Home() {
                   cachedExternalGroup !== undefined &&
                   cachedDescendants !== undefined
                 ) {
-                  console.log(StorageManager.Token.getAccess());
                   const newick: string =
                     await requests.phylogeneticTreeScriptRequests.generateNewick(
                       {
@@ -128,7 +132,6 @@ export default function Home() {
                       },
                       StorageManager.Token.getAccess()
                     );
-                  console.log(newick);
                   setActiveNwkOnTree(newick);
                   saveTreeNewick(newick);
                 } else {
