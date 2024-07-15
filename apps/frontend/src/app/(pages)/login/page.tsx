@@ -2,14 +2,18 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { Button, TextField } from "@mui/material";
-import Navbar from "@/components/Navbar/Navbar";
 import Requests from "@/requests/requests";
 import StorageManager from "@/utils/storageManager/storageManager.util";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const requests = new Requests();
+  const router = useRouter();
 
   const [loginFailed, setLoginFailed] = useState(false);
+  const [loginFailedErrorMessage, setLoginFailedErrorMessage] = useState<
+    string | string[]
+  >("");
 
   const [emailInput, setEmailInput] = useState("");
   function setEmailInputFunc(e: any) {
@@ -22,19 +26,39 @@ export default function Login() {
   }
 
   async function login(email: string, password: string) {
-    const auth = await requests.userRequests.login({ email, password });
+    const response = await requests.userRequests.login({ email, password });
 
-    if (!auth.auth) {
+    if (!response.auth && response.message) {
       setLoginFailed(true);
-    } else if (auth.tokens) {
-      StorageManager.Token.set(auth.tokens);
+      const errorMessage = response.message;
+
+      if (typeof errorMessage === "object") {
+        let formattedErrorMessage = formatErrorMessage(errorMessage);
+        setLoginFailedErrorMessage(formattedErrorMessage);
+      } else {
+        setLoginFailedErrorMessage(response.message);
+      }
+    } else if (response.tokens) {
+      StorageManager.Tokens.set(response.tokens);
+      router.replace("/");
     } else console.error("Error on authentication!");
+  }
+
+  function formatErrorMessage(errorMessage: string[]) {
+    let formattedErrorMessage = "";
+
+    errorMessage.forEach((message) => {
+      const messageWithFirstLetterUpCase =
+        message[0].toLocaleUpperCase() + message.substring(1);
+      formattedErrorMessage += " / " + messageWithFirstLetterUpCase;
+    });
+    formattedErrorMessage = formattedErrorMessage.substring(3);
+    return formattedErrorMessage;
   }
 
   return (
     <div className={styles.main}>
-      <Navbar />
-      <h1>Bem vindo!</h1>
+      <h1>Bem-vindo!</h1>
       <div className={styles.actionArea}>
         <TextField
           value={emailInput}
@@ -50,7 +74,6 @@ export default function Login() {
           label="Senha"
           onChange={setPasswordInputFunc}
         />
-        x
         <Button
           variant="contained"
           onClick={() => login(emailInput, passwordInput)}
@@ -58,7 +81,16 @@ export default function Login() {
         >
           Entrar
         </Button>
+        <Button
+          variant="outlined"
+          onClick={() => router.replace("/signup")}
+          style={{ marginTop: "5vh" }}
+        >
+          Cadastre-se!
+        </Button>
+        <div className={styles.itsFreeText}>É gratis :)</div>
       </div>
+      <div className={styles.errorMessage}>{loginFailedErrorMessage}</div>
     </div>
   );
 }

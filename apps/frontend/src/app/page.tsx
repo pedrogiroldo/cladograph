@@ -130,7 +130,7 @@ export default function Home() {
                         externalGroup: cachedExternalGroup,
                         descendants: cachedDescendants,
                       },
-                      StorageManager.Token.getAccess()
+                      StorageManager.Tokens.getAccess()
                     );
                   setActiveNwkOnTree(newick);
                   saveTreeNewick(newick);

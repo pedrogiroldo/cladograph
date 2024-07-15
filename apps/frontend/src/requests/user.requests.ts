@@ -9,9 +9,16 @@ interface LoginUserDto {
   password: string;
 }
 
+interface SignUpUserData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 interface ResponseBody {
   auth: boolean;
   tokens: Tokens | undefined;
+  message?: string | Array<string>;
 }
 
 interface Tokens {
@@ -34,6 +41,24 @@ export default class UserRequests {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(loginUserData),
+    });
+
+    const responseBody: any = await response.json();
+
+    if (responseBody.auth === true) {
+      return { auth: true, tokens: responseBody.tokens };
+    } else if (responseBody.auth === false) {
+      return { auth: false, tokens: undefined, message: responseBody.message };
+    } else {
+      return { auth: false, tokens: undefined, message: responseBody.message };
+    }
+  }
+
+  public async signUp(signUpUserData: SignUpUserData) {
+    const response = await fetch(`${this.baseUrl}/signup`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(signUpUserData),
     });
 
     const responseBody: any = await response.json();

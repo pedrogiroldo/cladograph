@@ -214,7 +214,7 @@ export default function AddDescendantsPage() {
   return (
     <>
       <div className={styles.main}>
-        <Navbar />
+        
         <div className={styles.inputs}>
           <div className={styles.newDescendantInput}>
             <TextField

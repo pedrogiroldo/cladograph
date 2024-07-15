@@ -13,15 +13,3 @@
     display: flex;
     flex-direction: column;
 }
-
-.itsFreeText {
-    font-style: italic;
-    color: rgb(68, 68, 68);
-    margin-top: 1vh;
-    font-size: medium;
-}
-
-.errorMessage {
-    color: red;
-    margin-top: 2vh;
-}

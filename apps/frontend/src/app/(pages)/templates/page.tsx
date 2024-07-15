@@ -17,7 +17,6 @@ export default function Page() {
 
   return (
     <>
-      <Navbar />
       <div className={styles.main}>
         <h1 className={styles.title}>Templates</h1>
         <div className={styles.gridArea}>

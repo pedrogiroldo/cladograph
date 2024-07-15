@@ -59,7 +59,6 @@ export default function User() {
 
   return (
     <div className={styles.main}>
-      <Navbar />
       <div className={styles.actionArea}>
         <div className={styles.icon}>
           <FaRegUserCircle style={{ width: "100%", height: "100%" }} />

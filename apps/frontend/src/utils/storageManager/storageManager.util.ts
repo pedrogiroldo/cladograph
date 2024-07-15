@@ -9,7 +9,7 @@ interface Tokens {
 }
 
 export default class StorageManager {
-  static Token = class {
+  static Tokens = class {
     private static tokensKey = "tokens";
 
     static set(tokens: Tokens) {
@@ -17,12 +17,13 @@ export default class StorageManager {
     }
 
     static getAccess() {
-      const tokens: Tokens | null = Cookie.get(this.tokensKey);
+      const tokens: Tokens | null | string = Cookie.get(this.tokensKey);
 
-      if (tokens !== null) {
+      if (tokens !== null && typeof tokens !== "string") {
         const tokensObject: Tokens = tokens;
         return tokensObject.accessToken;
       }
+      return undefined;
     }
 
     static getRefresh() {

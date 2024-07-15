@@ -6,26 +6,26 @@ import { mockedTokens } from "./mockedVars";
 
 describe("Storage token tests", () => {
   test("Set token to cookies and get them and delete them", () => {
-    StorageManager.Token.set(mockedTokens);
+    StorageManager.Tokens.set(mockedTokens);
 
-    const tokens = StorageManager.Token.get();
+    const tokens = StorageManager.Tokens.getAccess();
 
-    expect(tokens).toEqual(mockedTokens);
+    expect(tokens).toEqual(mockedTokens.accessToken);
 
-    StorageManager.Token.delete();
+    StorageManager.Tokens.delete();
 
-    const tokensAfterDelete = StorageManager.Token.get();
+    const tokensAfterDelete = StorageManager.Tokens.getAccess();
 
-    expect(tokensAfterDelete).toEqual(null);
+    expect(tokensAfterDelete).toEqual(undefined);
   });
 
   test("Verify if a token was saved", () => {
-    const verificationBeforeSaving = StorageManager.Token.isSaved();
+    const verificationBeforeSaving = StorageManager.Tokens.isSaved();
     expect(verificationBeforeSaving).toEqual(false);
 
-    StorageManager.Token.set(mockedTokens);
+    StorageManager.Tokens.set(mockedTokens);
 
-    const verificationAfterSaving = StorageManager.Token.isSaved();
+    const verificationAfterSaving = StorageManager.Tokens.isSaved();
     expect(verificationAfterSaving).toEqual(true);
   });
 });
