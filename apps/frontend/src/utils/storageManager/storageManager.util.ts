@@ -44,6 +44,10 @@ export default class StorageManager {
     }
   };
 
+  /**
+   * @deprecated Feature not implemented yet. Don't use iT
+   */
+  // TODO Implement class
   static PhylogeneticTreeData = class {
     static ExternalGroup = class {
       private static externalGroupKey = "externalGroup";

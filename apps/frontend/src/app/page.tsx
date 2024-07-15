@@ -19,6 +19,7 @@ import styles from "./styles.module.css";
 import { FaRegUserCircle } from "react-icons/fa";
 import { userButton } from "./userButtonStyles";
 import Requests from "@/requests/requests";
+import StorageManager from "@/utils/storageManager/storageManager.util";
 
 const requests = new Requests();
 
@@ -48,6 +49,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (!StorageManager.Tokens.isSaved()) {
+      router.replace("/login");
+    }
+
     setCachedTraits(getTraits());
     setCachedExternalGroup(getExternalGroup());
     setCachedDescendants(getDescendants());
