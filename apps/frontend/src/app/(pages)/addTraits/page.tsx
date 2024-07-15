@@ -85,7 +85,6 @@ export default function AddTraitsPage() {
 
   return (
     <div style={main}>
-      <Navbar />
       <div style={addTraitsActionArea}>
         <div style={inputs}>
           <TextField

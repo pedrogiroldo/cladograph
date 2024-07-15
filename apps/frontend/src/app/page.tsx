@@ -15,8 +15,14 @@ import {
   getTreeNewick,
   saveTreeNewick,
 } from "../scripts/cacheManager/treeNewickCRUD";
-import styles from "./page.module.css";
-import generateNewick from "../requests/phylogeneticTreeScrip.js";
+import styles from "./styles.module.css";
+import { FaRegUserCircle } from "react-icons/fa";
+import { userButton } from "./userButtonStyles";
+import Requests from "@/requests/requests";
+import StorageManager from "@/utils/storageManager/storageManager.util";
+
+const requests = new Requests();
+
 export default function Home() {
   const [cachedTraits, setCachedTraits] = useState<
     TraitObjectsArray | undefined
@@ -43,6 +49,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (!StorageManager.Tokens.isSaved()) {
+      router.replace("/login");
+    }
+
     setCachedTraits(getTraits());
     setCachedExternalGroup(getExternalGroup());
     setCachedDescendants(getDescendants());
@@ -70,24 +80,36 @@ export default function Home() {
               onChange={setNwkInputValueFunc}
             />
             <Button
-              id="generateNwkButton"
+              id={styles.generateNwkButton}
               onClick={updateTree}
-              variant="contained"
+              variant="outlined"
             >
               Gerar
             </Button>
           </div>
           <Button
-            id="apiButton"
+            id={styles.templateButton}
             size="large"
             onClick={() => router.replace("/templates")}
+            variant="contained"
           >
             Templates
           </Button>
+          <FaRegUserCircle
+            onClick={() => router.replace("/user")}
+            size="2.5em"
+            color="#1976D2"
+            style={userButton}
+          />
         </div>
         <div className={styles.comparatorArea}>
-          <h1 id="comparatorTitle">Comparador</h1>
-          <ButtonGroup variant="outlined" size="large" orientation="vertical">
+          <h1 id={styles.comparatorTitle}>Comparador</h1>
+          <ButtonGroup
+            className={styles.buttonGroup}
+            variant="outlined"
+            size="large"
+            orientation="vertical"
+          >
             <Button onClick={() => router.replace("/addTraits")}>
               Adicionar características
             </Button>
@@ -105,12 +127,14 @@ export default function Home() {
                   cachedExternalGroup !== undefined &&
                   cachedDescendants !== undefined
                 ) {
-                  const newick: string = await generateNewick({
-                    traits: cachedTraits,
-                    externalGroup: cachedExternalGroup,
-                    descendants: cachedDescendants,
-                  });
-                  console.log(newick);
+                  const newick: string =
+                    await requests.phylogeneticTreeScriptRequests.generateNewick(
+                      {
+                        traits: cachedTraits,
+                        externalGroup: cachedExternalGroup,
+                        descendants: cachedDescendants,
+                      }
+                    );
                   setActiveNwkOnTree(newick);
                   saveTreeNewick(newick);
                 } else {
@@ -122,54 +146,6 @@ export default function Home() {
               Gerar árvore
             </Button>
           </ButtonGroup>
-          {/* <Grid container>
-            <Grid item xs={6}>
-              <div className="comparasionInfoButtons">
-                <Button
-                  variant="contained"
-                  size="medium"
-                  fullWidth
-                  id="comparasionInfoButtonId"
-                >
-                  Visualizar carac.
-                </Button>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  fullWidth
-                  id="comparasionInfoButtonId"
-                >
-                  Visualizar grupo ext.
-                </Button>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  fullWidth
-                  id="comparasionInfoButtonId"
-                >
-                  Visualizar descendentes
-                </Button>
-              </div>
-            </Grid> */}
-          {/* <Grid item xs={6}>
-              <div className="comparasionInfoContainer">
-                <Grid container>
-                  <Grid item xs={6}>
-                    <div>Descendentes:</div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div>5</div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div>Características:</div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div>5</div>
-                  </Grid>
-                </Grid>
-              </div>
-            </Grid>
-          </Grid> */}
         </div>
       </div>
     </div>

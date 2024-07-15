@@ -213,8 +213,8 @@ export default function AddDescendantsPage() {
 
   return (
     <>
-      <Navbar />
       <div className={styles.main}>
+        
         <div className={styles.inputs}>
           <div className={styles.newDescendantInput}>
             <TextField
@@ -262,6 +262,7 @@ export default function AddDescendantsPage() {
               {descendantObjectsArray.map((descendant: Descendant) => {
                 if (descendant.active === true) {
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <div className={styles.descendantsItems}>
                       <DescendantListItem
                         id={descendant.id}
