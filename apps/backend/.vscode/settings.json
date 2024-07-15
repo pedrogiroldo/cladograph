@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "apomorphies",
+        "hasher",
+        "Hasher",
         "newick",
         "Newick",
         "ples",
@@ -8,7 +10,8 @@
         "plesio",
         "plesiomorphies",
         "sinapomorfia",
-        "synapomorphies"
+        "synapomorphies",
+        "uuidv"
     ],
     "cSpell.language": "en,pt"
 }

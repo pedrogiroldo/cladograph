@@ -1,9 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { PhylogeneticTreeScriptsService } from './phylogenetic-tree-scripts.service';
-/* eslint-disable no-else-return */
 import { DescendantObjectsArray } from '../models/descendantsTypes';
 import { ExternalGroup } from '../models/externalGroupTypes';
 import { TraitObjectsArray } from '../models/traitsTypes';
+import { UsersGuard } from '../guards/users.guard';
 
 interface Props {
   traits: TraitObjectsArray;
@@ -11,6 +11,7 @@ interface Props {
   descendants: DescendantObjectsArray;
 }
 
+@UseGuards(UsersGuard)
 @Controller('phylogenetic-tree-scripts')
 export class PhylogeneticTreeScriptsController {
   constructor(

@@ -1,5 +1,6 @@
 POST  http://localhost:3333/phylogenetic-tree-scripts
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYzM3Mjk4OS0yZmJiLTQ1MGYtYmE0Zi1iMmJlZWVmYTAxODEiLCJpYXQiOjE3MjA2NjAyMjIsImV4cCI6MTcyMTg2OTgyMn0.edW8-JL9BYZXi5PwKoTClVG1ocO_KI2-9SVP59r78y0
 
 {
   "traits": [
