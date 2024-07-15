@@ -108,14 +108,14 @@ export default function SignUp() {
       <div className={styles.actionArea}>
         <TextField
           value={nameInput}
-          style={{ marginTop: "2.5vh" }}
+          style={{ marginTop: "2.5vh", width: "100%" }}
           variant={"outlined"}
           label="Nome"
           onChange={setNameInputFunc}
         />
         <TextField
           value={emailInput}
-          style={{ marginTop: "2.5vh" }}
+          style={{ marginTop: "2.5vh", width: "100%" }}
           variant={"outlined"}
           label="E-mail"
           onChange={setEmailInputFunc}
@@ -124,7 +124,7 @@ export default function SignUp() {
           <>
             <TextField
               value={passwordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Senha"
               onChange={setPasswordInputFunc}
@@ -133,7 +133,7 @@ export default function SignUp() {
             />
             <TextField
               value={confirmPasswordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Confirmar senha"
               onChange={setConfirmPasswordInputFunc}
@@ -145,14 +145,14 @@ export default function SignUp() {
           <>
             <TextField
               value={passwordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Senha"
               onChange={setPasswordInputFunc}
             />
             <TextField
               value={confirmPasswordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Confirmar senha"
               onChange={setConfirmPasswordInputFunc}

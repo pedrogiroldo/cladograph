@@ -64,7 +64,7 @@ export default function Login() {
           <>
             <TextField
               value={emailInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="E-mail"
               onChange={setEmailInputFunc}
@@ -73,7 +73,7 @@ export default function Login() {
             />
             <TextField
               value={passwordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Senha"
               onChange={setPasswordInputFunc}
@@ -85,14 +85,14 @@ export default function Login() {
           <>
             <TextField
               value={emailInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="E-mail"
               onChange={setEmailInputFunc}
             />
             <TextField
               value={passwordInput}
-              style={{ marginTop: "2.5vh" }}
+              style={{ marginTop: "2.5vh", width: "100%" }}
               variant={"outlined"}
               label="Senha"
               onChange={setPasswordInputFunc}
