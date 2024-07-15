@@ -174,6 +174,9 @@ export class UsersService {
         where: { id },
         data,
       });
+
+      updatedUser.password = undefined;
+
       return updatedUser;
     } catch (error) {
       return error;
