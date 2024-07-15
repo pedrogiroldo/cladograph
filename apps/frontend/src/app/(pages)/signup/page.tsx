@@ -17,6 +17,9 @@ export default function SignUp() {
   const requests = new Requests();
 
   const [signUpFailed, setSignUpFailed] = useState(false);
+  const [signUpFailedErrorMessage, setSignUpFailedErrorMessage] = useState<
+    string | string[]
+  >("");
 
   const [emailInput, setEmailInput] = useState("");
   function setEmailInputFunc(e: any) {
@@ -39,14 +42,38 @@ export default function SignUp() {
   }
 
   async function signUp({ name, email, password }: SignUpUserData) {
-    const auth = await requests.userRequests.signUp({ name, email, password });
+    const response = await requests.userRequests.signUp({
+      name,
+      email,
+      password,
+    });
 
-    if (!auth.auth) {
+    if (!response.auth && response.message) {
       setSignUpFailed(true);
-    } else if (auth.tokens) {
-      StorageManager.Tokens.set(auth.tokens);
+      const errorMessage = response.message;
+
+      if (typeof errorMessage === "object") {
+        let formattedErrorMessage = formatErrorMessage(errorMessage);
+        setSignUpFailedErrorMessage(formattedErrorMessage);
+      } else {
+        setSignUpFailedErrorMessage(response.message);
+      }
+    } else if (response.tokens) {
+      StorageManager.Tokens.set(response.tokens);
       router.replace("/");
     } else console.error("Error on authentication!");
+  }
+
+  function formatErrorMessage(errorMessage: string[]) {
+    let formattedErrorMessage = "";
+
+    errorMessage.forEach((message) => {
+      const messageWithFirstLetterUpCase =
+        message[0].toLocaleUpperCase() + message.substring(1);
+      formattedErrorMessage += " / " + messageWithFirstLetterUpCase;
+    });
+    formattedErrorMessage = formattedErrorMessage.substring(3);
+    return formattedErrorMessage;
   }
 
   return (
@@ -101,6 +128,7 @@ export default function SignUp() {
         >
           Faça login!
         </Button>
+        <div className={styles.errorMessage}>{signUpFailedErrorMessage}</div>
       </div>
     </div>
   );

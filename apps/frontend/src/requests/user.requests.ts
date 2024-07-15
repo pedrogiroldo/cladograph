@@ -54,7 +54,7 @@ export default class UserRequests {
     }
   }
 
-  public async signUp(signUpUserData: SignUpUserData) {
+  public async signUp(signUpUserData: SignUpUserData): Promise<ResponseBody> {
     const response = await fetch(`${this.baseUrl}/signup`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
