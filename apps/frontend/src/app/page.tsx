@@ -19,7 +19,6 @@ import styles from "./styles.module.css";
 import { FaRegUserCircle } from "react-icons/fa";
 import { userButton } from "./userButtonStyles";
 import Requests from "@/requests/requests";
-import StorageManager from "@/utils/storageManager/storageManager.util";
 
 const requests = new Requests();
 
@@ -129,8 +128,7 @@ export default function Home() {
                         traits: cachedTraits,
                         externalGroup: cachedExternalGroup,
                         descendants: cachedDescendants,
-                      },
-                      StorageManager.Tokens.getAccess()
+                      }
                     );
                   setActiveNwkOnTree(newick);
                   saveTreeNewick(newick);

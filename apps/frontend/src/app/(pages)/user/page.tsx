@@ -1,60 +1,145 @@
 "use client";
-
-import Navbar from "@/components/Navbar/Navbar";
 import styles from "./styles.module.css";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import StorageManager from "@/utils/storageManager/storageManager.util";
+import Requests from "@/requests/requests";
 
 export default function User() {
   const router = useRouter();
+  const requests = new Requests();
 
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<any | null>(null);
 
-  const [nameInput, setNameInput] = useState("");
+  const [updateFailed, setUpdateFailed] = useState(false);
+  const [equalPasswordsError, setEqualPasswordsError] = useState(false);
+  const [updateFailedErrorMessage, setUpdateFailedErrorMessage] = useState("");
+
+  const [nameInput, setNameInput] = useState(undefined);
   function setNameInputFunc(e: any) {
     setNameInput(e.target.value);
   }
-  const [emailInput, setEmailInput] = useState("");
+  const [emailInput, setEmailInput] = useState(undefined);
   function setEmailInputFunc(e: any) {
     setEmailInput(e.target.value);
   }
-  const [usernameInput, setUsernameInput] = useState("");
-  function setUsernameInputFunc(e: any) {
-    setUsernameInput(e.target.value);
-  }
-  const [newPasswordInput, setNewPasswordInput] = useState("");
+  const [newPasswordInput, setNewPasswordInput] = useState(undefined);
   function setNewPasswordInputFunc(e: any) {
-    setNewPasswordInput(e.target.value);
+    if (e.target.value === "") {
+      setNewPasswordInput(undefined);
+    } else {
+      setNewPasswordInput(e.target.value);
+    }
   }
-  const [newPasswordConfirmInput, setNewPasswordConfirmInput] = useState("");
+  const [newPasswordConfirmInput, setNewPasswordConfirmInput] =
+    useState(undefined);
   function setNewPasswordConfirmInputFunc(e: any) {
-    setNewPasswordConfirmInput(e.target.value);
+    if (e.target.value === "") {
+      setNewPasswordConfirmInput(undefined);
+    } else {
+      setNewPasswordConfirmInput(e.target.value);
+    }
   }
 
   const [isSaved, setIsSaved] = useState(false);
 
-  function saveUser() {
-    setIsSaved(true);
+  async function saveUser() {
+    const isPasswordsEqual = verifyIfPasswordsAreEqual(
+      newPasswordInput,
+      newPasswordConfirmInput
+    );
+
+    if (user !== null && isPasswordsEqual) {
+      const response = await requests.userRequests.updateUser(user.id, {
+        email: emailInput,
+        name: nameInput,
+        password: newPasswordInput,
+      });
+      if (response.message) {
+        handleErrorMessage(response.message);
+      } else {
+        setIsSaved(true);
+        setUpdateFailed(false);
+        setEqualPasswordsError(false);
+        setUpdateFailedErrorMessage("");
+      }
+    } else {
+      setIsSaved(false);
+      setUpdateFailed(true);
+      setEqualPasswordsError(true);
+      setUpdateFailedErrorMessage("A senhas precisam ser iguais!");
+    }
+  }
+
+  function verifyIfPasswordsAreEqual(
+    password: string | undefined,
+    confirmPassword: string | undefined
+  ) {
+    if (password !== confirmPassword) {
+      throwPasswordsAreNotEqualError();
+      return false;
+    } else {
+      setEqualPasswordsError(false);
+      setUpdateFailed(false);
+      setUpdateFailedErrorMessage("");
+      return true;
+    }
+  }
+
+  function throwPasswordsAreNotEqualError() {
+    setEqualPasswordsError(true);
+    setUpdateFailedErrorMessage("As senhas precisam ser iguais!");
   }
 
   useEffect(() => {
     getUserDataOrRedirect();
-  });
+  }, []);
 
-  function getUserDataOrRedirect() {
+  async function getUserDataOrRedirect() {
     if (isLogged()) {
-      //@ts-ignore (condition verified with isLogged function)
-      setUser(JSON.parse(localStorage.getItem("user")));
+      const response = await requests.userRequests.fetchUser();
+
+      if (response.message) {
+        handleErrorMessage(response.message);
+      } else {
+        setNameInput(response.name);
+        setEmailInput(response.email);
+        setUser(response);
+      }
     } else {
       router.replace("/login");
     }
   }
 
+  function handleErrorMessage(errorMessage: string | Array<string>) {
+    if (typeof errorMessage === "object") {
+      let formattedErrorMessage = formatErrorMessage(errorMessage);
+      setIsSaved(false);
+      setUpdateFailed(true);
+      setUpdateFailedErrorMessage(formattedErrorMessage);
+    } else {
+      setIsSaved(false);
+      setUpdateFailed(true);
+      setUpdateFailedErrorMessage(errorMessage);
+    }
+  }
+
+  function formatErrorMessage(errorMessage: string[]) {
+    let formattedErrorMessage = "";
+
+    errorMessage.forEach((message) => {
+      const messageWithFirstLetterUpCase =
+        message[0].toLocaleUpperCase() + message.substring(1);
+      formattedErrorMessage += " / " + messageWithFirstLetterUpCase;
+    });
+    formattedErrorMessage = formattedErrorMessage.substring(3);
+    return formattedErrorMessage;
+  }
+
   function isLogged() {
-    const localStorageUser = localStorage.getItem("user");
-    return localStorageUser ? true : false;
+    return StorageManager.Tokens.isSaved();
   }
 
   return (
@@ -66,43 +151,76 @@ export default function User() {
         <div className={styles.fields}>
           <TextField
             value={nameInput}
-            style={{ marginTop: "2.5vh" }}
-            variant={"filled"}
+            className={styles.textField}
+            variant={"outlined"}
             label="Nome"
             onChange={setNameInputFunc}
+            focused={true}
           />
           <TextField
             value={emailInput}
-            style={{ marginTop: "2.5vh" }}
-            variant={"filled"}
+            className={styles.textField}
+            variant={"outlined"}
             label="E-mail"
             onChange={setEmailInputFunc}
+            focused={true}
           />
-          <TextField
-            value={usernameInput}
-            style={{ marginTop: "2.5vh" }}
-            variant={"filled"}
-            label="Nome de Usuário"
-            onChange={setUsernameInputFunc}
-          />
-          <TextField
-            value={newPasswordInput}
-            style={{ marginTop: "2.5vh" }}
-            variant={"filled"}
-            label="Nova senha"
-            onChange={setNewPasswordInputFunc}
-          />
-          <TextField
-            value={newPasswordConfirmInput}
-            style={{ marginTop: "2.5vh" }}
-            variant={"filled"}
-            label="Confirmar nova senha"
-            onChange={setNewPasswordConfirmInputFunc}
-          />
+          {equalPasswordsError ? (
+            <>
+              <TextField
+                value={newPasswordInput}
+                className={styles.textField}
+                variant={"outlined"}
+                label="Nova senha"
+                onChange={setNewPasswordInputFunc}
+                focused={true}
+                color="error"
+              />
+              <TextField
+                value={newPasswordConfirmInput}
+                className={styles.textField}
+                variant={"outlined"}
+                label="Confirmar nova senha"
+                size="medium"
+                onChange={setNewPasswordConfirmInputFunc}
+                focused={true}
+                color="error"
+              />
+            </>
+          ) : (
+            <>
+              <TextField
+                value={newPasswordInput}
+                className={styles.textField}
+                variant={"outlined"}
+                focused={true}
+                label="Nova senha"
+                onChange={setNewPasswordInputFunc}
+              />
+              <TextField
+                value={newPasswordConfirmInput}
+                className={styles.textField}
+                variant={"outlined"}
+                focused={true}
+                label="Confirmar nova senha"
+                size="medium"
+                onChange={setNewPasswordConfirmInputFunc}
+              />
+            </>
+          )}
           {isSaved ? (
             <Button
               variant="contained"
               color="success"
+              onClick={() => saveUser()}
+              style={{ marginTop: "2vh" }}
+            >
+              Salvar
+            </Button>
+          ) : updateFailed ? (
+            <Button
+              variant="outlined"
+              color="error"
               onClick={() => saveUser()}
               style={{ marginTop: "2vh" }}
             >
@@ -117,6 +235,7 @@ export default function User() {
               Salvar
             </Button>
           )}
+          <div className={styles.errorMessage}>{updateFailedErrorMessage}</div>
         </div>
       </div>
     </div>

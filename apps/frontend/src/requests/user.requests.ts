@@ -1,3 +1,5 @@
+import StorageManager from "@/utils/storageManager/storageManager.util";
+
 interface UserUpdateDto {
   name?: string;
   email?: string;
@@ -30,11 +32,19 @@ export default class UserRequests {
   private baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
   public async updateUser(id: string, userUpdateData: UserUpdateDto) {
-    await fetch(`${this.baseUrl}/${id}`, {
+    const response = await fetch(`${this.baseUrl}/${id}`, {
       method: "PATCH",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(userUpdateData),
     });
+
+    const responseBody = await response.json();
+
+    if (responseBody.message) {
+      return { message: responseBody.message };
+    } else {
+      return responseBody;
+    }
   }
   public async login(loginUserData: LoginUserDto): Promise<ResponseBody> {
     const response = await fetch(`${this.baseUrl}/login`, {
@@ -69,6 +79,23 @@ export default class UserRequests {
       return { auth: false, tokens: undefined, message: responseBody.message };
     } else {
       return { auth: false, tokens: undefined, message: responseBody.message };
+    }
+  }
+
+  public async fetchUser() {
+    const accessToken = StorageManager.Tokens.getAccess();
+
+    const response = await fetch(this.baseUrl, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    const responseBody = await response.json();
+
+    if (responseBody.message) {
+      return { message: responseBody.message };
+    } else {
+      return responseBody;
     }
   }
 }

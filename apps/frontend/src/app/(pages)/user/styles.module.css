@@ -24,4 +24,15 @@
     align-items: center;
     justify-content: center;
     margin-top: 5vh;
+    width: 20vw;
+}
+
+.textField {
+    margin-top: 2.5vh;
+    width: 100%;
+}
+
+.errorMessage {
+    color: red;
+    margin-top: 2vh;
 }

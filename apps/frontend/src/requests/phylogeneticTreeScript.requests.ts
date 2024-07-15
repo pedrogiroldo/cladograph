@@ -1,6 +1,7 @@
 import { DescendantObjectsArray } from "@/models/descendantsTypes";
 import { ExternalGroup } from "@/models/externalGroupTypes";
 import { TraitObjectsArray } from "@/models/traitsTypes";
+import StorageManager from "@/utils/storageManager/storageManager.util";
 
 interface Props {
   traits: TraitObjectsArray;
@@ -11,7 +12,8 @@ interface Props {
 export default class PhylogeneticTreeScriptRequests {
   private baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/phylogenetic-tree-scripts`;
 
-  public async generateNewick(props: Props, accessToken: string | undefined) {
+  public async generateNewick(props: Props) {
+    const accessToken = StorageManager.Tokens.getAccess();
     const response = await fetch(this.baseUrl, {
       method: "POST",
       headers: {
