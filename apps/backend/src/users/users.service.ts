@@ -169,10 +169,15 @@ export class UsersService {
   }
 
   async update(id: string, data: UpdateUserDto) {
+    const { email, name, password } = data;
     try {
       const updatedUser = await this.prismaService.user.update({
         where: { id },
-        data,
+        data: {
+          email,
+          name,
+          password: await this.passwordHasherService.hashPassword(password),
+        },
       });
 
       updatedUser.password = undefined;
