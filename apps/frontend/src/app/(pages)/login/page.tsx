@@ -23,7 +23,6 @@ export default function Login() {
 
   async function login(email: string, password: string) {
     const auth = await requests.userRequests.login({ email, password });
-    // console.log(auth);
 
     if (!auth.auth) {
       setLoginFailed(true);
