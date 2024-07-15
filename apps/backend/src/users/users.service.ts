@@ -41,7 +41,7 @@ export class UsersService {
 
       const tokens = await this.generateUserTokens(undefined, createdUser.id);
 
-      return { message: 'Success', tokens };
+      return { auth: true, tokens };
     } catch (error) {
       return error;
     }
