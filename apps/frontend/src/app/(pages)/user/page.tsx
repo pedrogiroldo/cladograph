@@ -142,6 +142,11 @@ export default function User() {
     return StorageManager.Tokens.isSaved();
   }
 
+  function logOut() {
+    StorageManager.Tokens.delete();
+    router.replace("/login");
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.actionArea}>
@@ -235,6 +240,14 @@ export default function User() {
               Salvar
             </Button>
           )}
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => logOut()}
+            style={{ marginTop: "2vh" }}
+          >
+            Sair
+          </Button>
           <div className={styles.errorMessage}>{updateFailedErrorMessage}</div>
         </div>
       </div>
