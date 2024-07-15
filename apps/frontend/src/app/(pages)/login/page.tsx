@@ -60,20 +60,45 @@ export default function Login() {
     <div className={styles.main}>
       <h1>Bem-vindo!</h1>
       <div className={styles.actionArea}>
-        <TextField
-          value={emailInput}
-          style={{ marginTop: "2.5vh" }}
-          variant={"filled"}
-          label="E-mail"
-          onChange={setEmailInputFunc}
-        />
-        <TextField
-          value={passwordInput}
-          style={{ marginTop: "2.5vh" }}
-          variant={"filled"}
-          label="Senha"
-          onChange={setPasswordInputFunc}
-        />
+        {loginFailed ? (
+          <>
+            <TextField
+              value={emailInput}
+              style={{ marginTop: "2.5vh" }}
+              variant={"outlined"}
+              label="E-mail"
+              onChange={setEmailInputFunc}
+              color="error"
+              focused={true}
+            />
+            <TextField
+              value={passwordInput}
+              style={{ marginTop: "2.5vh" }}
+              variant={"outlined"}
+              label="Senha"
+              onChange={setPasswordInputFunc}
+              color="error"
+              focused={true}
+            />
+          </>
+        ) : (
+          <>
+            <TextField
+              value={emailInput}
+              style={{ marginTop: "2.5vh" }}
+              variant={"outlined"}
+              label="E-mail"
+              onChange={setEmailInputFunc}
+            />
+            <TextField
+              value={passwordInput}
+              style={{ marginTop: "2.5vh" }}
+              variant={"outlined"}
+              label="Senha"
+              onChange={setPasswordInputFunc}
+            />
+          </>
+        )}
         <Button
           variant="contained"
           onClick={() => login(emailInput, passwordInput)}

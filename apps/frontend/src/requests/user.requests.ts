@@ -66,9 +66,9 @@ export default class UserRequests {
     if (responseBody.auth === true) {
       return { auth: true, tokens: responseBody.tokens };
     } else if (responseBody.auth === false) {
-      return { auth: false, tokens: undefined };
+      return { auth: false, tokens: undefined, message: responseBody.message };
     } else {
-      return { auth: false, tokens: undefined };
+      return { auth: false, tokens: undefined, message: responseBody.message };
     }
   }
 }
