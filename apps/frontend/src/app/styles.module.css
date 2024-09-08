@@ -81,3 +81,8 @@
 .buttonGroup {
   width: 100%;
 }
+
+.teachingMaterialButton {
+  margin-top: 2vh;
+  width: 100%;
+}

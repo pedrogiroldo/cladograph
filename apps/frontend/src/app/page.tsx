@@ -48,6 +48,16 @@ export default function Home() {
     setActiveNwkOnTree(nwkInputValue);
   }
 
+  function hasSavedData() {
+    if (
+      cachedTraits !== undefined &&
+      cachedExternalGroup !== undefined &&
+      cachedDescendants !== undefined
+    ) {
+      return true;
+    } else return false;
+  }
+
   useEffect(() => {
     if (!StorageManager.Tokens.isSaved()) {
       router.replace("/login");
@@ -122,16 +132,15 @@ export default function Home() {
             </Button>
             <Button
               onClick={async () => {
-                if (
-                  cachedTraits !== undefined &&
-                  cachedExternalGroup !== undefined &&
-                  cachedDescendants !== undefined
-                ) {
+                if (hasSavedData()) {
                   const newick: string =
                     await requests.phylogeneticTreeScriptRequests.generateNewick(
                       {
+                        //@ts-ignore already verified on hasSavedData function
                         traits: cachedTraits,
+                        //@ts-ignore already verified on hasSavedData function
                         externalGroup: cachedExternalGroup,
+                        //@ts-ignore already verified on hasSavedData function
                         descendants: cachedDescendants,
                       }
                     );
@@ -146,6 +155,33 @@ export default function Home() {
               Gerar árvore
             </Button>
           </ButtonGroup>
+          <Button
+            onClick={async () => {
+              if (hasSavedData()) {
+                const newick: string =
+                  await requests.phylogeneticTreeScriptRequests.generateNewick({
+                    //@ts-ignore already verified on hasSavedData function
+                    traits: cachedTraits,
+                    //@ts-ignore already verified on hasSavedData function
+                    externalGroup: cachedExternalGroup,
+                    //@ts-ignore already verified on hasSavedData function
+                    descendants: cachedDescendants,
+                  });
+                setActiveNwkOnTree(newick);
+                saveTreeNewick(newick);
+
+                router.replace("/teachingMaterial");
+              } else {
+                // eslint-disable-next-line no-console
+                console.error("Missing data!");
+              }
+            }}
+            variant="contained"
+            disabled={hasSavedData() ? false : true}
+            className={styles.teachingMaterialButton}
+          >
+            Material didático
+          </Button>
         </div>
       </div>
     </div>
