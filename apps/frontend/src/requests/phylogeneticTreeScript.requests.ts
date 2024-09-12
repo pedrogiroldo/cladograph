@@ -22,6 +22,6 @@ export default class PhylogeneticTreeScriptRequests {
       },
       body: JSON.stringify(props),
     }).then((res) => res);
-    return response.text();
+    return response.json();
   }
 }

@@ -10,7 +10,10 @@ import defaultNewick from "./defaultTree";
 import { ExternalGroup } from "../models/externalGroupTypes";
 import { getExternalGroup } from "../scripts/cacheManager/externalGroupCRUD";
 import { DescendantObjectsArray } from "../models/descendantsTypes";
-import { getDescendants } from "../scripts/cacheManager/descendantsCRUD";
+import {
+  getDescendants,
+  saveDescendants,
+} from "../scripts/cacheManager/descendantsCRUD";
 import {
   getTreeNewick,
   saveTreeNewick,
@@ -22,6 +25,11 @@ import Requests from "@/requests/requests";
 import StorageManager from "@/utils/storageManager/storageManager.util";
 
 const requests = new Requests();
+
+interface treeResponse {
+  newick: string;
+  descendants: DescendantObjectsArray;
+}
 
 export default function Home() {
   const [cachedTraits, setCachedTraits] = useState<
@@ -72,7 +80,7 @@ export default function Home() {
     } else {
       setActiveNwkOnTree(defaultNewick);
     }
-  }, []);
+  }, [router]);
 
   return (
     <div className={styles.Home}>
@@ -133,7 +141,7 @@ export default function Home() {
             <Button
               onClick={async () => {
                 if (hasSavedData()) {
-                  const newick: string =
+                  const response: treeResponse =
                     await requests.phylogeneticTreeScriptRequests.generateNewick(
                       {
                         //@ts-ignore already verified on hasSavedData function
@@ -144,8 +152,9 @@ export default function Home() {
                         descendants: cachedDescendants,
                       }
                     );
-                  setActiveNwkOnTree(newick);
-                  saveTreeNewick(newick);
+                  setActiveNwkOnTree(response.newick);
+                  saveTreeNewick(response.newick);
+                  saveDescendants(response.descendants);
                 } else {
                   // eslint-disable-next-line no-console
                   console.error("Missing data!");
@@ -158,7 +167,7 @@ export default function Home() {
           <Button
             onClick={async () => {
               if (hasSavedData()) {
-                const newick: string =
+                const response: treeResponse =
                   await requests.phylogeneticTreeScriptRequests.generateNewick({
                     //@ts-ignore already verified on hasSavedData function
                     traits: cachedTraits,
@@ -167,8 +176,9 @@ export default function Home() {
                     //@ts-ignore already verified on hasSavedData function
                     descendants: cachedDescendants,
                   });
-                setActiveNwkOnTree(newick);
-                saveTreeNewick(newick);
+                setActiveNwkOnTree(response.newick);
+                saveTreeNewick(response.newick);
+                saveDescendants(response.descendants);
 
                 router.replace("/teachingMaterial");
               } else {

@@ -52,7 +52,6 @@ export default function TeachingMaterial() {
 
   return (
     <>
-      {console.log(cachedDescendants)}
       <div className={styles.main}>
         <div>
           <div className={styles.treeArea}>
