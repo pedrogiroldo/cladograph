@@ -15,6 +15,7 @@ export default class NewickGenerator {
   private traitsAndNumberOfDescendantsThatHaveThem: TraitAndNumberOfDescendantsThatHaveThemeObjectsArray;
   private externalGroup: ExternalGroup;
   protected descendants = new DescendantsManager();
+  private descendantsWithSinPlesAndApo;
   private newick: string;
 
   constructor(traits, externalGroup, descendants) {
@@ -32,6 +33,10 @@ export default class NewickGenerator {
     return this.newick;
   }
 
+  public getDescendants() {
+    return this.descendantsWithSinPlesAndApo;
+  }
+
   private main() {
     // it's an important info to compare the traits later
     this.traitsAndNumberOfDescendantsThatHaveThem =
@@ -42,6 +47,8 @@ export default class NewickGenerator {
     const sortedDescendants = descendantsWithSinPlesAndApo.sort(
       this.logicToCompareDescendants,
     );
+
+    this.descendantsWithSinPlesAndApo = sortedDescendants;
 
     const newick = this.generateNewickWithSortedDescendants(sortedDescendants);
 
@@ -71,13 +78,15 @@ export default class NewickGenerator {
 
   private calculateSynPlesioAndApo() {
     const descendants = this.descendants.getDescendants();
-    return descendants.map((descendant) => {
+    const newDescendants = descendants.map((descendant) => {
       descendant.synapomorphies = this.calculateSynapomorphies(descendant);
       descendant.plesiomorphies = this.calculatePlesiomorphies(descendant);
       descendant.apomorphies = this.calculateApomorphies(descendant);
 
       return descendant;
     });
+
+    return newDescendants;
   }
 
   private calculateSynapomorphies(descendant: Descendant) {

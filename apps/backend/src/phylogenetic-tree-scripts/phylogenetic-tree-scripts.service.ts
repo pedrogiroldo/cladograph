@@ -21,6 +21,9 @@ export class PhylogeneticTreeScriptsService {
       descendants,
     );
 
-    return newickGenerator.getNewick();
+    return {
+      newick: newickGenerator.getNewick(),
+      descendants: newickGenerator.getDescendants(),
+    };
   }
 }
