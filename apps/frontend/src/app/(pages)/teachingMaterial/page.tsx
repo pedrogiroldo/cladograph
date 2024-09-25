@@ -48,7 +48,7 @@ export default function TeachingMaterial() {
     if (cachedNewick !== undefined) {
       setActiveNwkOnTree(cachedNewick);
     }
-  }, []);
+  }, [router]);
 
   return (
     <>
@@ -65,6 +65,47 @@ export default function TeachingMaterial() {
                   <TableCell align="right">Sinapomorfias</TableCell>
                   <TableCell align="right">Plesiomorifias</TableCell>
                   <TableCell align="right">Apomorfias</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cachedDescendants
+                  ? cachedDescendants.map((descendant) => (
+                      <TableRow
+                        key={descendant.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {descendant.descendantName}
+                        </TableCell>
+                        <TableCell align="right">
+                          {descendant.synapomorphies}
+                        </TableCell>
+                        <TableCell align="right">
+                          {descendant.plesiomorphies}
+                        </TableCell>
+                        <TableCell align="right">
+                          {descendant.apomorphies}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : void 0}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TableContainer component={Paper} style={{ marginTop: "10vh" }}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Características</TableCell>
+                  {cachedDescendants
+                    ? cachedDescendants.map((descendant) => (
+                        <TableCell key={descendant.id}>
+                          {descendant.descendantName}
+                        </TableCell>
+                      ))
+                    : void 0}
                 </TableRow>
               </TableHead>
               <TableBody>
