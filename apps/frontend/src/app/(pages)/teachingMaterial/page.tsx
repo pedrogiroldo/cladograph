@@ -129,6 +129,9 @@ export default function TeachingMaterial() {
                         <TableCell align="right">
                           {descendant.apomorphies}
                         </TableCell>
+                        <TableCell align="right">
+                          {descendant.apomorphies}
+                        </TableCell>
                       </TableRow>
                     ))
                   : void 0}

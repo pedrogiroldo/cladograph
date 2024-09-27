@@ -9,9 +9,8 @@
 
 .treeArea {
     margin-left: 2vw;
-    margin-right: 10vw;
+    /* margin-right: 10vw; */
     width: 500px;
     height: 500px;
-    margin-top: 3.5vh;
-    position: relative;
+    margin-top: 100vh;
 }
