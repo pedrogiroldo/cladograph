@@ -17,8 +17,8 @@ body {
     a proporção é 1180 x 730
   */
   width: 100%;
-  max-width: calc(100vh * 1180 / 730);
-  aspect-ratio: 1180 / 730;
+  /* max-width: calc(100vh * 1180 / 730); */
+  /* aspect-ratio: 1180 / 730; */
   background-color: white;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }

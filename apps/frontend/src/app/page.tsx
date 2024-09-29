@@ -86,7 +86,7 @@ export default function Home() {
   return (
     <div className={styles.Home}>
       <div className={styles.treeArea}>
-        <Tree newick={activeNwkOnTree} />
+        <Tree newick={activeNwkOnTree} printMode={false} />
       </div>
       <div className={styles.optionsArea}>
         <div className={styles.topArea}>

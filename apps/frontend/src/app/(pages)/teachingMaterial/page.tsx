@@ -12,6 +12,7 @@ import { getTraits } from "@/scripts/cacheManager/traitsCRUD";
 import { useRouter } from "next/navigation";
 import StorageManager from "@/utils/storageManager/storageManager.util";
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -37,6 +38,8 @@ export default function TeachingMaterial() {
     DescendantObjectsArray | undefined
   >(undefined);
 
+  const [displayPrintBtn, setDisplayPrintBtn] = useState<string>("block");
+
   useEffect(() => {
     if (!StorageManager.Tokens.isSaved()) {
       router.replace("/login");
@@ -52,111 +55,121 @@ export default function TeachingMaterial() {
   }, [router]);
 
   return (
-    <>
-      <div className={styles.main}>
-        <div>
-          <div className={styles.treeArea}>
-            <Tree newick={activeNwkOnTree} />
-          </div>
-          <TableContainer component={Paper} style={{ marginTop: "10vh" }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Descendentes</TableCell>
-                  <TableCell>Sinapomorfias</TableCell>
-                  <TableCell>Plesiomorifias</TableCell>
-                  <TableCell>Apomorfias</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+    <div className={styles.main}>
+      <div>
+        <div className={styles.treeArea}>
+          <Tree newick={activeNwkOnTree} printMode={true} />
+        </div>
+        <TableContainer component={Paper} style={{ marginTop: "10vh" }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Descendentes</TableCell>
+                <TableCell>Sinapomorfias</TableCell>
+                <TableCell>Plesiomorifias</TableCell>
+                <TableCell>Apomorfias</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cachedDescendants
+                ? cachedDescendants.map((descendant) => (
+                    <TableRow
+                      key={descendant.id}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {descendant.descendantName}
+                      </TableCell>
+                      <TableCell>{descendant.synapomorphies}</TableCell>
+                      <TableCell>{descendant.plesiomorphies}</TableCell>
+                      <TableCell>{descendant.apomorphies}</TableCell>
+                    </TableRow>
+                  ))
+                : void 0}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TableContainer component={Paper} style={{ marginTop: "10vh" }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Características</TableCell>
                 {cachedDescendants
                   ? cachedDescendants.map((descendant) => (
-                      <TableRow
-                        key={descendant.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {descendant.descendantName}
-                        </TableCell>
-                        <TableCell>{descendant.synapomorphies}</TableCell>
-                        <TableCell>{descendant.plesiomorphies}</TableCell>
-                        <TableCell>{descendant.apomorphies}</TableCell>
-                      </TableRow>
+                      <TableCell key={descendant.id}>
+                        {descendant.descendantName}
+                      </TableCell>
                     ))
                   : void 0}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TableContainer component={Paper} style={{ marginTop: "10vh" }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Características</TableCell>
-                  {cachedDescendants
-                    ? cachedDescendants.map((descendant) => (
-                        <TableCell key={descendant.id}>
-                          {descendant.descendantName}
-                        </TableCell>
-                      ))
-                    : void 0}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {cachedTraits
-                  ? cachedTraits.map((trait) => (
-                      <TableRow
-                        key={trait.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {trait.traitName}
-                        </TableCell>
-                        {cachedDescendants
-                          ? cachedDescendants?.map((descendant) => {
-                              if (descendant.traitsIds.includes(trait.id)) {
-                                console.log("ué caralho");
-                                return (
-                                  <TableCell
-                                    component="th"
-                                    scope="row"
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cachedTraits
+                ? cachedTraits.map((trait) => (
+                    <TableRow
+                      key={trait.id}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {trait.traitName}
+                      </TableCell>
+                      {cachedDescendants
+                        ? cachedDescendants?.map((descendant) => {
+                            if (descendant.traitsIds.includes(trait.id)) {
+                              return (
+                                <TableCell
+                                  component="th"
+                                  scope="row"
+                                  key={descendant.id + trait.id}
+                                >
+                                  <BpCheckbox
                                     key={descendant.id + trait.id}
-                                  >
-                                    <BpCheckbox
-                                      key={descendant.id + trait.id}
-                                      checked
-                                      readOnly
-                                    />
-                                  </TableCell>
-                                );
-                              } else {
-                                return (
-                                  <TableCell
-                                    component="th"
-                                    scope="row"
+                                    checked
+                                    readOnly
+                                  />
+                                </TableCell>
+                              );
+                            } else {
+                              return (
+                                <TableCell
+                                  component="th"
+                                  scope="row"
+                                  key={descendant.id + trait.id}
+                                >
+                                  <BpCheckbox
                                     key={descendant.id + trait.id}
-                                  >
-                                    <BpCheckbox
-                                      key={descendant.id + trait.id}
-                                      checked={false}
-                                      readOnly
-                                    />
-                                  </TableCell>
-                                );
-                              }
-                            })
-                          : void 0}
-                      </TableRow>
-                    ))
-                  : void 0}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+                                    checked={false}
+                                    readOnly
+                                  />
+                                </TableCell>
+                              );
+                            }
+                          })
+                        : void 0}
+                    </TableRow>
+                  ))
+                : void 0}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
-    </>
+      <div className={styles.printBtn}>
+        <Button
+          style={{ display: displayPrintBtn }}
+          variant="contained"
+          onClick={async () => {
+            await setDisplayPrintBtn("none");
+            window.print();
+            setDisplayPrintBtn("block");
+          }}
+        >
+          Salvar PDF
+        </Button>
+      </div>
+    </div>
   );
 }

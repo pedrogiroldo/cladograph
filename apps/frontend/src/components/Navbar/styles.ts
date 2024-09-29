@@ -13,3 +13,10 @@ export const homeButton: CSS.Properties = {
   marginTop: "2vh",
   cursor: "pointer",
 };
+
+export const logo: CSS.Properties = {
+  width: "15vw",
+  height: "auto",
+  marginLeft: "4vw",
+  cursor: "pointer",
+};

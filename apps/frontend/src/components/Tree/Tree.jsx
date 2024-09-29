@@ -1,3 +1,4 @@
+//@ts-ignore
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Button } from "@mui/material";
 import { phylotree as Phylotree } from "phylotree";
@@ -6,7 +7,7 @@ import { useRef, useLayoutEffect } from "react";
 import "./style.css";
 import saveTree from "../../scripts/saveTree";
 
-export default function Tree({ newick }) {
+export default function Tree({ newick, printMode }) {
   const treeContainer = useRef();
   let tree;
   try {
@@ -34,17 +35,25 @@ export default function Tree({ newick }) {
     $(tree.display.container).append(tree.display.show());
   });
 
-  return (
-    <div>
-      <div className="tree" id="tree" ref={treeContainer} />
-      <Button
-        type="button"
-        id="saveImageButton"
-        onClick={() => saveTree("svg", "#tree")}
-        variant="outlined"
-      >
-        baixar
-      </Button>
-    </div>
-  );
+  if (!printMode) {
+    return (
+      <div>
+        <div className="tree" id="tree" ref={treeContainer} />
+        <Button
+          type="button"
+          id="saveImageButton"
+          onClick={() => saveTree("svg", "#tree")}
+          variant="outlined"
+        >
+          baixar
+        </Button>
+      </div>
+    );
+  } else if (printMode) {
+    return (
+      <div>
+        <div className="tree" id="tree" ref={treeContainer} />
+      </div>
+    );
+  }
 }
