@@ -20,6 +20,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import BpCheckbox from "@/components/BpCheckbox/BpCheckbox";
 
 export default function TeachingMaterial() {
   const router = useRouter();
@@ -62,9 +63,9 @@ export default function TeachingMaterial() {
               <TableHead>
                 <TableRow>
                   <TableCell>Descendentes</TableCell>
-                  <TableCell align="right">Sinapomorfias</TableCell>
-                  <TableCell align="right">Plesiomorifias</TableCell>
-                  <TableCell align="right">Apomorfias</TableCell>
+                  <TableCell>Sinapomorfias</TableCell>
+                  <TableCell>Plesiomorifias</TableCell>
+                  <TableCell>Apomorfias</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -79,15 +80,9 @@ export default function TeachingMaterial() {
                         <TableCell component="th" scope="row">
                           {descendant.descendantName}
                         </TableCell>
-                        <TableCell align="right">
-                          {descendant.synapomorphies}
-                        </TableCell>
-                        <TableCell align="right">
-                          {descendant.plesiomorphies}
-                        </TableCell>
-                        <TableCell align="right">
-                          {descendant.apomorphies}
-                        </TableCell>
+                        <TableCell>{descendant.synapomorphies}</TableCell>
+                        <TableCell>{descendant.plesiomorphies}</TableCell>
+                        <TableCell>{descendant.apomorphies}</TableCell>
                       </TableRow>
                     ))
                   : void 0}
@@ -109,29 +104,51 @@ export default function TeachingMaterial() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cachedDescendants
-                  ? cachedDescendants.map((descendant) => (
+                {cachedTraits
+                  ? cachedTraits.map((trait) => (
                       <TableRow
-                        key={descendant.id}
+                        key={trait.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {descendant.descendantName}
+                          {trait.traitName}
                         </TableCell>
-                        <TableCell align="right">
-                          {descendant.synapomorphies}
-                        </TableCell>
-                        <TableCell align="right">
-                          {descendant.plesiomorphies}
-                        </TableCell>
-                        <TableCell align="right">
-                          {descendant.apomorphies}
-                        </TableCell>
-                        <TableCell align="right">
-                          {descendant.apomorphies}
-                        </TableCell>
+                        {cachedDescendants
+                          ? cachedDescendants?.map((descendant) => {
+                              if (descendant.traitsIds.includes(trait.id)) {
+                                console.log("ué caralho");
+                                return (
+                                  <TableCell
+                                    component="th"
+                                    scope="row"
+                                    key={descendant.id + trait.id}
+                                  >
+                                    <BpCheckbox
+                                      key={descendant.id + trait.id}
+                                      checked
+                                      readOnly
+                                    />
+                                  </TableCell>
+                                );
+                              } else {
+                                return (
+                                  <TableCell
+                                    component="th"
+                                    scope="row"
+                                    key={descendant.id + trait.id}
+                                  >
+                                    <BpCheckbox
+                                      key={descendant.id + trait.id}
+                                      checked={false}
+                                      readOnly
+                                    />
+                                  </TableCell>
+                                );
+                              }
+                            })
+                          : void 0}
                       </TableRow>
                     ))
                   : void 0}

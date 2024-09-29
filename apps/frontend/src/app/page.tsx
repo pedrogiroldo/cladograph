@@ -23,6 +23,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { userButton } from "./userButtonStyles";
 import Requests from "@/requests/requests";
 import StorageManager from "@/utils/storageManager/storageManager.util";
+import UpdateTraitsWithItsDescendants from "@/scripts/updateTraitsWithItsDescendants/updateTraitsWithItsDescendants";
 
 const requests = new Requests();
 
@@ -155,6 +156,8 @@ export default function Home() {
                   setActiveNwkOnTree(response.newick);
                   saveTreeNewick(response.newick);
                   saveDescendants(response.descendants);
+
+                  new UpdateTraitsWithItsDescendants();
                 } else {
                   // eslint-disable-next-line no-console
                   console.error("Missing data!");
@@ -179,6 +182,10 @@ export default function Home() {
                 setActiveNwkOnTree(response.newick);
                 saveTreeNewick(response.newick);
                 saveDescendants(response.descendants);
+
+                new UpdateTraitsWithItsDescendants();
+                console.log(getTraits());
+                console.log(getDescendants());
 
                 router.replace("/teachingMaterial");
               } else {

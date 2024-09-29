@@ -5,7 +5,7 @@ export interface Trait {
   traitName: string;
   lastTraitName: string | undefined; // help to handle errors it's a possbile function for this
   active: boolean; // save the history of traits
-  descendants: DescendantObjectsArray | undefined;
+  descendantsIds: number[] | undefined;
 }
 
 export type TraitObjectsArray = Array<Trait>;
