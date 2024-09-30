@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
+    "sharp": "^0.33.5",
     "storage-manager-js": "4.2.6-5"
   },
   "devDependencies": {

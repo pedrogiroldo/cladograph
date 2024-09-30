@@ -90,6 +90,7 @@ export default function AddExternalGroupPage() {
           traitName: inputValue,
           lastTraitName: undefined,
           active: true,
+          descendantsIds: undefined,
         },
         ...traits,
       ];

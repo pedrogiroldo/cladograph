@@ -173,6 +173,7 @@ export default function AddDescendantsPage() {
           traitName: newTraitInputValue,
           lastTraitName: undefined,
           active: true,
+          descendantsIds: undefined,
         },
         ...traitObjectsArray,
       ];
@@ -212,120 +213,114 @@ export default function AddDescendantsPage() {
   };
 
   return (
-    <>
-      <div className={styles.main}>
-        
-        <div className={styles.inputs}>
-          <div className={styles.newDescendantInput}>
-            <TextField
-              label="Nome do descendente:"
-              variant="standard"
-              size="small"
-              onChange={setInputValueFunc}
-              value={inputValue}
-              id="descendantNameInput"
-            />
-            <div className={styles.addDescendantButton}>
-              <Button
-                onClick={() => createDescendant(inputValue)}
-                variant="contained"
-                style={{ height: "100%" }}
-                id="addDescendantButton"
-              >
-                Adicionar
-              </Button>
-            </div>
-          </div>
-          <div className={styles.newTraitInput}>
-            <TextField
-              label="Adicionar características:"
-              variant="standard"
-              size="small"
-              onChange={setNewTraitInputValueFunc}
-              value={newTraitInputValue}
-            />
-            <div>
-              <Button
-                variant="contained"
-                style={{ marginLeft: "2vw", height: "100%" }}
-                onClick={addInputValueToTraitsArray}
-              >
-                Adicionar
-              </Button>
-            </div>
+    <div className={styles.main}>
+      <div className={styles.inputs}>
+        <div className={styles.newDescendantInput}>
+          <TextField
+            label="Nome do descendente:"
+            variant="standard"
+            size="small"
+            onChange={setInputValueFunc}
+            value={inputValue}
+            id="descendantNameInput"
+          />
+          <div className={styles.addDescendantButton}>
+            <Button
+              onClick={() => createDescendant(inputValue)}
+              variant="contained"
+              style={{ height: "100%" }}
+              id="addDescendantButton"
+            >
+              Adicionar
+            </Button>
           </div>
         </div>
-        <div className={styles.descendantsContainer}>
-          <h1 className={styles.title}>Descendentes:</h1>
-          <div className={styles.descendantsContainerActionArea}>
-            <div className={styles.descendantsArea}>
-              {descendantObjectsArray.map((descendant: Descendant) => {
-                if (descendant.active === true) {
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className={styles.descendantsItems}>
-                      <DescendantListItem
-                        id={descendant.id}
-                        value={descendant.descendantName}
-                        trashFunc={() =>
-                          deleteDescendantFromArray(descendant.id)
-                        }
-                        pencilFunc={editDescendantFromArray}
-                      />
-                      {traitObjectsArray.map((trait) => {
-                        if (trait.active === true) {
-                          return (
-                            <FormControlLabel
-                              key={descendant.id + trait.id}
-                              control={
-                                <BpCheckbox
-                                  id={`trait${trait.id}descendant${descendant.id}`}
-                                  checked={descendant.traitsIds?.includes(
-                                    trait.id
-                                  )} // Checking if the trait exists in externalGroup traits array
-                                  onChange={() =>
-                                    handleTraitChange(
-                                      trait.id,
-                                      descendant.id,
-                                      descendant.traitsIds?.includes(trait.id)
-                                    )
-                                  }
-                                />
-                              }
-                              label={trait.traitName}
-                            />
-                          );
-                        }
-                        return null;
-                      })}
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
-            {isSaved ? (
-              <Button
-                variant="contained"
-                color="success"
-                onClick={() => saveTraitsAndDescendantsInSessionStorage()}
-                style={{ marginTop: "2vh" }}
-              >
-                Salvar
-              </Button>
-            ) : (
-              <Button
-                variant="outlined"
-                onClick={() => saveTraitsAndDescendantsInSessionStorage()}
-                style={{ marginTop: "2vh" }}
-              >
-                Salvar
-              </Button>
-            )}
+        <div className={styles.newTraitInput}>
+          <TextField
+            label="Adicionar características:"
+            variant="standard"
+            size="small"
+            onChange={setNewTraitInputValueFunc}
+            value={newTraitInputValue}
+          />
+          <div>
+            <Button
+              variant="contained"
+              style={{ marginLeft: "2vw", height: "100%" }}
+              onClick={addInputValueToTraitsArray}
+            >
+              Adicionar
+            </Button>
           </div>
         </div>
       </div>
-      {/* <Button onClick={() => console.log(descendantObjectsArray)}>ver</Button> */}
-    </>
+      <div className={styles.descendantsContainer}>
+        <h1 className={styles.title}>Descendentes:</h1>
+        <div className={styles.descendantsContainerActionArea}>
+          <div className={styles.descendantsArea}>
+            {descendantObjectsArray.map((descendant: Descendant) => {
+              if (descendant.active === true) {
+                return (
+                  // eslint-disable-next-line react/jsx-key
+                  <div className={styles.descendantsItems}>
+                    <DescendantListItem
+                      id={descendant.id}
+                      value={descendant.descendantName}
+                      trashFunc={() => deleteDescendantFromArray(descendant.id)}
+                      pencilFunc={editDescendantFromArray}
+                    />
+                    {traitObjectsArray.map((trait) => {
+                      if (trait.active === true) {
+                        return (
+                          <FormControlLabel
+                            key={descendant.id + trait.id}
+                            control={
+                              <BpCheckbox
+                                id={`trait${trait.id}descendant${descendant.id}`}
+                                checked={descendant.traitsIds?.includes(
+                                  trait.id
+                                )} // Checking if the trait exists in externalGroup traits array
+                                onChange={() =>
+                                  handleTraitChange(
+                                    trait.id,
+                                    descendant.id,
+                                    descendant.traitsIds?.includes(trait.id)
+                                  )
+                                }
+                              />
+                            }
+                            label={trait.traitName}
+                          />
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+          {isSaved ? (
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => saveTraitsAndDescendantsInSessionStorage()}
+              style={{ marginTop: "2vh" }}
+            >
+              Salvar
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={() => saveTraitsAndDescendantsInSessionStorage()}
+              style={{ marginTop: "2vh" }}
+            >
+              Salvar
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

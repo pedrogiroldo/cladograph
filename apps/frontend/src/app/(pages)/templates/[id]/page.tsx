@@ -70,6 +70,7 @@ export default function Page({ params }: { params: { id: string } }) {
             newick={
               "(((Desmodus rotundus, Glossophaga soricina), Artibeus jamaicensis), (Pteropus vampyrus, Myotis lucifugus));"
             }
+            printMode={false}
           />
         </div>
         <div className={styles.traitsTable}></div>

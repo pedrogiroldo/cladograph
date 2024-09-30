@@ -12,6 +12,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
+      <head>
+        <title>CladoGraph</title>
+      </head>
       <body className={inter.className}>
         <Navbar />
         <div className="container">{children}</div>

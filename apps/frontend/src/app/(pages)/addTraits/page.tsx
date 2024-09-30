@@ -44,6 +44,7 @@ export default function AddTraitsPage() {
         traitName: inputValue,
         lastTraitName: undefined,
         active: true,
+        descendantsIds: undefined,
       };
 
       setTraits([newTrait, ...traits]); // Update traits using setTraits
