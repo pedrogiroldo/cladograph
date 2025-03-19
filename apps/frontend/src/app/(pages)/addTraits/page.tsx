@@ -44,6 +44,7 @@ export default function AddTraitsPage() {
         traitName: inputValue,
         lastTraitName: undefined,
         active: true,
+        descendantsIds: undefined,
       };
 
       setTraits([newTrait, ...traits]); // Update traits using setTraits
@@ -85,7 +86,6 @@ export default function AddTraitsPage() {
 
   return (
     <div style={main}>
-      <Navbar />
       <div style={addTraitsActionArea}>
         <div style={inputs}>
           <TextField

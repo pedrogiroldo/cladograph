@@ -90,6 +90,7 @@ export default function AddExternalGroupPage() {
           traitName: inputValue,
           lastTraitName: undefined,
           active: true,
+          descendantsIds: undefined,
         },
         ...traits,
       ];
@@ -109,7 +110,6 @@ export default function AddExternalGroupPage() {
 
   return (
     <div style={main}>
-      <Navbar />
       <div style={actionArea}>
         <h1 style={externalGroupTraits}>Características do Grupo Externo:</h1>
         <div style={inputs}>
