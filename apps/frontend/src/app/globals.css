@@ -1,0 +1,30 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: #f0f0f0; */
+}
+
+.container {
+  /*
+    a proporção é 1180 x 730
+  */
+  width: 100%;
+  /* max-width: calc(100vh * 1180 / 730); */
+  /* aspect-ratio: 1180 / 730; */
+  background-color: white;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+h1,
+h2,
+h3 {
+  color: #1976D2;
+}

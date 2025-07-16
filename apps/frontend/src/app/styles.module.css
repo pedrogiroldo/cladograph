@@ -1,0 +1,88 @@
+.Home {
+  /* height: 100%; */
+  /* width: 100%; */
+  display: flex;
+  /* position: relative; */
+
+
+}
+
+.treeArea {
+  margin-left: 5vw;
+  margin-right: auto;
+  width: 500px;
+  height: 500px;
+  margin-top: 3.5vh;
+  /* border: solid; */
+  border-color: #1976D2;
+  position: relative;
+}
+
+.optionsArea {
+  height: 90vh;
+  width: 40vw;
+  /* border: solid;
+  border-color: gray; */
+  margin-right: 5vw;
+  margin-left: auto;
+  margin-top: 1vh;
+}
+
+.topArea {
+  display: flex;
+  margin-top: 2vh;
+}
+
+#templateButton {
+  margin-right: 1.5vw;
+  margin-left: 1.5vw;
+}
+
+.nwkInput {
+  margin-left: 1vw;
+  margin-right: auto;
+}
+
+#generateNwkButton {
+  margin-left: 2vw;
+}
+
+.comparatorArea {
+  margin-top: 13vh;
+}
+
+.nwkInputAndButton {
+  display: flex;
+}
+
+#comparatorTitle {
+  color: #1976D2;
+}
+
+.comparisonInfoContainer {
+  margin-top: 5vh;
+  border: solid;
+  border-color: #1976D2;
+  width: auto;
+  height: 25vh;
+}
+
+.comparisonInfoButtons {
+  margin-top: 5vh;
+  width: auto;
+  height: 40vh;
+  padding-right: 2vw;
+}
+
+#comparisonInfoButtonId {
+  margin-top: 2.5vh;
+}
+
+.buttonGroup {
+  width: 100%;
+}
+
+.teachingMaterialButton {
+  margin-top: 2vh;
+  width: 100%;
+}
