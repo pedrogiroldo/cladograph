@@ -1,0 +1,74 @@
+.Home {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+
+}
+
+.treeArea {
+  margin-left: 2vw;
+  margin-right: auto;
+  width: 500px;
+  margin-top: 3.5vh;
+}
+
+.optionsArea {
+  height: 90vh;
+  width: 80vh;
+  /* border: solid;
+  border-color: gray; */
+  margin-right: 4vw;
+  margin-left: auto;
+  margin-top: 1vh;
+}
+
+.topArea {
+  display: flex;
+  margin-top: 2vh;
+}
+
+#apiButton {
+  margin-right: 3vw;
+  margin-left: auto;
+}
+
+.nwkInput {
+  margin-left: 1vw;
+  margin-right: auto;
+}
+
+#generateNwkButton {
+  margin-left: 2vw;
+}
+
+.comparatorArea {
+  margin-top: 13vh;
+}
+
+.nwkInputAndButton {
+  display: flex;
+}
+
+#comparatorTitle {
+  color: #1976D2;
+}
+
+.comparasionInfoContainer {
+  margin-top: 5vh;
+  border: solid;
+  border-color: #1976D2;
+  width: auto;
+  height: 25vh;
+}
+
+.comparasionInfoButtons {
+  margin-top: 5vh;
+  width: auto;
+  height: 40vh;
+  padding-right: 2vw;
+}
+
+#comparasionInfoButtonId {
+  margin-top: 2.5vh;
+}
