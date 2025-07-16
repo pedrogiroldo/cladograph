@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "cladograph"
+version = "0.1.0"
+description = ""
+authors = ["Pedro Giroldo <pedrogiroldo40@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+ete3 = "^3.1.3"
+fpdf2 = "^2.7.5"
+six = "^1.16.0"
+numpy = "^1.26.0"
+pyqt5 = "^5.15.9"
+
+[tool.poetry.scripts]
+build = "scripts.build:buildCladograph"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
