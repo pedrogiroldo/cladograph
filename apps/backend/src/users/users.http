@@ -3,7 +3,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmZjY1Z
 
 ###
 
-POST http://localhost:3333/users/signup
+POST http://api.cladograph.vercel.app/users/signup
 content-type: application/json
 
 {
