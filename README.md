@@ -5,7 +5,7 @@
 </div>
 
 <p align="center">
-  <strong>Create, visualize, and share phylogenetic trees with ease.  árvore da vida</strong>
+  <strong>Create, visualize, and share phylogenetic trees with ease.</strong>
 </p>
 
 <p align="center">
